@@ -1,0 +1,15 @@
+.item-list {
+    display: block;
+    margin: auto;
+    padding: 10px;
+    
+    span {
+        font-size: 14px;
+    }
+}
+
+.item-box {
+    display: inline-block;
+    min-width: 100%;
+    margin: 2px;
+}

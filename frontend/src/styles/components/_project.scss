@@ -1,0 +1,14 @@
+.project {
+    display: inline-block;
+    width: 230px;
+    margin-left: 3px;
+    vertical-align: top;
+    padding: 5px;
+    border: 1px solid hsla(210,18%,87%,1);
+    background-color: white;
+    border-radius: 6px;
+}
+
+.project.metric {
+    border: unset;
+}

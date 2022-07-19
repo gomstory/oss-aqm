@@ -1,0 +1,8 @@
+@function toRem($value) {
+    @if(unitless($value)){
+        $remValue: ($value / 16) + rem;
+        @return $remValue;
+    } @else {
+        @return $value;
+    }
+}

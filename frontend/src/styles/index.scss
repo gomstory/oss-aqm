@@ -1,0 +1,40 @@
+// Base CSS
+@import 
+'./base/reset',
+'./base/color',
+'./base/body';
+
+// Utils
+@import 
+'./utils/common',
+'./utils/to-rem',
+'./utils/margin',
+'./utils/padding',
+'./utils/flex';
+
+// Components
+@import 
+'./components/header',
+'./components/item-list',
+'./components/typography',
+'./components/project',
+'./components/project-logo',
+'./components/search',
+'./components/navbar';
+
+.App {
+  background-color: $app-background;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.App-container {
+  background-color: white;
+  width: 80%;
+  font-size: calc(10px + 2vmin);
+}
+
+.container {
+  padding: 20px;
+}

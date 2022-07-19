@@ -1,0 +1,28 @@
+@for $i from 1 through 200 {
+    $padding-top: $i * 1px;
+
+    .pt-#{$i} {
+        padding-top: toRem($padding-top) !important;
+    }
+}
+@for $i from 1 through 200 {
+    $padding-bottom: $i * 1px;
+
+    .pb-#{$i} {
+        padding-bottom: toRem($padding-bottom) !important;
+    }
+}
+@for $i from 1 through 200 {
+    $padding-left: $i * 1px;
+
+    .pl-#{$i} {
+        padding-left: toRem($padding-left) !important;
+    }
+}
+@for $i from 1 through 200 {
+    $padding-right: $i * 1px;
+
+    .pr-#{$i} {
+        padding-right: toRem($padding-right) !important;
+    }
+}
