@@ -11,10 +11,6 @@ owner = "angular"
 response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/languages');
 data = response.json()
 
-# # Get Primary Language
-# sorted_langs = sorted(langs.items(), key=lambda x: x[1], reverse=True)
-# print('Primary Language:', sorted_langs[0])
-
 # export to file
 file_path = os.path.join('.', 'raw-data', repo, 'language.json')
 os.makedirs(os.path.dirname(file_path), exist_ok=True)

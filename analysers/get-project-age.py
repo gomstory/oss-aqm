@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import json
-from datetime import date, datetime
 from dateutil import parser
 
 # Setting

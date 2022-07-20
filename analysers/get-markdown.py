@@ -11,7 +11,7 @@ def get_markdown_files():
 def get_total_files():
     return len(glob.glob("**", root_dir=code_folder_path, recursive=True))
 
-def score():
+def get_markdown_score():
     total_markdown = get_markdown_files()
     total_files = get_total_files()
     return total_markdown/total_files
@@ -20,5 +20,5 @@ def score():
 if __name__ == "__main__":
     markdown = get_markdown_files()
     total = get_total_files()
-    score = score()
+    score = get_markdown_score()
     print(markdown, total, score)
