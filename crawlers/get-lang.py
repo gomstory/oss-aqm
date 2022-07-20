@@ -16,7 +16,7 @@ data = response.json()
 # print('Primary Language:', sorted_langs[0])
 
 # export to file
-file_path = os.path.join('..', 'raw-data', repo, 'language.json')
+file_path = os.path.join('.', 'raw-data', repo, 'language.json')
 os.makedirs(os.path.dirname(file_path), exist_ok=True)
 with open(file_path, 'a') as f:
     json.dump(data, f)
