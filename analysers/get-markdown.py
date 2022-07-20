@@ -9,7 +9,7 @@ def get_markdown_files():
     return len(glob.glob('**/*.md', root_dir=code_folder_path, recursive=True))
 
 def get_total_files():
-    return len(glob.glob("**", root_dir=code_folder_path, recursive=True))
+    return len(glob.glob("**/*.*", root_dir=code_folder_path, recursive=True))
 
 def get_markdown_score():
     total_markdown = get_markdown_files()
