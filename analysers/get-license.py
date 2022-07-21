@@ -15,7 +15,7 @@ def get_license():
 
 def get_license_score(license):
     switcher = {
-        "": 1,
+        "none": 1,
         "gpl-2.0": 2,
         "lgpl-2.1": 2,
         "mpl-2.0": 3, 
