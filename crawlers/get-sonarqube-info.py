@@ -15,7 +15,9 @@ metrics = [
     'files','security_rating', 
     'reliability_rating',
     'sqale_rating', # maintainability rating,
-    'comment_lines_density'
+    'comment_lines_density',
+    'files',
+    'functions'
 ]
 
 # Get all metrics from SonarQube
@@ -29,5 +31,5 @@ data = response.json()
 # export to file
 file_path = os.path.join('.', 'raw-data', repo, 'sonar-info.json')
 os.makedirs(os.path.dirname(file_path), exist_ok=True)
-with open(file_path, 'a') as f:
+with open(file_path, 'w') as f:
     json.dump(data, f)
