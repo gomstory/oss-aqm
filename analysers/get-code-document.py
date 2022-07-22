@@ -29,7 +29,7 @@ def get_code_lines():
 def get_code_comment_density():
     comment_lines = get_comment_lines()
     code_lines = get_code_lines()
-    return comment_lines / (comment_lines + code_lines)
+    return (comment_lines / (comment_lines + code_lines))
 
 def get_code_document_score():
     code_comment = get_code_comment_density();
