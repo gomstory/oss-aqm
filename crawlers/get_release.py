@@ -17,5 +17,5 @@ data = response.json()
 # export to file
 file_path = os.path.join('.', 'raw-data', repo, 'release.json')
 os.makedirs(os.path.dirname(file_path), exist_ok=True)
-with open(file_path, 'a') as f:
+with open(file_path, 'w') as f:
     json.dump(data, f)
