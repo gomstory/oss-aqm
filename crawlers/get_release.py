@@ -9,7 +9,7 @@ owner = "angular"
 
 # Get Primary Languages
 response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/releases', {
-    'per_page': 50
+    'per_page': 100
 });
 
 data = response.json()

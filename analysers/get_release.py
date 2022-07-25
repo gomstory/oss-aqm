@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from ensurepip import version
 import json
 import re
 
@@ -50,5 +51,5 @@ def get_release_score(number_of_major_release = 0):
 # Run main program here
 if __name__ == "__main__":
     versions = get_release()
-    score = get_release_score(1)
+    score = get_release_score(versions)
     print(versions, score)
