@@ -27,7 +27,8 @@ def get_owner_and_project(github_url):
 
 def lambda_handler(event, context):
     # Get github url from body
-    github_url = event['github_url']
+    body = json.loads(event['body'])
+    github_url = body['github_url']
     requested_time = datetime.datetime.now()
     
     # Attract full_url, project, owner from the link
