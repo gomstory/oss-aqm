@@ -23,9 +23,10 @@ def lambda_handler(event, context):
     github_url = q_data['body']
     project_name = q_data['messageAttributes']['project_name']['stringValue']
     owner_name = q_data['messageAttributes']['owner_name']['stringValue']
-    print(github_url, project_name, owner_name)
+    print(q_data)
 
     # Create project record
+    # TODO: Check if github_id already exists ignore and remove q
     response = dynamo.put_item(
         TableName=table_name,
         Item={
@@ -40,6 +41,21 @@ def lambda_handler(event, context):
             },
             'created_date': {
                 'S': '1245'
+            },
+            'is_source_code_ready': {
+                'BOOL': False
+            },
+            'is_license_ready': {
+                'BOOL': False
+            },
+            'is_release_ready': {
+                'BOOL': False
+            },
+            'is_lang_ready': {
+                'BOOL': False
+            },
+            'is_issue_ready': {
+                'BOOL': False
             }
         }
     )
