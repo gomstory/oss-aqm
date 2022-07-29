@@ -30,6 +30,8 @@ def lambda_handler(event, context):
     body = json.loads(event['body'])
     github_url = body['github_url']
     requested_time = datetime.datetime.now()
+
+    # TODO: Check link is valid before proceed further
     
     # Attract full_url, project, owner from the link
     owner_name, project_name = get_owner_and_project(github_url)
@@ -39,7 +41,7 @@ def lambda_handler(event, context):
     response = sqs.send_message(
         QueueUrl=queue_name,
         MessageBody=github_url,
-        MessageDeduplicationId='github',
+        MessageDeduplicationId=github_url,
         MessageGroupId='github',
         MessageAttributes={
             'owner_name': {
