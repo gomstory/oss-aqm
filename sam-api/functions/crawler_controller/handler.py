@@ -5,7 +5,7 @@ import boto3
 # Connect to dynamoDb
 region_name = os.environ['REGION_NAME']
 dynamo = boto3.client('dynamodb', region_name=region_name)
-table_name = os.environ['TABLE_NAME']
+table_name = os.environ['CRAWLER_TABLE']
 
 def respond(err, res=None):
     return {

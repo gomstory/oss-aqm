@@ -22,10 +22,20 @@ def lambda_handler(event, context):
     
     # Clone source code to tmp folder
     github_url = f"https://github.com/{owner}/{repo}.git"
-    tmp_folder = f"."
-    folder_name = f"{repo}/"
+    tmp_folder = f"/tmp/{repo}"
+    folder_name = f"{owner}/{repo}"
+    # os.system('cmd /k \"gomstory\"')
+    # os.system('cmd /k \"***REMOVED***\"')
+    # subprocess.call('cd /tmp', shell=True)
+    print('Cloning source code')
+    os.chdir('/tmp')
+    if not os.path.exists(os.path.join('mydir')):
+        os.makedirs('mydir')
+        os.system(f"git clone ${github_url}")
+    # subprocess.check_call(["git", "clone", github_url])
 
     # # Upload code to s3 bucket
+    print('Uoload to S3')
     for root, dirs, files in os.walk(tmp_folder):
         for file in files:
             s3.upload_file(os.path.join(root, file), bucket_name, folder_name + file)
