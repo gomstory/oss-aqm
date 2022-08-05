@@ -5,8 +5,7 @@ import datetime
 import re
 
 # connect with SQS
-print('connecting with SQS service')
-queue_name = os.environ['SQSQueueName']
+queue_name = os.environ['START_CRAWLER_QUEUE']
 sqs = boto3.client('sqs')
 
 def respond(err, res=None):
