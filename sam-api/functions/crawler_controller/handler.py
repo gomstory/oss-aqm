@@ -7,6 +7,10 @@ region_name = os.environ['REGION_NAME']
 dynamo = boto3.client('dynamodb', region_name=region_name)
 table_name = os.environ['CRAWLER_TABLE']
 
+# Connect to Lambda
+lamb = boto3.client('lambda')
+
+
 def respond(err, res=None):
     return {
         'statusCode': '400' if err else '200',
@@ -16,14 +20,14 @@ def respond(err, res=None):
         }
     }
 
+
 def lambda_handler(event, context):
     # Get data from queue
     records = event['Records']
-    q_data = records[0]
-    github_url = q_data['body']
-    project_name = q_data['messageAttributes']['project_name']['stringValue']
-    owner_name = q_data['messageAttributes']['owner_name']['stringValue']
-    print(q_data)
+    raw_data = records[0]
+    github_url = raw_data['body']
+    project_name = raw_data['messageAttributes']['project_name']['stringValue']
+    owner_name = raw_data['messageAttributes']['owner_name']['stringValue']
 
     # Create project record
     # TODO: Check if github_id already exists ignore and remove q
@@ -61,6 +65,23 @@ def lambda_handler(event, context):
     )
 
     # Call crawler lambdars
+    functions_list = [
+        os.environ['GET_REPO_INFO_FUNCTION'],
+        # os.environ['GET_LICENSE_FUNCTION']
+    ]
+
+    payload = {
+        "github_id": github_url,
+        "repo": project_name,
+        "owner": owner_name
+    }
+
+    for func_name in functions_list:
+        print('Invoke func', func_name)
+        response = lamb.invoke(
+            FunctionName=func_name,
+            Payload=payload,
+        )
 
     # Return success or fail
-    return respond(None, response)
+    return respond(None, 'OK')
