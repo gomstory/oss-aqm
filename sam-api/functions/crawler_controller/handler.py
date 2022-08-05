@@ -78,9 +78,9 @@ def lambda_handler(event, context):
 
     for func_name in functions_list:
         print('Invoke func', func_name)
-        response = lamb.invoke(
+        lamb.invoke(
             FunctionName=func_name,
-            Payload=payload,
+            Payload=json.dumps(payload),
         )
 
     # Return success or fail
