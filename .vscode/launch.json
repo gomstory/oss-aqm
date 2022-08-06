@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "sam-app-CreateProjectFunction-J0zHgP6meJ3K:handler.lambda_handler (python3.9)",
+            "invokeTarget": {
+                "target": "code",
+                "projectRoot": "${workspaceFolder}/sam-app-CreateProjectFunction-J0zHgP6meJ3K",
+                "lambdaHandler": "handler.lambda_handler"
+            },
+            "lambda": {
+                "runtime": "python3.9",
+                "payload": {},
+                "environmentVariables": {}
+            }
+        }
+    ]
+}

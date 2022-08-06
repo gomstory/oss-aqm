@@ -58,9 +58,10 @@ def lambda_handler(event, context):
         }
     )
 
+    # Response to user
     return respond(None, {
         "github_url": github_url,
         "owner":  owner,
         "repo": repo,
-        'requested_time': requested_time
+        'requested_time': str(requested_time)
     })
