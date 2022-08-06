@@ -44,7 +44,7 @@ def lambda_handler(event, context):
     response = sqs.send_message(
         QueueUrl=queue_name,
         MessageBody='get_repo_info_function',
-        MessageDeduplicationId=repo,
+        MessageDeduplicationId=destination_url,
         MessageGroupId=repo,
         MessageAttributes={
             'function_name': {

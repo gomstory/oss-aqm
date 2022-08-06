@@ -3,7 +3,7 @@ import json
 import boto3
 
 # Connect to S3
-bucket_name = os.environ['BUCKET_NAME']
+bucket_name = os.environ['S3_BUCKET']
 s3 = boto3.client('s3')
 
 def respond(err, res=None):
@@ -24,15 +24,6 @@ def lambda_handler(event, context):
     github_url = f"https://github.com/{owner}/{repo}.git"
     tmp_folder = f"/tmp/{repo}"
     folder_name = f"{owner}/{repo}"
-    # os.system('cmd /k \"gomstory\"')
-    # os.system('cmd /k \"***REMOVED***\"')
-    # subprocess.call('cd /tmp', shell=True)
-    print('Cloning source code')
-    os.chdir('/tmp')
-    if not os.path.exists(os.path.join('mydir')):
-        os.makedirs('mydir')
-        os.system(f"git clone ${github_url}")
-    # subprocess.check_call(["git", "clone", github_url])
 
     # # Upload code to s3 bucket
     print('Uoload to S3')
