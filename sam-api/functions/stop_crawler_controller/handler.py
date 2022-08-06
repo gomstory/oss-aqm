@@ -26,7 +26,7 @@ def lambda_handler(event, context):
     owner = attributes['owner']['stringValue']
     repo = attributes['repo']['stringValue']
 
-    # Mark as success of every queue
+    # Get record from dynamoDB
     response = crawler_table.get_item(Key={'github_id': f'https://github.com/{owner}/{repo}'})
     
     if 'Item' not in response:
