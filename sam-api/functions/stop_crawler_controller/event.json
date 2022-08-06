@@ -1,0 +1,43 @@
+{
+    "Records": [
+        {
+            "messageId": "873efcdb-db2a-4516-a1a4-8ea65249bf84",
+            "receiptHandle": "AQEB0kYiNGSrlfljfgDeL2PQmaAPrsEQPScim3fIfM6YVsVwnL5Sh4vNRr0zzgKmtkMU0sanrDGYqYZKZEXkKnsoj7fbehmz+0xKX4ZywTQ38NhHqp+naYWBjDdG9XoOopRZ9kqLEo5d7an+z+AhWUOpdvbHa+blNXAVK6uX/AmtH1MEufMZNMzAGl6bN7FtBALs1t8dCqBGsCjx11Mw6eKzWQbqzmy1f27K/Q33VMEgPHtMzMgZmwKN0af0CUbeza6sUEpV25/xkhE4c97OEm26YhDJoKVIKhtz4bD7APfjvseQAowyaqW+xYKnO7CC4W5045qjs0Khl7CfUXSDxq+66g==",
+            "body": "is_license_ready",
+            "attributes": {
+                "ApproximateReceiveCount": "1",
+                "SentTimestamp": "1659774632832",
+                "SequenceNumber": "18871646379714543616",
+                "MessageGroupId": "github",
+                "SenderId": "AROAYVT72YM6U2T3EZL5T:sam-app-CreateProjectFunction-J0zHgP6meJ3K",
+                "MessageDeduplicationId": "https://github.com/angular/angular-cli",
+                "ApproximateFirstReceiveTimestamp": "1659774692889"
+            },
+            "messageAttributes": {
+                "requested_time": {
+                    "stringValue": "2022-08-06 08:30:32.614188",
+                    "stringListValues": [],
+                    "binaryListValues": [],
+                    "dataType": "String"
+                },
+                "owner": {
+                    "stringValue": "angular",
+                    "stringListValues": [],
+                    "binaryListValues": [],
+                    "dataType": "String"
+                },
+                "repo": {
+                    "stringValue": "angular-cli",
+                    "stringListValues": [],
+                    "binaryListValues": [],
+                    "dataType": "String"
+                }
+            },
+            "md5OfMessageAttributes": "74365c4148f3036590fcd233cd51d542",
+            "md5OfBody": "83fba8bc999f200cfe34e97778117f28",
+            "eventSource": "aws:sqs",
+            "eventSourceARN": "arn:aws:sqs:ap-southeast-1:596194804541:sam-app-StartCrawlerQueue-WvxkIxZASEEB.fifo",
+            "awsRegion": "ap-southeast-1"
+        }
+    ]
+}

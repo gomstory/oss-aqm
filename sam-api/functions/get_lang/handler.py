@@ -43,12 +43,20 @@ def lambda_handler(event, context):
     # Add queue to inform completion
     response = sqs.send_message(
         QueueUrl=queue_name,
-        MessageBody='get_lang_function',
+        MessageBody='is_lang_ready',
         MessageDeduplicationId=destination_url,
         MessageGroupId=repo,
         MessageAttributes={
             'function_name': {
                 'StringValue': 'get_lang',
+                'DataType': 'String'
+            },
+            'owner': {
+                'StringValue': owner,
+                'DataType': 'String'
+            },
+            'repo': {
+                'StringValue': repo,
                 'DataType': 'String'
             }
         }
