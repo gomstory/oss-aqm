@@ -68,7 +68,8 @@ def lambda_handler(event, context):
     # Call crawler lambdars
     functions_list = [
         os.environ['GET_REPO_INFO_FUNCTION'],
-        os.environ['GET_LICENSE_FUNCTION']
+        os.environ['GET_LICENSE_FUNCTION'],
+        os.environ['GET_LANG_FUNCTION']
     ]
 
     payload = {

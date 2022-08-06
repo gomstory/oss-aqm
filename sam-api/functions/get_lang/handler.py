@@ -25,13 +25,12 @@ def lambda_handler(event, context):
     repo = event['repo']
     owner = event['owner']
 
-    # TODO: Add access token when calling the Github api
-    # Get repository license
-    response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/license')
+    # Get Primary Languages
+    response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/languages');
     data = response.json()
 
     # Create json file to tmp folder
-    file_name = 'license.json'
+    file_name = 'language.json'
     file_path = os.path.join('/tmp', repo, file_name)
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, 'w') as f:
@@ -44,12 +43,12 @@ def lambda_handler(event, context):
     # Add queue to inform completion
     response = sqs.send_message(
         QueueUrl=queue_name,
-        MessageBody='get_license_function',
+        MessageBody='get_lang_function',
         MessageDeduplicationId=destination_url,
         MessageGroupId=repo,
         MessageAttributes={
             'function_name': {
-                'StringValue': 'get_license',
+                'StringValue': 'get_lang',
                 'DataType': 'String'
             }
         }
