@@ -33,22 +33,22 @@ def lambda_handler(event, context):
     # TODO: Check link is valid before proceed further
     
     # Attract full_url, project, owner from the link
-    owner_name, project_name = get_owner_and_project(github_url)
+    owner, repo = get_owner_and_project(github_url)
     
     # Create queue with body and additional attributes
-    print('start sending queue', github_url, owner_name, project_name)
+    print('start sending queue', github_url, owner, repo)
     response = sqs.send_message(
         QueueUrl=queue_name,
         MessageBody=github_url,
         MessageDeduplicationId=github_url,
         MessageGroupId='github',
         MessageAttributes={
-            'owner_name': {
-                'StringValue': owner_name,
+            'owner': {
+                'StringValue': owner,
                 'DataType': 'String'
             },
-            'project_name': {
-                'StringValue': project_name,
+            'repo': {
+                'StringValue': repo,
                 'DataType': 'String'
             },
             'requested_time': {
@@ -58,4 +58,9 @@ def lambda_handler(event, context):
         }
     )
 
-    return respond(None, response)
+    return respond(None, {
+        "github_url": github_url,
+        "owner":  owner,
+        "repo": repo,
+        'requested_time': requested_time
+    })

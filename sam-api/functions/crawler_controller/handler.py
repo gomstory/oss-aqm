@@ -1,6 +1,8 @@
+from datetime import datetime
 import json
 import os
 import boto3
+import datetime
 
 # Connect to dynamoDb
 region_name = os.environ['REGION_NAME']
@@ -27,39 +29,34 @@ def lambda_handler(event, context):
     records = event['Records']
     raw_data = records[0]
     github_url = raw_data['body']
-    project_name = raw_data['messageAttributes']['project_name']['stringValue']
-    owner_name = raw_data['messageAttributes']['owner_name']['stringValue']
+    repo = raw_data['messageAttributes']['repo']['stringValue']
+    owner = raw_data['messageAttributes']['owner']['stringValue']
 
     # Create project record
     # TODO: Check if github_id already exists ignore and remove q
+    today = datetime.datetime.now()
     response = dynamo.put_item(
         TableName=table_name,
         Item={
             'github_id': {
                 'S': github_url
             },
-            'project_name': {
-                'S': project_name
+            'repo': {
+                'S': repo
             },
-            'owner_name': {
-                'S': owner_name
+            'owner': {
+                'S': owner
             },
             'created_date': {
-                'S': '1245'
-            },
-            'is_source_code_ready': {
-                'BOOL': False
+                'S': str(today)
             },
             'is_license_ready': {
-                'BOOL': False
-            },
-            'is_release_ready': {
                 'BOOL': False
             },
             'is_lang_ready': {
                 'BOOL': False
             },
-            'is_issue_ready': {
+            'is_repo_info_ready': {
                 'BOOL': False
             }
         }
@@ -74,8 +71,8 @@ def lambda_handler(event, context):
 
     payload = {
         "github_id": github_url,
-        "repo": project_name,
-        "owner": owner_name
+        "repo": repo,
+        "owner": owner
     }
 
     for func_name in functions_list:
