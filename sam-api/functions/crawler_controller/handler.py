@@ -23,6 +23,7 @@ def respond(err, res=None):
 
 def lambda_handler(event, context):
     # Get data from queue
+    print('event', event)
     records = event['Records']
     raw_data = records[0]
     github_url = raw_data['body']
