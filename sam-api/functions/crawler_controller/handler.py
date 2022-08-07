@@ -4,14 +4,11 @@ import os
 import boto3
 import datetime
 
-# Connect to dynamoDb
+# Connect to dynamoDb, Lambda
 region_name = os.environ['REGION_NAME']
-dynamo = boto3.client('dynamodb', region_name=region_name)
 table_name = os.environ['CRAWLER_TABLE']
-
-# Connect to Lambda
+crawler_table = boto3.resource('dynamodb').Table(table_name)
 lamb = boto3.client('lambda')
-
 
 def respond(err, res=None):
     return {
@@ -22,7 +19,6 @@ def respond(err, res=None):
         }
     }
 
-
 def lambda_handler(event, context):
     # Get data from queue
     print('event', event)
@@ -32,35 +28,23 @@ def lambda_handler(event, context):
     repo = raw_data['messageAttributes']['repo']['stringValue']
     owner = raw_data['messageAttributes']['owner']['stringValue']
 
-    # Create project record
-    # TODO: Check if github_id already exists ignore and remove q
-    today = datetime.datetime.now()
-    response = dynamo.put_item(
-        TableName=table_name,
-        Item={
-            'github_id': {
-                'S': github_url
-            },
-            'repo': {
-                'S': repo
-            },
-            'owner': {
-                'S': owner
-            },
-            'created_date': {
-                'S': str(today)
-            },
-            'is_license_ready': {
-                'BOOL': False
-            },
-            'is_lang_ready': {
-                'BOOL': False
-            },
-            'is_repo_info_ready': {
-                'BOOL': False
+    # Check if github_id already exists ignore and remove q
+    row = crawler_table.get_item(Key={'github_id': github_url})
+
+    if 'Item' not in row:
+        # Create a new project record
+        today = datetime.datetime.now()
+        new_row = crawler_table.put_item(
+            Item={
+                'github_id': github_url,
+                'repo': repo,
+                'owner': owner,
+                'requested_date': str(today),
+                'is_license_ready': False,
+                'is_lang_ready': False,
+                'is_repo_info_ready': False
             }
-        }
-    )
+        )
 
     # Call crawler lambdars
     functions_list = [
