@@ -59,6 +59,10 @@ def lambda_handler(event, context):
             'repo': {
                 'StringValue': repo,
                 'DataType': 'String'
+            },
+            'upload_url': {
+                'StringValue': destination_url,
+                'DataType': 'String'
             }
         }
     )
