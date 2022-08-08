@@ -25,9 +25,14 @@ def lambda_handler(event, context):
     repo = event['repo']
     owner = event['owner']
 
-    # TODO: Add access token when calling the Github api
+    # Add access token when calling the Github api
+    headers = None
+    if 'access_token' in event:
+        access_token = event['access_token']
+        headers={ 'Authorization': f'Bearer {access_token}' }
+
     # Get repository license
-    response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/license')
+    response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/license', headers=headers)
     data = response.json()
 
     # Create json file to tmp folder

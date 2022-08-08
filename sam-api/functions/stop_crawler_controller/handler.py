@@ -48,7 +48,7 @@ def lambda_handler(event, context):
             is_all_ready = False
             break
 
-    # TODO: Invoke Analyser Function to callculate score once crawler has done
+    # Invoke Analyser Function to callculate score once crawler has done
     if is_all_ready is True:
         func_name = os.environ['ANALYSER_FUNCTION']
         lamb.invoke(
