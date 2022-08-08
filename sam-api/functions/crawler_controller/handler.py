@@ -40,14 +40,16 @@ def lambda_handler(event, context):
                 'repo': repo,
                 'owner': owner,
                 'requested_date': str(today),
-                'is_license_ready': False,
-                'is_lang_ready': False,
-                'is_repo_info_ready': False
+                'license_status': "in-progress",
+                'lang_status': "in-progress",
+                'repo_info_status': "in-progress",
+                'source_code_status': "in-progress"
             }
         )
 
     # Call crawler lambdars
     functions_list = [
+        os.environ["GET_SOURCE_CODE_FUNCTION"],
         os.environ['GET_REPO_INFO_FUNCTION'],
         os.environ['GET_LICENSE_FUNCTION'],
         os.environ['GET_LANG_FUNCTION']
