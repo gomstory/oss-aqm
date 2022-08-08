@@ -5,8 +5,8 @@ import boto3
 # Connect to dynamoDb
 region_name = os.environ['REGION_NAME']
 dynamo = boto3.client('dynamodb', region_name=region_name)
-table_name = os.environ['CRAWLER_TABLE']
-crawler_table = boto3.resource('dynamodb', region_name=region_name).Table(table_name)
+crawler_table_name = os.environ['CRAWLER_TABLE']
+crawler_table = boto3.resource('dynamodb', region_name=region_name).Table(crawler_table_name)
 lamb = boto3.client('lambda')
 
 def respond(err, res=None):
@@ -62,6 +62,10 @@ def lambda_handler(event, context):
         )
         
         print('Analyses::Invoke', func_name)
+
+    # Remove the record from Crawler Table
+    crawler_table = dynamo.Table(crawler_table_name)
+    crawler_table.delete_item(Key={ 'github_id': github_id })
 
     # Return success or fail
     return respond(None, 'OK')

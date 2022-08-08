@@ -72,9 +72,4 @@ def lambda_handler(event, context):
         new_row = oss_table.put_item(Item=item)
         print(new_row)
 
-    # Remove the record from Crawler Table
-    github_id = f'https://github.com/{owner}/{repo}'
-    crawler_table = dynamo.Table(crawler_table_name)
-    crawler_table.delete_item(Key={ 'github_id': github_id })
-
     return respond(None, 'OK')
