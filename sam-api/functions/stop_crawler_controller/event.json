@@ -3,7 +3,7 @@
         {
             "messageId": "88f2dc22-6f8c-48de-b812-487e256d3bf9",
             "receiptHandle": "AQEBGDQ1sLiVFITzFiGW8Xd3a77TymJ3tGM9RyN4XeehiItVV8wKhlBB919GnPlIw0DAzUdyjRQcFs+Kg2LZirwKP7FXO1GjiJe7EnjSeZhrr/AZAPmQhaSzLvMKbZm1KO1CZpK62OHgaqkrjMFv25Yp5EvYoBp9dZpCw7U7Q1+qvvGLWg7QbNB6iTirwSkKIADYbWRN+N+hDl34TqVUr6j8SqSgwwZ6mN4q3JiXYRq2EnL1Z5zM3V7bsZCSVgjnvzPVkJl6L8X04ubMeRshtsXnayh9LKrh0kbtpX4yZGvtVwTKGRqL4zKZ3fyZi2eNr9dJ0GRJLnvfE6/M+rwJqL91ig==",
-            "body": "is_lang_ready",
+            "body": "lang_status",
             "attributes": {
                 "ApproximateReceiveCount": "1",
                 "SentTimestamp": "1659850353411",

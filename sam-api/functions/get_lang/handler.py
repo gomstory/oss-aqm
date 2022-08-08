@@ -43,7 +43,7 @@ def lambda_handler(event, context):
     # Add queue to inform completion
     response = sqs.send_message(
         QueueUrl=queue_name,
-        MessageBody='is_lang_ready',
+        MessageBody='lang_status',
         MessageDeduplicationId=destination_url,
         MessageGroupId=repo,
         MessageAttributes={
@@ -61,6 +61,10 @@ def lambda_handler(event, context):
             },
             'upload_url': {
                 'StringValue': destination_url,
+                'DataType': 'String'
+            },
+            'status': {
+                'StringValue': 'completed',
                 'DataType': 'String'
             }
         }

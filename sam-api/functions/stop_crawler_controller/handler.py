@@ -33,18 +33,18 @@ def lambda_handler(event, context):
         Key={'github_id': github_id},
         UpdateExpression=f'SET {queue_key} = :val',
         ExpressionAttributeValues={
-            ':val': True
+            ':val': 'completed'
         }
     )
 
     # Check all crawler has been completed or not
-    key_checklist = ['is_license_ready', 'is_lang_ready', 'is_repo_info_ready']
+    key_checklist = ['license_status', 'lang_status', 'repo_info_status']
     response = crawler_table.get_item(Key={'github_id': f'https://github.com/{owner}/{repo}'})
     item = response['Item']
     is_all_ready = True
 
     for key in key_checklist:
-        if item[key] is False:
+        if item[key] != "completed":
             is_all_ready = False
             break
 
@@ -55,6 +55,8 @@ def lambda_handler(event, context):
             FunctionName=func_name,
             Payload=json.dumps({
                 "github_id": github_id,
+                "repo": repo,
+                "owner": owner,
                 "item": json.dumps(item)
             })
         )
