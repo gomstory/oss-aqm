@@ -3,6 +3,7 @@ import boto3
 import os
 import datetime
 import re
+import requests
 
 # connect with SQS
 queue_name = os.environ['START_CRAWLER_QUEUE']
@@ -11,7 +12,7 @@ sqs = boto3.client('sqs')
 def respond(err, res=None):
     return {
         'statusCode': '400' if err else '200',
-        'body': err.message if err else json.dumps(res),
+        'body': str(err) if err else json.dumps(res),
         'headers': {
             'Content-Type': 'application/json'
         }
@@ -30,7 +31,10 @@ def lambda_handler(event, context):
     github_url = body['github_url']
     requested_time = datetime.datetime.now()
 
-    # TODO: Check link is valid before proceed further
+    # Check repo is valid before proceed further
+    res_check = requests.get(github_url)
+    if res_check.status_code != 200:
+        return respond(ValueError("The repository is not exists"))
     
     # Attract full_url, project, owner from the link
     owner, repo = get_owner_and_project(github_url)
