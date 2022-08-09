@@ -3,10 +3,10 @@
     "repo": "angular",
     "owner": "angular",
     "item": {
-        "repo": "components",
+        "repo": "angular",
         "github_id": "https://github.com/angular/angular",
         "repo_info_status": "completed",
-        "requested_date": "2022-08-08 22:01:32.383663",
+        "requested_date": "2022-08-09 01:14:16.119726",
         "source_code_status": "completed",
         "license_status_url": "angular/angular/license.json",
         "repo_info_status_url": "angular/angular/repo-info.json",

@@ -3,9 +3,11 @@ import boto3
 import os
 import io
 
+# Get lincense file from raw data
 def get_value(data):
-    # Get lincense file from raw data
-    license = data['license']['key']
+    license = 'none'
+    if 'license' in data:
+        license = data['license']['key']
     return license
 
 def get_score(license):

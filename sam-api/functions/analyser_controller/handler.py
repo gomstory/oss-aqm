@@ -28,12 +28,11 @@ def get_filename(link):
     return name
 
 def lambda_handler(event, context):
-    print(event)
-    # Detech Env Local or AWS
-    # data = json.loads(event)
     data = event
     owner = data['owner']
     repo = data["repo"]
+
+    # Detech Env Local or AWS
     is_local = 'AWS_SAM_LOCAL' in os.environ
     s3_bucket_name = os.environ["S3_BUCKET"]
     oss_table_name = os.environ["OSS_TABLE"]
