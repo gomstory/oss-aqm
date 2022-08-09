@@ -62,14 +62,17 @@ def lambda_handler(event, context):
     # Invoke Analyser Function to callculate score once crawler has done
     if is_all_ready is True:
         func_name = os.environ['ANALYSER_FUNCTION']
-        lamb.invoke(
-            FunctionName=func_name,
-            Payload=json.dumps({
+
+        payload = {
                 "github_id": github_id,
                 "repo": repo,
                 "owner": owner,
                 "item": item
-            })
+        }
+
+        lamb.invoke(
+            FunctionName=func_name,
+            Payload=json.dumps(payload)
         )
         
         print('Analyses::Invoke', func_name)
