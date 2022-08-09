@@ -37,6 +37,17 @@ def lambda_handler(event, context):
         }
     )
 
+    # Update url to table
+    if 'upload_url' in attributes:
+        url = attributes['upload_url']['stringValue']
+        crawler_table.update_item(
+            Key={'github_id': github_id},
+            UpdateExpression=f'SET {queue_key}_url = :val',
+            ExpressionAttributeValues={
+                ':val': url
+            }
+        )
+
     # Check all crawler has been completed or not
     key_checklist = ['license_status', 'lang_status', 'repo_info_status']
     response = crawler_table.get_item(Key={'github_id': f'https://github.com/{owner}/{repo}'})
@@ -57,15 +68,14 @@ def lambda_handler(event, context):
                 "github_id": github_id,
                 "repo": repo,
                 "owner": owner,
-                "item": json.dumps(item)
+                "item": item
             })
         )
         
         print('Analyses::Invoke', func_name)
 
-    # Remove the record from Crawler Table
-    crawler_table = dynamo.Table(crawler_table_name)
-    crawler_table.delete_item(Key={ 'github_id': github_id })
+        # Remove the record from Crawler Table
+        # crawler_table.delete_item(Key={ 'github_id': github_id })
 
     # Return success or fail
     return respond(None, 'OK')

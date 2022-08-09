@@ -4,25 +4,12 @@ import json
 import boto3
 import io
 
-# Setting
-file_name = 'language.json'
-bucket_name = 'sam-app-srcbucket-1u946t1s7gggp' #os.environ['S3_BUCKET']
-repo = 'angular'
-owner = 'angular'
-func_name = 'get_license'
 
-def get_s3():
-    s3 = boto3.resource('s3')
-    obj = s3.Object(bucket_name, f'{repo}/{owner}/{file_name}')
-    data = io.BytesIO()
-    obj.download_fileobj(data)
-    json_data = json.load(data.getvalue().decode("utf-8"))
-    return json_data
-
-def get_value():
-    langs = get_s3()
+def get_value(langs):
+    # Get language the most loc
     sorted_langs = sorted(langs.items(), key=lambda x: x[1], reverse=True)
-    return sorted_langs[0]
+    name, value = sorted_langs[0]
+    return str.lower(name)
 
 
 def get_score(lang):
