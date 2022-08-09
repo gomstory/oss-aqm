@@ -3,22 +3,8 @@ import boto3
 import os
 import io
 
-file_name = 'license.json'
-s3_bucket = ''
-repo = ''
-owner = ''
-
-def get_s3():
-    s3 = boto3.resource('s3')
-    obj = s3.Object(s3_bucket, f'{repo}/{owner}/{file_name}')
-    data = io.BytesIO()
-    obj.download_fileobj(data)
-    json_data = json.loads(data.getvalue().decode("utf-8"))
-    return json_data
-
-def get_value():
+def get_value(data):
     # Get lincense file from raw data
-    data = get_s3()
     license = data['license']['key']
     return license
 
