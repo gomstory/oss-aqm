@@ -34,7 +34,7 @@ def lambda_handler(event, context):
     if 'Item' not in row:
         # Create a new project record
         today = datetime.datetime.now()
-        new_row = crawler_table.put_item(
+        crawler_table.put_item(
             Item={
                 'github_id': github_url,
                 'repo': repo,
@@ -47,26 +47,28 @@ def lambda_handler(event, context):
             }
         )
 
-    # Call crawler lambdars
-    functions_list = [
-        os.environ["GET_SOURCE_CODE_FUNCTION"],
-        os.environ['GET_REPO_INFO_FUNCTION'],
-        os.environ['GET_LICENSE_FUNCTION'],
-        os.environ['GET_LANG_FUNCTION']
-    ]
+        # Call crawler lambdars
+        functions_list = [
+            os.environ["GET_SOURCE_CODE_FUNCTION"],
+            os.environ['GET_REPO_INFO_FUNCTION'],
+            os.environ['GET_LICENSE_FUNCTION'],
+            os.environ['GET_LANG_FUNCTION']
+        ]
 
-    payload = {
-        "github_id": github_url,
-        "repo": repo,
-        "owner": owner
-    }
+        payload = {
+            "github_id": github_url,
+            "repo": repo,
+            "owner": owner
+        }
 
-    for func_name in functions_list:
-        print('Invoke func', func_name)
-        lamb.invoke(
-            FunctionName=func_name,
-            Payload=json.dumps(payload),
-        )
-
+        for func_name in functions_list:
+            lamb.invoke(
+                FunctionName=func_name,
+                InvocationType='Event',
+                Payload=json.dumps(payload)
+            )
+            
+            print('Invoke func', func_name)
+            
     # Return success or fail
     return respond(None, 'OK')
