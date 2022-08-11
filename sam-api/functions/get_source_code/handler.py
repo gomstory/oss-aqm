@@ -40,7 +40,8 @@ def lambda_handler(event, context):
                 f"-Dsonar.projectKey={owner}:{repo} \\", 
                 f"-Dsonar.sources={repo} \\", 
                 "-Dsonar.host.url=http://localhost:9000 \\", 
-                "-Dsonar.login=2116a8e668add61710a8992775c5c7adecdbae4d",
+                "-Dsonar.login=admin \\",
+                "-Dsonar.password=sonaradmin",
                 f"rm -rf {repo}"
             ]
         }
