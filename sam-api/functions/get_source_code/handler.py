@@ -8,6 +8,8 @@ queue_name = os.environ['STOP_CRAWLER_QUEUE']
 sqs = boto3.client('sqs')
 ssm = boto3.client('ssm' )
 sonarqube_name = os.environ["EC2_SONAR_SERVER"]
+sonar_username = os.environ["EC2_SONAR_USERNAME"]
+sonar_password = os.environ["EC2_SONAR_PASS"]
 
 def respond(err, res=None):
     return {
@@ -26,11 +28,10 @@ def lambda_handler(event, context):
     
     # Send Command to ec2 instance
     github_url = f"https://www.github.com/{owner}/{repo}"
-    instance_id = sonarqube_name
     ssm_response = ssm.send_command( 
-        InstanceIds=[ instance_id ], 
+        InstanceIds=[ sonarqube_name ], 
         DocumentName='AWS-RunShellScript', 
-        Comment='Send Github repo to clone source code and scan by sonarqube', 
+        Comment=f'{github_url}: clone source code and scan by sonarqube', 
         Parameters={
             "commands":[
                 "sodu su -",
@@ -40,8 +41,8 @@ def lambda_handler(event, context):
                 f"-Dsonar.projectKey={owner}:{repo} \\", 
                 f"-Dsonar.sources={repo} \\", 
                 "-Dsonar.host.url=http://localhost:9000 \\", 
-                "-Dsonar.login=***REMOVED*** \\",
-                "-Dsonar.password=sonar***REMOVED***",
+                f"-Dsonar.login={sonar_username} \\",
+                f"-Dsonar.password={sonar_password}",
                 f"rm -rf {repo}"
             ]
         }
@@ -53,13 +54,13 @@ def lambda_handler(event, context):
     ssm_command_id = ssm_response['Command']['CommandId']
     ssm_output = ssm.get_command_invocation(
       CommandId=ssm_command_id,
-      InstanceId=instance_id,
+      InstanceId=sonarqube_name,
     )
     
     while (ssm_output["Status"] == "InProgress"):
         ssm_output = ssm.get_command_invocation(
           CommandId=ssm_command_id,
-          InstanceId=instance_id,
+          InstanceId=sonarqube_name,
         )
         
         print(ssm_output["Status"])
@@ -67,11 +68,9 @@ def lambda_handler(event, context):
         time.sleep(3)
 
     # Add queue to inform completion
-    destination_url = github_url + 'source_code'
-    response = sqs.send_message(
+    sqs.send_message(
         QueueUrl=queue_name,
         MessageBody='source_code_status',
-        MessageDeduplicationId=destination_url,
         MessageGroupId=repo,
         MessageAttributes={
             'function_name': {
