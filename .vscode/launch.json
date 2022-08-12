@@ -3,16 +3,17 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
-            "name": "sam-app-CreateProjectFunction-J0zHgP6meJ3K:handler.lambda_handler (python3.9)",
+            "name": "Invoke Lambda",
             "invokeTarget": {
                 "target": "code",
-                "projectRoot": "${workspaceFolder}/sam-app-CreateProjectFunction-J0zHgP6meJ3K",
-                "lambdaHandler": "handler.lambda_handler"
+                "lambdaHandler": "handler.lambda_handler",
+                "projectRoot": "${workspaceFolder}/sam-api/functions/analyser_controller"
             },
             "lambda": {
                 "runtime": "python3.9",
-                "payload": {},
-                "environmentVariables": {}
+                "payload": {
+                    "path": "${workspaceFolder}/sam-api/functions/analyser_controller/event.json"
+                }
             }
         }
     ]
