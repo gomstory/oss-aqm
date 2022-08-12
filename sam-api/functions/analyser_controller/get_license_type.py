@@ -5,10 +5,14 @@ import io
 
 # Get lincense file from raw data
 def get_value(data):
-    license = 'none'
+    if data is None:
+        return 'none'
+
     if 'license' in data:
         license = data['license']['key']
-    return license
+        return license
+        
+    return 'none'
 
 def get_score(license):
     switcher = {
