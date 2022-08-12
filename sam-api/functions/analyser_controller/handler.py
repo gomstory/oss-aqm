@@ -11,6 +11,9 @@ import get_maturity
 # Connect to AWS services
 s3 = boto3.resource('s3')
 dynamo = boto3.resource('dynamodb')
+is_local = 'AWS_SAM_LOCAL' in os.environ
+s3_bucket_name = os.environ["S3_BUCKET"]
+oss_table_name = os.environ["OSS_TABLE"]
 
 def respond(err, res=None):
     return {
@@ -31,18 +34,9 @@ def lambda_handler(event, context):
     data = event
     owner = data['owner']
     repo = data["repo"]
-
-    # Detech Env Local or AWS
-    is_local = 'AWS_SAM_LOCAL' in os.environ
-    s3_bucket_name = os.environ["S3_BUCKET"]
-    oss_table_name = os.environ["OSS_TABLE"]
     tmp_folder = '/tmp'
     project_row = {}
     json_files = {}
-
-    if is_local:
-        s3_bucket_name = 'sam-app-srcbucket-1u946t1s7gggp'
-        oss_table_name = 'sam-app-OSSTable-1RQGU0QP816EO'
 
     # Download all files and store to tmp
     bucket = s3.Bucket(s3_bucket_name)
