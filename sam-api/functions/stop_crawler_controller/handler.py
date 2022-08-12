@@ -49,7 +49,13 @@ def lambda_handler(event, context):
         )
 
     # Check all crawler has been completed or not
-    key_checklist = ['license_status', 'lang_status', 'repo_info_status']
+    key_checklist = [
+        'license_status', 
+        'lang_status', 
+        'repo_info_status', 
+        'source_code_status'
+    ]
+    
     response = crawler_table.get_item(Key={'github_id': f'https://github.com/{owner}/{repo}'})
     item = response['Item']
     is_all_ready = True
