@@ -3,7 +3,7 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
-            "name": "Invoke Lambda",
+            "name": "Invoke Analyser Function Locally",
             "invokeTarget": {
                 "target": "code",
                 "lambdaHandler": "handler.lambda_handler",
@@ -13,6 +13,10 @@
                 "runtime": "python3.9",
                 "payload": {
                     "path": "${workspaceFolder}/sam-api/functions/analyser_controller/event.json"
+                },
+                "environmentVariables": {
+                    "S3_BUCKET": "sam-app-srcbucket-1u946t1s7gggp",
+                    "OSS_TABLE": "sam-app-OSSTable-1RQGU0QP816EO"
                 }
             }
         }

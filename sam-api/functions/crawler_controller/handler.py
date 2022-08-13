@@ -7,7 +7,9 @@ import datetime
 # Connect to dynamoDb, Lambda
 region_name = os.environ['REGION_NAME']
 table_name = os.environ['CRAWLER_TABLE']
+token_table_name = os.environ["TOKEN_TABLE"]
 crawler_table = boto3.resource('dynamodb').Table(table_name)
+token_table = boto3.resource('dynamodb').Table(token_table_name)
 lamb = boto3.client('lambda')
 
 def respond(err, res=None):
@@ -30,6 +32,8 @@ def lambda_handler(event, context):
 
     # Check if github_id already exists ignore and remove q
     row = crawler_table.get_item(Key={'github_id': github_url})
+    row_token = token_table.scan(Limit=3)
+    access_token = list(map(lambda x: x["access_token"], row_token["Items"]))
 
     if 'Item' not in row:
         # Create a new project record
@@ -52,13 +56,15 @@ def lambda_handler(event, context):
             os.environ["GET_SOURCE_CODE_FUNCTION"],
             os.environ['GET_REPO_INFO_FUNCTION'],
             os.environ['GET_LICENSE_FUNCTION'],
-            os.environ['GET_LANG_FUNCTION']
+            os.environ['GET_LANG_FUNCTION'],
+            os.environ["GET_CONTRIBUTOR_FUNCTION"]
         ]
 
         payload = {
             "github_id": github_url,
             "repo": repo,
-            "owner": owner
+            "owner": owner,
+            "access_token": access_token
         }
 
         for func_name in functions_list:

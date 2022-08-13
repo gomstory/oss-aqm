@@ -3,12 +3,10 @@ import requests
 import boto3
 import os
 
-# Connect to S3
+# Connect to AWS
 bucket_name = os.environ['S3_BUCKET']
-s3 = boto3.client('s3')
-
-# Connect to Queue
 queue_name = os.environ['STOP_CRAWLER_QUEUE']
+s3 = boto3.client('s3')
 sqs = boto3.client('sqs')
 
 def respond(err, res=None):
@@ -32,11 +30,11 @@ def lambda_handler(event, context):
         headers={ 'Authorization': f'Bearer {access_token}' }
 
     # Get repository license
-    response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/license', headers=headers)
+    response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/contributors', headers=headers)
     data = response.json()
 
     # Create json file to tmp folder
-    file_name = 'license.json'
+    file_name = 'contributor.json'
     file_path = os.path.join('/tmp', repo, file_name)
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, 'w') as f:
@@ -49,12 +47,12 @@ def lambda_handler(event, context):
     # Add queue to inform completion
     response = sqs.send_message(
         QueueUrl=queue_name,
-        MessageBody='license_status',
+        MessageBody='contributor_status',
         MessageDeduplicationId=destination_url,
         MessageGroupId=repo,
         MessageAttributes={
             'function_name': {
-                'StringValue': 'get_license',
+                'StringValue': 'get_contributor',
                 'DataType': 'String'
             },
             'owner': {

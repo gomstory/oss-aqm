@@ -28,7 +28,7 @@ def lambda_handler(event, context):
     # Add access token when calling the Github api
     headers = None
     if 'access_token' in event:
-        access_token = event['access_token']
+        access_token = event['access_token'][0]
         headers={ 'Authorization': f'Bearer {access_token}' }
 
     # Get Primary Languages
