@@ -42,16 +42,19 @@ def lambda_handler(event, context):
                 "sodu su -",
                 "cd /home/download",
                 f"git clone {github_url}",
+                f"cd {repo}",
                 "/opt/sonar-scanner/bin/sonar-scanner \\", 
+                "-Dsonar.host.url=http://localhost:9000 \\",
+                "-Dsonar.scm.provider=git \\", 
+                "-Dsonar.sources=. \\", 
                 f"-Dsonar.projectKey={owner}:{repo} \\", 
-                f"-Dsonar.sources={repo} \\", 
-                "-Dsonar.host.url=http://localhost:9000 \\", 
                 f"-Dsonar.login={sonar_username} \\",
                 f"-Dsonar.password={sonar_password}",
                 f"rm -rf {repo}"
             ]
         }
     )
+    
     
     time.sleep(3)
     
