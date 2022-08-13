@@ -53,7 +53,8 @@ def lambda_handler(event, context):
         'license_status', 
         'lang_status', 
         'repo_info_status', 
-        'source_code_status'
+        'source_code_status',
+        'contributor_status'
     ]
     
     response = crawler_table.get_item(Key={'github_id': f'https://github.com/{owner}/{repo}'})
@@ -61,9 +62,10 @@ def lambda_handler(event, context):
     is_all_ready = True
 
     for key in key_checklist:
-        if item[key] != "completed":
-            is_all_ready = False
-            break
+        if key in item:
+            if item[key] != "completed":
+                is_all_ready = False
+                break
 
     # Invoke Analyser Function to callculate score once crawler has done
     if is_all_ready is True:

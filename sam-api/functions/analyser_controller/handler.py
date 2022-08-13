@@ -7,6 +7,7 @@ import re
 import get_license_type
 import get_development_lang
 import get_maturity
+import get_contributor
 
 # Connect to AWS services
 s3 = boto3.resource('s3')
@@ -53,7 +54,8 @@ def lambda_handler(event, context):
     func_list = [
         ('license', get_license_type, 'license.json'), 
         ('maturity', get_maturity, 'repo-info.json'),
-        ('development_lang', get_development_lang, 'language.json')
+        ('development_lang', get_development_lang, 'language.json'),
+        ('contributor', get_contributor, 'contributor.json')
     ]
 
     for field, func, json_filename in func_list:
