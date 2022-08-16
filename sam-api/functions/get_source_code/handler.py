@@ -50,6 +50,7 @@ def lambda_handler(event, context):
                 f"-Dsonar.projectKey={owner}:{repo} \\", 
                 f"-Dsonar.login={sonar_username} \\",
                 f"-Dsonar.password={sonar_password}",
+                "cd ..",
                 f"rm -rf {repo}"
             ]
         }
