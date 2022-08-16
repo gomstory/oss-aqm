@@ -4,7 +4,7 @@ import os
 import io
 
 # Get lincense file from raw data
-def get_value(data):
+def get_value(data = None):
     if data is None:
         return 'none'
 
@@ -14,7 +14,7 @@ def get_value(data):
         
     return 'none'
 
-def get_score(license):
+def get_score(license = "none"):
     switcher = {
         "none": 1,
         "gpl-2.0": 2,

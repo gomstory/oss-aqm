@@ -10,10 +10,7 @@ def get_value(data):
     return int(cyclo)/int(function)
 
 
-def get_score(avg_cyclimetric):
-    if avg_cyclimetric is None:
-        avg_cyclimetric = 1
-
+def get_score(avg_cyclimetric = 1):
     rank = 1
 
     if avg_cyclimetric > 50:
