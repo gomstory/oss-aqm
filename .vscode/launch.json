@@ -3,7 +3,27 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
-            "name": "Invoke Analyser Function Locally",
+            "name": "Get Project API",
+            "invokeTarget": {
+                "target": "code",
+                "lambdaHandler": "handler.lambda_handler",
+                "projectRoot": "${workspaceFolder}/sam-api/functions/get_project"
+            },
+            "lambda": {
+                "runtime": "python3.9",
+                "payload": {
+                    "path": "${workspaceFolder}/sam-api/functions/get_project/event.json"
+                },
+                "environmentVariables": {
+                    "S3_BUCKET": "sam-app-srcbucket-1u946t1s7gggp",
+                    "OSS_TABLE": "sam-app-OSSTable-1RQGU0QP816EO"
+                }
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "Analyser Function",
             "invokeTarget": {
                 "target": "code",
                 "lambdaHandler": "handler.lambda_handler",
