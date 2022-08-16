@@ -63,6 +63,7 @@ def lambda_handler(event, context):
     ]
 
     for field, func, json_filename in func_list:
+        print('func:', field, json_filename)
         data = json_files.get(json_filename)
         value = func.get_value(data)
         score = func.get_score(value)

@@ -32,9 +32,9 @@ def lambda_handler(event, context):
     
     if event["queryStringParameters"] is not None:
         params = event['queryStringParameters']
+        page = int(params["page"]) if "page" in params else 1
         search = params["search"] if "search" in params else ""
-        per_page = int(params["per_page"]) if params["per_page"] != "" else 30
-        page = int(params["page"]) if params["page"] != "" else 1
+        per_page = int(params["per_page"]) if "per_page" in params else 30
     
     oss_table = dynamo.Table(table_name)
     
@@ -42,8 +42,7 @@ def lambda_handler(event, context):
         scan_result = oss_table.scan(Limit=per_page)
     else:
         scan_result = oss_table.query(
-            KeyConditionExpression=Key('id').begins_with(search),
-            FilterExpression=Attr('name').contains(search),
+            KeyConditionExpression=Key('id').eq(search),
             Limit=per_page
         )
     

@@ -90,7 +90,7 @@ def lambda_handler(event, context):
     ]
 
     # Waiting sonar server to be ready after calculation
-    time.sleep(10)
+    time.sleep(15)
     
     # Get all metrics from SonarQube server
     instances = ec2.Instance(sonarqube_name)
