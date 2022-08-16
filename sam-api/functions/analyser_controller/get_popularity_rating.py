@@ -2,7 +2,7 @@
 # Metric: Popularity Rating Score
 # Description: How much repository popularity
 
-def get_value(data):
+def get_value(data = None):
     if data is None:
         return 0
 

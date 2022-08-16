@@ -6,12 +6,9 @@
 def get_value(contributors = []):
     return len(contributors)
 
-def get_score(contributors):
-    if contributors == 0:
-        contributors = 1
-        
+def get_score(contributors = 1):
     score = 1
-
+        
     if contributors < 5:
         score = 1
     elif contributors >= 5 and contributors <= 10:

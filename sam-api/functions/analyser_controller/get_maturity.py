@@ -9,7 +9,7 @@ def get_value(data):
     total_days = delta.days
     return total_days
 
-def get_score(days):
+def get_score(days = 1):
     age_range = 0
 
     if days < 60: 

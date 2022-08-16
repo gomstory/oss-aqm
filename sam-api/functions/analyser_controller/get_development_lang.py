@@ -5,7 +5,7 @@ import boto3
 import io
 
 
-def get_value(langs):
+def get_value(langs = []):
     # Get language the most loc
     sorted_langs = sorted(langs.items(), key=lambda x: x[1], reverse=True)
     name, value = sorted_langs[0]
