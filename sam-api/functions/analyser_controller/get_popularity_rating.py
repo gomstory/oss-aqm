@@ -4,7 +4,7 @@
 
 def get_value(data):
     if data is None:
-        return (0,0)
+        return 0
 
     star = data['stargazers_count'] if 'stargazers_count' in data else 0
     number_watcher = data['watchers'] if 'watchers' in data else 0
