@@ -9,6 +9,7 @@ def get_value(contributors = []):
 def get_score(contributors):
     if contributors == 0:
         contributors = 1
+        
     score = 1
 
     if contributors < 5:

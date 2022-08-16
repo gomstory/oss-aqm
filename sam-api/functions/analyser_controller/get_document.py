@@ -1,6 +1,6 @@
 def get_value():
-    return 100
+    return 0
 
 
 def get_score():
-    return 100
+    return 0
