@@ -2,22 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import CompareProject from './compare-project/compare-project';
+import NewProject from './new-project/new-project';
+import AboutUs from './about-us/about-us';
+import './styles/theme.scss';
 import {
-  BrowserRouter,
   Routes,
   Route,
   Navigate,
   HashRouter
 } from "react-router-dom";
 
-import './styles/index.scss';
-
-import CompareProject from './compare-project/compare-project';
-import NewProject from './new-project/new-project';
-import AboutUs from './about-us/about-us';
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
 root.render(
   <React.StrictMode>
     <HashRouter>

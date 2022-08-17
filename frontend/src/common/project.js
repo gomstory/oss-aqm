@@ -5,7 +5,7 @@ function Project() {
     return (
         <div className="project">
             <div className='project-logo'>
-                <img className='logo' src='./logo192.png'></img>
+                <img className='logo' src='/oss-aqm/logo192.png'></img>
                 <a href='#' className='title'>Project A</a>
                 <button className='clear-project'>X</button>
             </div>
