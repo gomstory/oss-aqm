@@ -7,6 +7,7 @@ import {
   Routes,
   Route,
   Navigate,
+  HashRouter
 } from "react-router-dom";
 
 import './styles/index.scss';
@@ -19,16 +20,16 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-      <Route path="/" element={<App />}>
-        <Route path="compare" element={<CompareProject />} />
-        <Route path="new" element={<NewProject />} />
-        <Route path="about-us" element={<AboutUs />} />
-        <Route path='*' element={<Navigate to="/compare" replace />} />
-      </Route>
-      </Routes>
-    </BrowserRouter>
+    <HashRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="compare" element={<CompareProject />} />
+            <Route path="new" element={<NewProject />} />
+            <Route path="about-us" element={<AboutUs />} />
+            <Route path='*' element={<Navigate to="/compare" replace />} />
+          </Route>
+        </Routes>
+    </HashRouter>
   </React.StrictMode>
 );
 
