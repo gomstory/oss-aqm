@@ -26,3 +26,4 @@ raw-data/*
 */__pycache__/*
 */.aws-sam/*
 .vscode/*
+*/build/*
