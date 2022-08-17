@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/oss-aqm/static/css/main.e70e7bb8.css",
+    "main.js": "/oss-aqm/static/js/main.399ed78f.js",
+    "static/js/787.9d586f9e.chunk.js": "/oss-aqm/static/js/787.9d586f9e.chunk.js",
+    "index.html": "/oss-aqm/index.html",
+    "main.e70e7bb8.css.map": "/oss-aqm/static/css/main.e70e7bb8.css.map",
+    "main.399ed78f.js.map": "/oss-aqm/static/js/main.399ed78f.js.map",
+    "787.9d586f9e.chunk.js.map": "/oss-aqm/static/js/787.9d586f9e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e70e7bb8.css",
+    "static/js/main.399ed78f.js"
+  ]
+}
