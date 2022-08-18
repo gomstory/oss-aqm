@@ -55,13 +55,14 @@ exports.handler = async (event) => {
   const AWS = require('aws-sdk');
   AWS.config.update({ region: region });
   const ddb = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
+  const now = Date.now().toString()
   const params = {
     TableName: table_name,
     Item: {
-      "id": Date.now,
+      "id": now,
       "access_token": response.data.access_token,
       "token_type": response.data.token_type,
-      "created_time": Date.now
+      "created_time": now
     }
   };
 
