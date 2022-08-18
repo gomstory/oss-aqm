@@ -1,7 +1,3 @@
-/**
- * https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/
- */
-
 const { constants } = require('./constants')
 const { generateErrorObject } = require('./error')
 const { asyncHttpsRequest } = require('./request')
@@ -21,7 +17,6 @@ async function exchangeCodeForToken (code) {
 }
 
 exports.handler = async (event) => {
-
   if (!process.env.CLIENT_ID) {
     return generateErrorObject('CLIENT_ID is not set in environment')
   }
@@ -41,9 +36,9 @@ exports.handler = async (event) => {
   }
 
   let response
+
   try {
     response = await exchangeCodeForToken(code)
-    console.log(response)
   } catch (e) {
     console.error('response', response)
     return generateErrorObject('Failed to exchange code for access_token')
@@ -52,6 +47,30 @@ exports.handler = async (event) => {
   if (!response || !response.data.access_token) {
     console.error('response', response)
     return generateErrorObject('did not receive expected [access_token]')
+  }
+
+  // Save token to Dynamodb
+  const region = process.env["REGION_NAME"]
+  const table_name = process.env["TOKEN_TABLE"]
+  const AWS = require('aws-sdk');
+  AWS.config.update({ region: region });
+  const ddb = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
+  const params = {
+    TableName: table_name,
+    Item: {
+      "id": Date.now,
+      "access_token": response.data.access_token,
+      "token_type": response.data.token_type,
+      "created_time": Date.now
+    }
+  };
+
+  try {
+    var result = await ddb.put(params).promise();
+    console.log(result)
+  } catch (e) {
+    console.error('error', e)
+    return generateErrorObject('Failed to save data to dynamoDb')
   }
 
   return {
