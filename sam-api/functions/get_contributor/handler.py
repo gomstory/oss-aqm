@@ -30,7 +30,11 @@ def lambda_handler(event, context):
         headers={ 'Authorization': f'Bearer {access_token}' }
 
     # Get repository license
-    response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/contributors', headers=headers)
+    response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/contributors', 
+        params={ "per_page": 100 },
+        headers=headers
+    )
+
     data = response.json()
 
     # Create json file to tmp folder
