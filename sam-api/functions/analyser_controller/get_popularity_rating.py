@@ -1,15 +1,25 @@
 
 # Metric: Popularity Rating Score
 # Description: How much repository popularity
+from Calculator import OSS_Calculator
 
-def get_value(data = None):
-    if data is None:
-        return 0
+class Popularity(OSS_Calculator):
+    def __init__(self, data: dict) -> None:
+        self.repo_info = data['repo-info']
 
-    star = data['stargazers_count'] if 'stargazers_count' in data else 0
-    number_watcher = data['watchers'] if 'watchers' in data else 0
+    def get_value(self):
+        data = self.repo_info
+        star = data['stargazers_count'] if 'stargazers_count' in data else 0
+        number_watcher = data['watchers'] if 'watchers' in data else 0
+        self.value = (star / number_watcher)
+        return self.value
 
-    return (star / number_watcher)
+    def get_score(self):
+        star_per_watcher = self.value
 
-def get_score(star_per_watcher):
-    return (star_per_watcher) * 100
+        if star_per_watcher > 1:
+            star_per_watcher = 1
+
+        self.score = (star_per_watcher) * 100
+        
+        return self.score
