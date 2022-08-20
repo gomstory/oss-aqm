@@ -45,7 +45,7 @@ def get_sonar_info(owner: str, repo: str) -> dict:
         'comment_lines',
         'files','security_rating', 
         'reliability_rating',
-        'sqale_rating', # maintainability rating,
+        'sqale_rating',
         'comment_lines_density',
         'files',
         'functions'
@@ -54,15 +54,19 @@ def get_sonar_info(owner: str, repo: str) -> dict:
     # Get all metrics from SonarQube server
     sonarqube_name = os.environ["EC2_SONAR_SERVER"]
     instances = ec2.Instance(sonarqube_name)
+
+    if instances.state["Name"] != "running":
+        raise ValueError("Please turn on the sonarqube server")
+
     ec2_ip_address = instances.public_ip_address
-    sonar_info = requests.get(f'http://{ec2_ip_address}:9000/api/measures/component', 
+    response = requests.get(f'http://{ec2_ip_address}:9000/api/measures/component', 
         auth=(sonar_username, sonar_password), 
         params={
             'component': f"{owner}:{repo}",
             'metricKeys': ','.join(metrics)
     })
 
-    return sonar_info.json()
+    return response.json()
 
 def lambda_handler(event, context):
     data = event

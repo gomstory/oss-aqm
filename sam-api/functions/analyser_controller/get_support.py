@@ -11,7 +11,7 @@ class Professional_Support(OSS_Calculator):
         return self.issues
 
     def get_issue_supported(self):
-        self.issues_supported = list(filter(lambda x: (int(x['comments']) > 0 or x['state'] == 'closed'), self.issues))
+        self.issues_supported = list(filter(lambda x: (int(x['comments']) > 0 or x['state'] == 'closed' or len(x['assignees']) > 0), self.issues))
         return self.issues_supported
 
     def get_value(self) -> float:
@@ -19,7 +19,6 @@ class Professional_Support(OSS_Calculator):
         issue_with_support = self.get_issue_supported()
         self.value = len(issue_with_support) / len(issues)
         return self.value
-
 
     def get_score(self) -> float:
         if self.value == 0:
