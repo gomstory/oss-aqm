@@ -2,6 +2,7 @@ import json
 import boto3
 import os
 import re
+import requests
 from decimal import Decimal
 from get_license_type import License
 from get_maturity import Maturity
@@ -14,7 +15,10 @@ from get_support import Professional_Support
 # Connect to AWS services
 s3 = boto3.resource('s3')
 dynamo = boto3.resource('dynamodb')
+ec2 = boto3.resource('ec2')
 is_local = 'AWS_SAM_LOCAL' in os.environ
+sonar_username = os.environ["EC2_SONAR_USERNAME"]
+sonar_password = os.environ["EC2_SONAR_PASS"]
 s3_bucket_name = os.environ["S3_BUCKET"]
 oss_table_name = os.environ["OSS_TABLE"]
 
@@ -33,6 +37,33 @@ def get_filename(link):
     name = group[0]
     return name
 
+def get_sonar_info(owner: str, repo: str) -> dict:
+    # Get sonarqube info from API
+    metrics = [
+        'ncloc','complexity',
+        'violations',
+        'comment_lines',
+        'files','security_rating', 
+        'reliability_rating',
+        'sqale_rating', # maintainability rating,
+        'comment_lines_density',
+        'files',
+        'functions'
+    ]
+    
+    # Get all metrics from SonarQube server
+    sonarqube_name = os.environ["EC2_SONAR_SERVER"]
+    instances = ec2.Instance(sonarqube_name)
+    ec2_ip_address = instances.public_ip_address
+    sonar_info = requests.get(f'http://{ec2_ip_address}:9000/api/measures/component', 
+        auth=(sonar_username, sonar_password), 
+        params={
+            'component': f"{owner}:{repo}",
+            'metricKeys': ','.join(metrics)
+    })
+
+    return sonar_info.json()
+
 def lambda_handler(event, context):
     data = event
     owner = data['owner']
@@ -40,6 +71,9 @@ def lambda_handler(event, context):
     tmp_folder = '/tmp'
     project_row = {}
     json_files = {}
+
+    # Download sonarqube metrics
+    json_files['sonar-info'] = get_sonar_info(owner, repo)
 
     # Download all files and store to tmp
     bucket = s3.Bucket(s3_bucket_name)
