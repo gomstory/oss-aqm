@@ -49,6 +49,7 @@ def lambda_handler(event, context):
                 'repo_info_status': "in-progress",
                 'release_status': "in-progress",
                 'source_code_status': "in-progress",
+                'contributor_status': "in-progress",
                 'issue_status': "in-progress"
             }
         )
