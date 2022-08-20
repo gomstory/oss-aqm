@@ -1,9 +1,8 @@
-from fileinput import filename
-from decimal import Decimal
 import json
 import boto3
 import os
 import re
+from decimal import Decimal
 from get_license_type import License
 from get_maturity import Maturity
 from get_contributor import Contributor

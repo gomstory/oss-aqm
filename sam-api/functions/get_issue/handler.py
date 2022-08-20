@@ -1,7 +1,9 @@
+from datetime import datetime, timedelta
 import json
 import requests
 import boto3
 import os
+import time
 
 # Connect to AWS
 bucket_name = os.environ['S3_BUCKET']
@@ -19,26 +21,66 @@ def respond(err, res=None):
     }
 
 def lambda_handler(event, context):
+    # Show info for debuging purpose
+    print(event)
     # Get owner and repo from event
     repo = event['repo']
     owner = event['owner']
-
+    today = datetime.now()
+    six_month_early = today - timedelta(days=180)
+    api_quata = 5000
+    issues = []
+    issue_date = today
+    page = 1
+    
     # Add access token when calling the Github api
     headers = None
+    token_list = []
+
     if 'access_token' in event:
-        access_token = event['access_token'][0]
+        token_list = list(event['access_token'])
+        access_token = token_list.pop()
         headers={ 'Authorization': f'Bearer {access_token}' }
 
-    # Get repository license
-    response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/contributors', 
-        params={ "per_page": 100 },
-        headers=headers
-    )
+    while (api_quata > 0) and (issue_date > six_month_early):
+        # Get repository license
+        response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/issues', 
+            params={ 
+                "state": 'all',
+                "per_page": 100, 
+                'page': page 
+            },
+            headers=headers
+        )
 
-    data = response.json()
+        # Checking API Quata Every call
+        api_quata = int(response.headers["X-RateLimit-Remaining"])
+
+        # Fill API Quata by switching access token
+        if api_quata == 0 and len(token_list) > 0:
+            access_token = token_list.pop()
+            headers={ 'Authorization': f'Bearer {access_token}' }
+            api_quata = 5000
+
+        # Status code is ok
+        if response.status_code == 200:
+            data = response.json()
+            issues.extend(data)
+            page = page + 1
+
+            # Check issue date is reached yet or not
+            last_row = data[-1]
+            issue_date = datetime.strptime(last_row['created_at'], "%Y-%m-%dT%H:%M:%SZ")
+
+            # Slow down for 2 sec
+            time.sleep(2)
+
+    # Throw error when exceed maxumum request
+    if api_quata <= 0:
+        raise respond(ValueError("Exceed maximum request from Github"))
 
     # Create json file to tmp folder
-    file_name = 'contributor.json'
+    file_name = 'issue.json'
     file_path = os.path.join('/tmp', repo, file_name)
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, 'w') as f:
@@ -51,12 +93,12 @@ def lambda_handler(event, context):
     # Add queue to inform completion
     response = sqs.send_message(
         QueueUrl=queue_name,
-        MessageBody='contributor_status',
+        MessageBody='issue_status',
         MessageDeduplicationId=destination_url,
         MessageGroupId=repo,
         MessageAttributes={
             'function_name': {
-                'StringValue': 'get_contributor',
+                'StringValue': 'get_issue',
                 'DataType': 'String'
             },
             'owner': {
