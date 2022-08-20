@@ -48,7 +48,8 @@ def lambda_handler(event, context):
                 'lang_status': "in-progress",
                 'repo_info_status': "in-progress",
                 'release_status': "in-progress",
-                'source_code_status': "in-progress"
+                'source_code_status': "in-progress",
+                'issue_status': "in-progress"
             }
         )
 
@@ -59,7 +60,8 @@ def lambda_handler(event, context):
             os.environ['GET_LICENSE_FUNCTION'],
             os.environ['GET_LANG_FUNCTION'],
             os.environ["GET_CONTRIBUTOR_FUNCTION"],
-            os.environ["GET_RELEASE_FUNCTION"]
+            os.environ["GET_RELEASE_FUNCTION"],
+            os.environ["GET_ISSUE_FUNCTION"]
         ]
 
         payload = {
