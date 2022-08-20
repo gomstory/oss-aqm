@@ -1,18 +1,18 @@
 {
-    "github_id": "https://github.com/angular/angular",
-    "repo": "angular",
+    "github_id": "https://github.com/angular/components",
+    "repo": "components",
     "owner": "angular",
     "item": {
-        "repo": "angular",
-        "github_id": "https://github.com/angular/angular",
+        "repo": "components",
+        "github_id": "https://github.com/angular/components",
         "repo_info_status": "completed",
         "requested_date": "2022-08-09 01:14:16.119726",
         "source_code_status": "completed",
-        "license_status_url": "angular/angular/license.json",
-        "repo_info_status_url": "angular/angular/repo-info.json",
+        "license_status_url": "angular/components/license.json",
+        "repo_info_status_url": "angular/components/repo-info.json",
         "license_status": "completed",
         "owner": "angular",
-        "lang_status_url": "angular/angular/language.json",
+        "lang_status_url": "angular/components/language.json",
         "lang_status": "completed"
     }
 }

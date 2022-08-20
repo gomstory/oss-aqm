@@ -2,7 +2,6 @@ import os
 import json
 import boto3
 import time
-import requests
 
 # Connect to Queue
 sqs = boto3.client('sqs')
@@ -66,6 +65,7 @@ def lambda_handler(event, context):
       InstanceId=sonarqube_name,
     )
     
+    # Waiting command to be finished
     while (ssm_output["Status"] == "InProgress"):
         ssm_output = ssm.get_command_invocation(
           CommandId=ssm_command_id,
@@ -73,45 +73,7 @@ def lambda_handler(event, context):
         )
         
         print(ssm_output["Status"])
-        
         time.sleep(3)
-
-    # Get sonarqube info from API
-    metrics = [
-        'ncloc','complexity',
-        'violations',
-        'comment_lines',
-        'files','security_rating', 
-        'reliability_rating',
-        'sqale_rating', # maintainability rating,
-        'comment_lines_density',
-        'files',
-        'functions'
-    ]
-
-    # Waiting sonar server to be ready after calculation
-    time.sleep(15)
-    
-    # Get all metrics from SonarQube server
-    instances = ec2.Instance(sonarqube_name)
-    ec2_ip_address = instances.public_ip_address
-    sonar_info = requests.get(f'http://{ec2_ip_address}:9000/api/measures/component', 
-        auth=(sonar_username, sonar_password), 
-        params={
-            'component': f"{owner}:{repo}",
-            'metricKeys': ','.join(metrics)
-    })
-    
-    # Create json file to tmp folder
-    file_name = 'sonar-info.json'
-    file_path = os.path.join('/tmp', repo, file_name)
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    with open(file_path, 'w') as f:
-        json.dump(sonar_info.json(), f)
-
-    # Upload S3 bucket
-    destination_url = f"{owner}/{repo}/{file_name}"
-    s3.upload_file(file_path, bucket_name, destination_url)
 
     # Add queue to inform completion
     sqs.send_message(
