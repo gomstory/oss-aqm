@@ -8,7 +8,8 @@ from get_maturity import Maturity
 from get_contributor import Contributor
 from get_popularity_rating import Popularity
 from get_development_lang import Developmet_Lang
-import get_testibility
+from get_testibility import Testibility
+from get_support import Professional_Support
 
 # Connect to AWS services
 s3 = boto3.resource('s3')
@@ -58,7 +59,8 @@ def lambda_handler(event, context):
         ('contributor', Contributor),
         ('popularity', Popularity),
         ('development_lang', Developmet_Lang),
-        # ('testibility', get_testibility, 'sonar-info.json')
+        ('testibility', Testibility),
+        ('professional_support', Professional_Support)
     ]
 
     for field, Class_n in func_list:
