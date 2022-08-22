@@ -11,23 +11,23 @@ class ProjectSize(Calculator.OSS_Calculator):
             if item['metric'] == key:
                 return item['value']
 
-    def get_value(self) -> dict:
+    def get_value(self) -> int:
         lines = self.find_metric('lines')
         self.value = int(lines)
         return self.value
 
     def get_score(self) -> dict:
-        lines = self.value
+        total_lines = self.value
 
-        if (lines < 1000):
+        if (total_lines < 1000):
             self.size_label = "XS"
-        elif lines >= 1000 and lines < 10000:
+        elif total_lines >= 1000 and total_lines < 10000:
             self.size_label = "S"
-        elif lines >= 10 and lines < 100000:
+        elif total_lines >= 10000 and total_lines < 100000:
             self.size_label = "M"
-        elif lines >= 10000 and lines < 500000:
+        elif total_lines >= 100000 and total_lines < 500000:
             self.size_label = "L"
-        elif lines > 500000:
+        elif total_lines > 500000:
             self.size_label = "XL"
 
         self.score = self.size_label
