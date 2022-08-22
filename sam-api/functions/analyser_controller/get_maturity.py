@@ -8,6 +8,7 @@ class Maturity(OSS_Calculator):
         self.release_info = data['release']
 
     def get_age(self):
+        """Project age from first created"""
         data = self.repo_info
         created_at = data['created_at']
         updated_at = data['updated_at']
