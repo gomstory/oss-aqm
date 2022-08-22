@@ -1,45 +1,41 @@
-#!/usr/bin/env python3
+from Calculator import OSS_Calculator
 
-import json
-from get_markdown import get_markdown_score
+class Document(OSS_Calculator):
+    """ 
+    Document = Code Comment = 
+    Number of Comment Lines / Number of Line of Code + Number of Comment Lines
+    """
+    def __init__(self, data: dict) -> None:
+        self.sonar = data['sonar-info']
+        self.metrics = self.sonar['component']['measures']
 
-# Setting
-project = 'angular'
-file_path = f'./raw-data/{project}/sonar-info.json'
+    def get_metric(self, metrics: dict, key: str):
+        for item in metrics:
+            if item['metric'] == key:
+                return item['value']
 
-def find_metric(arr, key):
-    for item in arr:
-        if item['metric'] == key:
-            return item['value']
-
-def get_comment_lines():
-    with open(file_path) as f:
-        data = json.load(f)
-        metrics = data['component']['measures']
-        code_comment = find_metric(metrics, 'comment_lines')
+    def get_comment_lines(self):
+        """Number of lines containing either comment or commented-out code."""
+        code_comment = self.get_metric(self.metrics, 'comment_lines')
         return int(code_comment)
 
-def get_code_lines():
-    with open(file_path) as f:
-        data = json.load(f)
-        metrics = data['component']['measures']
-        total_lines = find_metric(metrics, 'ncloc')
+    def get_code_lines(self):
+        """
+        Number of physical lines that contain at least one character 
+        which is neither a whitespace nor a tabulation nor part of a comment.
+        """
+        total_lines = self.get_metric(self.metrics, 'ncloc')
         return int(total_lines)
 
-def get_code_comment_density():
-    comment_lines = get_comment_lines()
-    code_lines = get_code_lines()
-    return (comment_lines / (comment_lines + code_lines))
+    def get_value(self) -> dict:
+        """Get Code Comment Line Density"""
+        comment_lines = self.get_comment_lines()
+        code_lines = self.get_code_lines()
+        self.value = (comment_lines / (comment_lines + code_lines))
+        return self.value
 
-def get_code_document_score():
-    code_comment = get_code_comment_density();
-    markdown_file = get_markdown_score()
-    return ((code_comment + markdown_file)/2) * 100
+    def get_score(self) -> dict:
+        """Convert to (0,100) score rank"""
+        self.score = self.value * 100
+        return self.score
 
-
-# Run main program here
-if __name__ == "__main__":
-    code_comment = get_code_comment_density()
-    markdown = get_markdown_score()
-    score = get_code_document_score()
-    print(code_comment, markdown, score)

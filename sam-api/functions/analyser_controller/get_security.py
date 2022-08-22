@@ -1,6 +1,6 @@
 from Calculator import OSS_Calculator
 
-class Maintainability(OSS_Calculator):
+class Security(OSS_Calculator):
     def __init__(self, data: dict) -> None:
         self.sonar = data['sonar-info']
         self.metrics = self.sonar['component']['measures']
@@ -11,7 +11,7 @@ class Maintainability(OSS_Calculator):
                 return item['value']
 
     def get_value(self):
-        self.value = self.find_metric('sqale_rating')
+        self.value = self.find_metric('security_rating')
         self.value = float(self.value)
         return self.value
 
