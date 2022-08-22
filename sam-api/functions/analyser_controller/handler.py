@@ -16,6 +16,7 @@ from get_security import Security
 from get_reliability import Reliability
 from get_code_quality import CodeQuality
 from get_document import Document
+from get_project_size import ProjectSize
 
 # Connect to AWS services
 s3 = boto3.resource('s3')
@@ -111,6 +112,7 @@ def lambda_handler(event, context):
         ('testibility', Testibility),
         ('reliability', Reliability),
         ('code_quality', CodeQuality),
+        ('project_size', ProjectSize),
         ('maintainability', Maintainability),
         ('development_lang', Developmet_Lang),
         ('professional_support', Professional_Support)

@@ -13,7 +13,7 @@ class Testibility(OSS_Calculator):
     def get_value(self):
         metrics = self.metrics
         complexity = self.find_metric(metrics, 'file_complexity')
-        self.value = int(complexity)
+        self.value = float(complexity)
         return self.value
 
 
