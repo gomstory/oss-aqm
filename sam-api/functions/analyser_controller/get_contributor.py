@@ -9,6 +9,8 @@ class Contributor(OSS_Calculator):
         self.contributors = data['contributor'] if 'contributor' in data else []
 
     def get_value(self):
+        """Number of Support Contributor + Core Team"""
+        # TODO: Add core team to calculation
         self.value = len(self.contributors)
         return self.value
 
