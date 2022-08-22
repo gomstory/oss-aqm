@@ -12,9 +12,8 @@ class Testibility(OSS_Calculator):
 
     def get_value(self):
         metrics = self.metrics
-        cyclo = self.find_metric(metrics, 'complexity')
-        function = self.find_metric(metrics, 'functions')
-        self.value = int(cyclo)/int(function)
+        complexity = self.find_metric(metrics, 'file_complexity')
+        self.value = int(complexity)
         return self.value
 
 

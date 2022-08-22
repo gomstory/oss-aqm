@@ -1,6 +1,6 @@
 from Calculator import OSS_Calculator
 
-class Maintainability(OSS_Calculator):
+class CodeQuality(OSS_Calculator):
     def __init__(self, data: dict) -> None:
         self.sonar = data['sonar-info']
         self.metrics = self.sonar['component']['measures']
@@ -11,18 +11,11 @@ class Maintainability(OSS_Calculator):
                 return item['value']
 
     def get_value(self):
-        self.value = self.find_metric('sqale_rating')
-        self.value = float(self.value)
+        duplicated_lines = self.find_metric('duplicated_lines')
+        lines = self.find_metric('lines')
+        self.value = int(duplicated_lines) / int(lines)
         return self.value
 
     def get_score(self):
-        switcher = {
-            1.0: 100, # A
-            2.0: 80,  # B
-            3.0: 60,  # C
-            4.0: 40,  # D
-            5.0: 20   # E
-        }
-
-        self.score = switcher.get(self.value, 0)
+        self.score = (1 - self.value) * 100
         return self.score

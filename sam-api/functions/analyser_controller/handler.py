@@ -11,6 +11,11 @@ from get_popularity_rating import Popularity
 from get_development_lang import Developmet_Lang
 from get_testibility import Testibility
 from get_support import Professional_Support
+from get_maintainability import Maintainability
+from get_security import Security
+from get_reliability import Reliability
+from get_code_quality import CodeQuality
+from get_document import Document
 
 # Connect to AWS services
 s3 = boto3.resource('s3')
@@ -40,14 +45,19 @@ def get_filename(link):
 def get_sonar_info(owner: str, repo: str) -> dict:
     # Get sonarqube info from API
     metrics = [
-        'ncloc','complexity',
+        'ncloc',
+        'complexity',
         'violations',
         'comment_lines',
-        'files','security_rating', 
+        'complexity',
+        'files',
+        'security_rating',
+        'duplicated_lines',
         'reliability_rating',
+        'file_complexity',
         'sqale_rating',
         'comment_lines_density',
-        'files',
+        'lines',
         'functions'
     ]
     
@@ -76,9 +86,6 @@ def lambda_handler(event, context):
     project_row = {}
     json_files = {}
 
-    # Download sonarqube metrics
-    json_files['sonar-info'] = get_sonar_info(owner, repo)
-
     # Download all files and store to tmp
     bucket = s3.Bucket(s3_bucket_name)
     file_list = bucket.objects.filter(Prefix=f"{owner}/{repo}")
@@ -90,14 +97,22 @@ def lambda_handler(event, context):
         with open(output_path, 'r') as f:
             json_files[json_filename] = json.load(f)
 
+    # Download sonarqube metrics
+    json_files['sonar-info'] = get_sonar_info(owner, repo)
+
     # Calculate value, score base on given key, function, file name
     func_list = [
         ('license', License), 
         ('maturity', Maturity),
-        ('contributor', Contributor),
+        ('security', Security),
+        ('document', Document),
         ('popularity', Popularity),
-        ('development_lang', Developmet_Lang),
+        ('contributor', Contributor),
         ('testibility', Testibility),
+        ('reliability', Reliability),
+        ('code_quality', CodeQuality),
+        ('maintainability', Maintainability),
+        ('development_lang', Developmet_Lang),
         ('professional_support', Professional_Support)
     ]
 
