@@ -37,33 +37,23 @@ def lambda_handler(event, context):
         }
     )
 
-    # Update url to table
-    if 'upload_url' in attributes:
-        url = attributes['upload_url']['stringValue']
-        crawler_table.update_item(
-            Key={'github_id': github_id},
-            UpdateExpression=f'SET {queue_key}_url = :val',
-            ExpressionAttributeValues={
-                ':val': url
-            }
-        )
-
     # Check all crawler has been completed or not
-    key_checklist = [
+    status_checklist = [
         'license_status', 
         'lang_status', 
         'repo_info_status', 
         'source_code_status',
         'contributor_status',
         'release_status',
-        'issue_status'
+        'issue_status',
+        'core_team_status'
     ]
     
     response = crawler_table.get_item(Key={'github_id': f'https://github.com/{owner}/{repo}'})
     item = response['Item']
     is_all_ready = True
 
-    for key in key_checklist:
+    for key in status_checklist:
         if key in item:
             if item[key] != "completed":
                 is_all_ready = False
@@ -72,18 +62,15 @@ def lambda_handler(event, context):
     # Invoke Analyser Function to callculate score once crawler has done
     if is_all_ready is True:
         func_name = os.environ['ANALYSER_FUNCTION']
-
-        payload = {
+        
+        lamb.invoke(
+            FunctionName=func_name,
+            Payload=json.dumps({
                 "github_id": github_id,
                 "repo": repo,
                 "owner": owner,
                 "item": item
-        }
-
-        lamb.invoke(
-            FunctionName=func_name,
-            Payload=json.dumps(payload)
-        )
+        }))
         
         print('Analyses::Invoke', func_name)
 
