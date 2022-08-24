@@ -1,6 +1,6 @@
-from Calculator import OSS_Calculator
+from Calculator import ScoreCalculator
 
-class Professional_Support(OSS_Calculator):
+class Professional_Support(ScoreCalculator):
     """Quality of Profession Support"""
     def __init__(self, data: dict) -> None:
         self.issue_and_pull_requests = data['issue']

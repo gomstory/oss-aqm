@@ -1,6 +1,6 @@
-from Calculator import OSS_Calculator
+from Calculator import ScoreCalculator
 
-class License(OSS_Calculator):
+class License(ScoreCalculator):
     def __init__(self, data: dict) -> None:
         self.license_info = data['license']
 

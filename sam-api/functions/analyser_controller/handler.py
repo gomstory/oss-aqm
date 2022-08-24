@@ -17,6 +17,7 @@ from get_reliability import Reliability
 from get_code_quality import CodeQuality
 from get_document import Document
 from get_project_size import ProjectSize
+from get_comminity_size import CommunitySize
 
 # Connect to AWS services
 s3 = boto3.resource('s3')
@@ -87,7 +88,7 @@ def lambda_handler(event, context):
     project_row = {}
     json_files = {}
 
-    # Download all files and store to tmp
+    # Download all files and store to /tmp folder
     bucket = s3.Bucket(s3_bucket_name)
     file_list = bucket.objects.filter(Prefix=f"{owner}/{repo}")
     
@@ -113,6 +114,7 @@ def lambda_handler(event, context):
         ('reliability', Reliability),
         ('code_quality', CodeQuality),
         ('project_size', ProjectSize),
+        ('community_size', CommunitySize),
         ('maintainability', Maintainability),
         ('development_lang', Developmet_Lang),
         ('professional_support', Professional_Support)

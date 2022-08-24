@@ -1,9 +1,11 @@
+from Calculator import ScoreCalculator
 
-# Metric: Popularity Rating Score
-# Description: How much repository popularity
-from Calculator import OSS_Calculator
+class Popularity(ScoreCalculator):
+    """
+    Metric: Popularity Rating Score
+    Description: How much repository popularity
+    """
 
-class Popularity(OSS_Calculator):
     def __init__(self, data: dict) -> None:
         self.repo_info = data['repo-info']
 

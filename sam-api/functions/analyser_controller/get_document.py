@@ -1,6 +1,6 @@
-from Calculator import OSS_Calculator
+from Calculator import ScoreCalculator
 
-class Document(OSS_Calculator):
+class Document(ScoreCalculator):
     """ 
     Document = Code Comment = 
     Number of Comment Lines / Number of Line of Code + Number of Comment Lines
