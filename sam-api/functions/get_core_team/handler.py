@@ -2,6 +2,7 @@ import json
 import requests
 import boto3
 import os
+import time
 
 # Connect to AWS
 bucket_name = os.environ['S3_BUCKET']
@@ -22,19 +23,19 @@ def lambda_handler(event, context):
     # Get owner and repo from event
     repo = event['repo']
     owner = event['owner']
-    has_next = True
+    has_next_page = True
+    api_quata = 5000
+    headers = None
     rows = []
     page = 1
-    api_quata = 5000
 
     # Add access token when calling the Github api
-    headers = None
     if 'access_token' in event:
         token_list = list(event['access_token'])
         access_token = token_list.pop()
         headers={ 'Authorization': f'Bearer {access_token}' }
 
-    while has_next and api_quata > 0:
+    while has_next_page and api_quata > 0 and page < 10:
         # Get repository license
         response = requests.get(f'https://api.github.com/orgs/{owner}/members', 
             params={ 
@@ -44,18 +45,19 @@ def lambda_handler(event, context):
             headers=headers
         )
 
-        if response.status_code == 200:
-            data = response.json()
-            rows.extend(data)
-
         # Checking API Quata Every call
         api_quata = int(response.headers["X-RateLimit-Remaining"])
 
-        if 'next' in response.links:
-            has_next = True
+        # Checking Next Page
+        has_next_page = 'next' in response.links
+
+        if response.status_code == 200:
+            data = response.json()
+            rows.extend(data)
             page = page + 1
-        else:
-            has_next = False
+
+        # Slow down for 2 sec
+        time.sleep(2)
 
    # Throw error when exceed maxumum request
     if api_quata <= 0:

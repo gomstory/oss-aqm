@@ -46,7 +46,8 @@ def lambda_handler(event, context):
         'contributor_status',
         'release_status',
         'issue_status',
-        'core_team_status'
+        'core_team_status',
+        'user_status'
     ]
     
     response = crawler_table.get_item(Key={'github_id': f'https://github.com/{owner}/{repo}'})

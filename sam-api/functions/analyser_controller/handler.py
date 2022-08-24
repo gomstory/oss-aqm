@@ -137,6 +137,7 @@ def lambda_handler(event, context):
     project_row["description"] = repo_info["description"]
     project_row["star"] = repo_info["stargazers_count"]
     project_row["website"] = repo_info["homepage"]
+    project_row["topics"] = ",".join(repo_info["topics"])
 
     # Save/Update project to table
     oss_table = dynamo.Table(oss_table_name)
