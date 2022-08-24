@@ -2,6 +2,7 @@ import json
 import requests
 import boto3
 import os
+import time
 
 # Connect to AWS
 bucket_name = os.environ['S3_BUCKET']
@@ -22,39 +23,48 @@ def lambda_handler(event, context):
     # Get owner and repo from event
     repo = event['repo']
     owner = event['owner']
-    count = 0
+    has_next_page = True
+    headers = None
     api_qata = 5000
-    records = []
+    page = 1
+    rows = []
 
     # Add access token when calling the Github api
-    headers = None
     if 'access_token' in event:
-        access_token = event['access_token'][0]
+        token_list = list(event["access_token"])
+        access_token = token_list.pop()
         headers={ 'Authorization': f'Bearer {access_token}' }
 
-    while(api_qata > 0 and count < 3):
+    while(has_next_page and api_qata > 0 and page < 5):
         # Get repository license
         response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/releases',
-            params={ 'per_page': 100 },
+            params={ 
+                'per_page': 100,
+                'page': page
+            },
             headers=headers
         )
 
-        if response.status_code != 200:
-            raise respond(ValueError("Un-expected API response"))
+        if response.status_code == 200:
+            data = response.json()
+            rows.extend(data)
+            page = page + 1
 
-        data = response.json()
-        records.extend(data)
+        # Checking Next Page
+        has_next_page = 'next' in response.links
 
         # Checking API Quata
         api_qata = int(response.headers["X-RateLimit-Remaining"])
-        count = count + 1
+
+        # Slow down for 2 sec
+        time.sleep(2)
 
     # Create json file to tmp folder
     file_name = 'release.json'
     file_path = os.path.join('/tmp', repo, file_name)
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, 'w') as f:
-        json.dump(records, f)
+        json.dump(rows, f)
 
     # Upload S3 bucket
     destination_url = f"{owner}/{repo}/{file_name}"

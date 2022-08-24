@@ -29,7 +29,7 @@ def lambda_handler(event, context):
     today = datetime.now()
     six_month_early = today - timedelta(days=180)
     api_quata = 5000
-    issues = []
+    rows = []
     issue_date = today
     page = 1
     
@@ -65,7 +65,7 @@ def lambda_handler(event, context):
         # Status code is ok
         if response.status_code == 200:
             data = response.json()
-            issues.extend(data)
+            rows.extend(data)
             page = page + 1
 
             # Check issue date is reached yet or not
@@ -84,7 +84,7 @@ def lambda_handler(event, context):
     file_path = os.path.join('/tmp', repo, file_name)
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, 'w') as f:
-        json.dump(data, f)
+        json.dump(rows, f)
 
     # Upload S3 bucket
     destination_url = f"{owner}/{repo}/{file_name}"
