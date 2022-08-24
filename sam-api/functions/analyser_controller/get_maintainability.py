@@ -1,6 +1,6 @@
-from Calculator import OSS_Calculator
+from Calculator import ScoreCalculator
 
-class Maintainability(OSS_Calculator):
+class Maintainability(ScoreCalculator):
     def __init__(self, data: dict) -> None:
         self.sonar = data['sonar-info']
         self.metrics = self.sonar['component']['measures']

@@ -1,5 +1,6 @@
-from Calculator import OSS_Calculator
-class Developmet_Lang(OSS_Calculator):
+from Calculator import ScoreCalculator
+
+class Developmet_Lang(ScoreCalculator):
     def __init__(self, data: dict) -> None:
         self.languages = data['language']
 

@@ -18,7 +18,7 @@ bucket_name = os.environ['S3_BUCKET']
 def respond(err, res=None):
     return {
         'statusCode': '400' if err else '200',
-        'body': err.message if err else json.dumps(res),
+        'body': str(err) if err else json.dumps(res),
         'headers': {
             'Content-Type': 'application/json'
         }
@@ -75,6 +75,20 @@ def lambda_handler(event, context):
         print(ssm_output["Status"])
         time.sleep(3)
 
+    # Map last status and sent to queue
+    print('SSM Status:', ssm_output["Status"])
+    status_switcher = {
+        "Pending": "pending",
+        "Delayed": "delayed",
+        "Success": "completed",
+        "Cancelled": "cancelled",
+        "TimedOut": "timed-out",
+        "Failed": "failed"
+    }
+
+    lambda_status = status_switcher.get(
+        ssm_output["Status"], 'failed')
+
     # Add queue to inform completion
     sqs.send_message(
         QueueUrl=queue_name,
@@ -94,7 +108,7 @@ def lambda_handler(event, context):
                 'DataType': 'String'
             },
             'status': {
-                'StringValue': 'completed',
+                'StringValue': lambda_status,
                 'DataType': 'String'
             }
         }

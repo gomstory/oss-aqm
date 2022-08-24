@@ -1,8 +1,8 @@
 import re
 from dateutil import parser
-from Calculator import OSS_Calculator
+from Calculator import ScoreCalculator
 
-class Maturity(OSS_Calculator):
+class Maturity(ScoreCalculator):
     def __init__(self, data: dict) -> None:
         self.repo_info = data['repo-info']
         self.release_info = data['release']

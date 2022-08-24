@@ -2,7 +2,7 @@
 from abc import ABC, abstractmethod
 
 # Abstrac Class for all calculator
-class OSS_Calculator(ABC):
+class ScoreCalculator(ABC):
     @abstractmethod
     def __init__(self, data: dict) -> None:
         """ Initial score, value, needed data """

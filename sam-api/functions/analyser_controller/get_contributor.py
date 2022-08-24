@@ -1,12 +1,14 @@
-from Calculator import OSS_Calculator
+from Calculator import ScoreCalculator
 
 """
-Metric: Get Contributor
-Description: The number of core developer and contributor in the last 6 month
+    Metric: Get Contributor
+    Description: The number of core developer and contributor in the last 6 month
 """
-class Contributor(OSS_Calculator):
+class Contributor(ScoreCalculator):
     """Aka of Support Contributor"""
     def __init__(self, data: dict) -> None:
+        self.value = 0
+        self.score = 0
         self.contributors = data['contributor'] if 'contributor' in data else []
         self.core_team = data['core-team'] if 'core-team' in data else []
 
@@ -16,9 +18,10 @@ class Contributor(OSS_Calculator):
         return self.value
 
     def get_score(self):
+        """Calculate Contributor score"""
         score = 0
         total_contributors = self.value
-            
+
         if total_contributors < 5:
             score = 1
         elif total_contributors >= 5 and total_contributors <= 10:
@@ -31,5 +34,4 @@ class Contributor(OSS_Calculator):
             score = 5
 
         self.score =  (score / 5) * 100
-
         return self.score

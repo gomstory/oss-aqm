@@ -1,6 +1,6 @@
 import Calculator
 
-class ProjectSize(Calculator.OSS_Calculator):
+class ProjectSize(Calculator.ScoreCalculator):
     def __init__(self, data: dict) -> None:
         self.sonar = data['sonar-info']
         self.metrics = self.sonar['component']['measures']
