@@ -68,6 +68,7 @@ class Maturity(ScoreCalculator):
         return (age_range / 5)
 
     def get_total_issue(self):
+        """Get number of issues the last 6 months reported in Github"""
         today = datetime.now()
         six_month_early = today - timedelta(days=180)
         selected_issue = []
@@ -80,6 +81,7 @@ class Maturity(ScoreCalculator):
         return len(selected_issue)
 
     def get_bugless_score(self, total_issue = 0) -> float:
+        """Calcuate bugless score base on total issues"""
         bugless_ranking = 1
 
         if total_issue > 1000:
@@ -96,14 +98,17 @@ class Maturity(ScoreCalculator):
         return bugless_ranking / 5
 
     def get_value(self) -> float:
+        """ Get total score avg of age, release, issues """
         days = self.get_age()
         age_score = self.get_age_score(days)
         total_release = self.get_release()
         release_score = self.get_release_score(total_release)
         issues = self.get_total_issue()
         issue_score = self.get_bugless_score(issues)
-        return (age_score + release_score + issue_score) / 3
+        self.value = (age_score + release_score + issue_score) / 3
+        return self.value
 
     def get_score(self) -> float:
-        score = self.get_value()
-        return score * 100
+        """Get Final score (0, 100] """
+        self.score = self.value * 100
+        return self.score
