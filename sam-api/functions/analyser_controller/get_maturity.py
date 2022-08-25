@@ -1,4 +1,5 @@
 import re
+from datetime import datetime, timedelta
 from dateutil import parser
 from Calculator import ScoreCalculator
 
@@ -6,6 +7,7 @@ class Maturity(ScoreCalculator):
     def __init__(self, data: dict) -> None:
         self.repo_info = data['repo-info']
         self.release_info = data['release']
+        self.issue = data['issue'] if 'issue' in data else []
 
     def get_age(self):
         """Project age from first created"""
@@ -24,7 +26,7 @@ class Maturity(ScoreCalculator):
         for release in data:
             version = release['tag_name']
             major_version = re.search(r"\w?(\d)", version)
-
+            #TODO: Get Minor Release
             if major_version is not None:
                 major = major_version.groups()[0]
                 if (major in major_releases) == False:
@@ -44,7 +46,7 @@ class Maturity(ScoreCalculator):
 
         return (score_range / 5)
 
-    def get_age_score(self, days: int = 1) -> int:
+    def get_age_score(self, days: int = 1) -> float:
         age_range = 0
 
         if days < 60: 
@@ -65,12 +67,42 @@ class Maturity(ScoreCalculator):
         
         return (age_range / 5)
 
+    def get_total_issue(self):
+        today = datetime.now()
+        six_month_early = today - timedelta(days=180)
+        selected_issue = []
+        
+        for x in self.issue:
+            date = datetime.strptime(x['created_at'], "%Y-%m-%dT%H:%M:%SZ")
+            if date >= six_month_early:
+                selected_issue.append(x)
+
+        return len(selected_issue)
+
+    def get_bugless_score(self, total_issue = 0) -> float:
+        bugless_ranking = 1
+
+        if total_issue > 1000:
+            bugless_ranking = 1
+        elif total_issue > 500 and total_issue <= 1000:
+            bugless_ranking = 2
+        elif total_issue > 100 and total_issue <= 500:
+            bugless_ranking = 3
+        elif total_issue > 50 and total_issue <= 100:
+            bugless_ranking = 4
+        elif total_issue < 50:
+            bugless_ranking = 5
+
+        return bugless_ranking / 5
+
     def get_value(self) -> float:
         days = self.get_age()
-        total_release = self.get_release()
         age_score = self.get_age_score(days)
+        total_release = self.get_release()
         release_score = self.get_release_score(total_release)
-        return (age_score + release_score) / 2
+        issues = self.get_total_issue()
+        issue_score = self.get_bugless_score(issues)
+        return (age_score + release_score + issue_score) / 3
 
     def get_score(self) -> float:
         score = self.get_value()
