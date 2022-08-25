@@ -18,6 +18,7 @@ from get_code_quality import CodeQuality
 from get_document import Document
 from get_project_size import ProjectSize
 from get_comminity_size import CommunitySize
+from get_available_forum import AvailableForum
 
 # Connect to AWS services
 s3 = boto3.resource('s3')
@@ -117,6 +118,7 @@ def lambda_handler(event, context):
         ('community_size', CommunitySize),
         ('maintainability', Maintainability),
         ('development_lang', Developmet_Lang),
+        ('availavility_forum', AvailableForum),
         ('professional_support', Professional_Support)
     ]
 
