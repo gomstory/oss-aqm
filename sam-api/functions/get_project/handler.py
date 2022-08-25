@@ -20,7 +20,9 @@ def respond(err, res=None):
         'statusCode': '400' if err else '200',
         'body': err.message if err else json.dumps(res, cls=DecimalEncoder),
         'headers': {
-            'Content-Type': 'application/json'
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         }
     }
     

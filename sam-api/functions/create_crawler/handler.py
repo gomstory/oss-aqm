@@ -14,7 +14,9 @@ def respond(err, res=None):
         'statusCode': '400' if err else '200',
         'body': str(err) if err else json.dumps(res),
         'headers': {
-            'Content-Type': 'application/json'
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         }
     }
 
