@@ -1,18 +1,16 @@
 import { Outlet } from 'react-router-dom';
 import Header from './common/header';
 import Navbar from './common/navbar';
-import { Button } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+import Counter from './common/counter';
 
 function App() {
   return (
     <div className="App">
       <header className="App-container">
-        <Button variation="primary">Hello world</Button>
         <Header></Header>
         <Navbar></Navbar>
         <Outlet/>
-        {/* Main Content */}
-        {/* Footer */}
       </header>
     </div>
   );

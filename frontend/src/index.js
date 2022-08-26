@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import CompareProject from './compare-project/compare-project';
-import NewProject from './new-project/new-project';
-import AboutUs from './about-us/about-us';
+import CompareProject from './pages/compare-project/compare-project';
+import NewProject from './pages/new-project/new-project';
+import AboutUs from './pages/about-us/about-us';
+import store from './redux/store'
+import { Provider } from 'react-redux'
 import './styles/theme.scss';
 import {
   Routes,
@@ -16,7 +18,8 @@ import {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <HashRouter>
+    <Provider store={store}>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<App />}>
             <Route path="compare" element={<CompareProject />} />
@@ -25,7 +28,8 @@ root.render(
             <Route path='*' element={<Navigate to="/compare" replace />} />
           </Route>
         </Routes>
-    </HashRouter>
+      </HashRouter>
+    </Provider>
   </React.StrictMode>
 );
 
