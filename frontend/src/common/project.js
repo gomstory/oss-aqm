@@ -1,36 +1,94 @@
 import React from 'react';
-import ItemList from "./item-list";
+import { useSelector, useDispatch } from 'react-redux'
+import { removeProject } from '../redux/projectReducer'
 
-function Project() {
+function Project({ project }) {
+    const dispatch = useDispatch()
+    const onRemove = () => {
+        dispatch(removeProject(project.id))
+    }
+
     return (
         <div className="project">
             <div className='project-logo'>
                 <img className='logo' src='/oss-aqm/logo192.png'></img>
-                <a href='#' className='title'>Project A</a>
-                <button className='clear-project'>X</button>
+                <a href='#' className='title'>{project.name}</a>
+                <button onClick={onRemove} className='clear-project'>X</button>
             </div>
+
             <div className="item-box">
                 <h1 className='hide'>License</h1>
                 <div className='item-list'>
-                    <span>Open Hub Data Quality</span>
+                    <span><a href={project.website}>{project.website}</a></span>
+                </div>
+                <div className='item-list'>
+                    <span>{project.project_size_value || 0} </span>
+                </div>
+                <div className='item-list'>
+                    <span>{project.star}</span>
+                </div>
+                <div className='item-list'>
+                    <span>{project.updated_at}</span>
+                </div>
+            </div>
+
+            <div className="item-box">
+                <h1 className='hide'>License</h1>
+                <div className='item-list'>
+                    <span>{project.license_value || 0} </span>
                 </div>
             </div>
 
             <div className="item-box">
                 <h1 className='hide'>Community and Support</h1>
                 <div className='item-list'>
-                    <span>Open Hub Data Quality</span>
+                    <span>{project.community_size_value || 0} </span>
                 </div>
                 <div className='item-list'>
-                    <span>Open Hub Data Quality</span>
+                    <span>{project.avialability || 0}</span>
                 </div>
                 <div className='item-list'>
-                    <span>Open Hub Data Quality</span>
+                    <span>{project.contributor_value || 0}</span>
                 </div>
                 <div className='item-list'>
-                    <span>Open Hub Data Quality</span>
+                    <span>{project.professional_support_value || 0}</span>
                 </div>
             </div>
+
+
+            <div className="item-box">
+                <h1 className='hide'>Community and Support</h1>
+                <div className='item-list'>
+                    <span>{project.maturity_value || 0} </span>
+                </div>
+                <div className='item-list'>
+                    <span>{project.document_value || 0} </span>
+                </div>
+                <div className='item-list'>
+                    <span>{project.development_lang_score}</span>
+                </div>
+            </div>
+
+            <div className="item-box">
+                <h1 className='hide'>Product Quality</h1>
+
+                <div className='item-list'>
+                    <span>{project.security_value || 0} </span>
+                </div>
+                <div className='item-list'>
+                    <span>{project.code_quality_value || 0} </span>
+                </div>
+                <div className='item-list'>
+                    <span>{project.testibility_value || 0} </span>
+                </div>
+                <div className='item-list'>
+                    <span>{project.maintainability_value || 0} </span>
+                </div>
+                <div className='item-list'>
+                    <span>{project.popularity_value || 0} </span>
+                </div>
+            </div>
+
 
             <div className="item-box">
                 <h1 className='hide'>OSS Qiality Score</h1>

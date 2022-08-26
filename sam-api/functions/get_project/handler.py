@@ -48,6 +48,7 @@ def lambda_handler(event, context):
             Limit=per_page
         )
     
+    # TODO: Mapping field of database to real user to be easy
     return respond(None, {
         "page": page,
         "per_page": per_page,
