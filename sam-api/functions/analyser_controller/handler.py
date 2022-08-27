@@ -81,6 +81,12 @@ def get_sonar_info(owner: str, repo: str) -> dict:
 
     return response.json()
 
+def get_logo(repo):
+    if 'owner' in repo:
+        if 'avatar_url' in repo['owner']:
+            return repo['owner']['avatar_url']
+    return ""
+
 def lambda_handler(event, context):
     data = event
     owner = data['owner']
@@ -140,6 +146,8 @@ def lambda_handler(event, context):
     project_row["star"] = repo_info["stargazers_count"]
     project_row["website"] = repo_info["homepage"]
     project_row["topics"] = ",".join(repo_info["topics"])
+    project_row["logo"] = get_logo(repo_info)
+    project_row["github_url"] = f"https://github.com/{owner}/{repo}"
 
     # Save/Update project to table
     oss_table = dynamo.Table(oss_table_name)
