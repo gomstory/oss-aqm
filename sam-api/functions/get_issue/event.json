@@ -1,5 +1,8 @@
 {
-    "owner": "angular",
-    "repo": "components",
-    "access_token": ["***REMOVED***"]
+    "github_id": "https://github.com/vuejs/create-vue",
+    "repo": "create-vue",
+    "owner": "vuejs",
+    "access_token": [
+        "***REMOVED***"
+    ]
 }
