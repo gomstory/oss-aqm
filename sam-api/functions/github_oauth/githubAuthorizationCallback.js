@@ -68,7 +68,6 @@ exports.handler = async (event) => {
   
   try {
     var result = await ddb.put(params).promise();
-    console.log(result)
   } catch (e) {
     console.error('error', e)
     return generateErrorObject('Failed to save data to dynamoDb')

@@ -12,5 +12,5 @@ export function createCrawler(url) {
 export function getCrawler() {
     return axios.get(`${apiConfigs.baseUrl}/crawler`)
     .then(res => res.data)
-    .then(res => res.Items)
+    .then(res => res.items)
 }

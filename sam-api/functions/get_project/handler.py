@@ -28,15 +28,15 @@ def respond(err, res=None):
     
 def lambda_handler(event, context):    
     # Default pagination
-    per_page = 30
+    per_page = 10
     search = ""
     page = 1
     
     if event["queryStringParameters"] is not None:
         params = event['queryStringParameters']
-        page = int(params["page"]) if "page" in params else 1
+        page = int(params["page"]) if "page" in params else page
         search = params["search"] if "search" in params else ""
-        per_page = int(params["per_page"]) if "per_page" in params else 30
+        per_page = int(params["per_page"]) if "per_page" in params else per_page
     
     oss_table = dynamo.Table(table_name)
     

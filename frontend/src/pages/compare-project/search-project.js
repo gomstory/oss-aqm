@@ -1,52 +1,64 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addProject } from '../../redux/projectReducer';
 import getProject from '../../services/getProject'
 
 function SearchProject() {
   const [project, setProject] = useState([])
+  const searchElm = useRef()
   const [popup, setPopup] = useState(false)
-  const [term, setTerm] = useState("")
   const dispatch = useDispatch()
   const onSelect = (proj) => {
     if (proj) {
         dispatch(addProject(proj))
         setPopup(false)
-        setTerm("")
     }
   }
   
-  const onChange = (event) => {    
-    setTerm(event.target.value)
+  const onChange = (event) => {   
+    let term = searchElm.current.value
     if (term.length >= 3) {
-      getProject()
-      .then(items => {
-        setProject(items)
-        setPopup(true)
-      })
+      setProject([])
+      getProject(term)
+        .then(items => {
+          setProject(items)
+          setPopup(true)
+        })
     } else {
       setPopup(false)
     }
   }
 
   const onFocus = (event) => {
-    onChange(event)
-    return false
+    if (project.length == 0) {
+      getProject()
+        .then(items => {
+          setProject(items)
+          setPopup(true)
+        })
+    } else {
+      setPopup(true)
+    }
   }
 
   const onClose = (event) => {
     setPopup(false)
-    setTerm("")
+    clearSearch()
+    event.preventDefault()
+  }
+
+  const clearSearch = () => {
+    searchElm.current.value = ""
   }
 
   return (
     <div className='search-bar'>
       <input
         type="text"
+        ref={searchElm}
         className="search" 
-        onChange={onChange} 
-        onFocus={onFocus} 
-        value={term} 
+        onInput={onChange}
+        onFocus={onFocus}
         placeholder="Search Github Project">
       </input>
 
