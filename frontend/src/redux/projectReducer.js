@@ -7,11 +7,14 @@ export const projectReducer = createSlice({
   },
   reducers: {
     addProject: (state, action) => {
-      state.value.push(action.payload)
+      const exists = state.value.find(x => x.id == action.payload.id)
+      if (!exists) {
+        state.value.push(action.payload)
+      }
     },
     removeProject: (state, action) => {
       state.value = state.value
-        .filter(proj => action.payload.id === proj.id)
+        .filter(proj => action.payload.id !== proj.id)
     }
   }
 })

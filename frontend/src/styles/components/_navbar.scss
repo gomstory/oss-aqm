@@ -1,5 +1,5 @@
 .navbar {
-    background-color: $navbar-color;
+    background-color:  black;
     display: inline-block;
     min-width: 100%;
     
@@ -17,7 +17,7 @@
             }
     
             a.active {
-                background-color: black;
+                background-color: #005272;
                 color: white;
             }
         }
