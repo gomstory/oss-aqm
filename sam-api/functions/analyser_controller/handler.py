@@ -88,6 +88,7 @@ def get_logo(repo):
     return ""
 
 def lambda_handler(event, context):
+    print(event)
     data = event
     owner = data['owner']
     repo = data["repo"]

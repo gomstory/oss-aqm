@@ -49,6 +49,7 @@ function NewProject(props) {
 
     const createRequest = () => {
         const url = inputEl.current.value
+        if (!url) return;
         return createCrawler(url)
             .then(() => inputEl.current.value = "")
     }
