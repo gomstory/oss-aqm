@@ -10,10 +10,6 @@ function Navbar() {
         id: 'compare-project',
         path: 'compare',
         name: 'Compare Project'
-    }, {
-        id: 'about-us',
-        path: 'about-us',
-        name: 'About Us'
     }].map(menu => (
         <li className="nav-item" key={menu.id}>
             <NavLink

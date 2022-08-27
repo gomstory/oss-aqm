@@ -4,7 +4,7 @@ function Header() {
   return(
     <div>
       <div className='header'>
-        <h3>OSS-AQM Model</h3>
+        <h3 className='title'>OSS-AQM</h3>
       </div>
     </div>
   );

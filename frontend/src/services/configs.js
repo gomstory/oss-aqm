@@ -1,3 +1,3 @@
-export const configs = {
-    apiUrl: '***REMOVED***'
+export const apiConfigs = {
+    baseUrl: '***REMOVED***'
 }
