@@ -12,7 +12,7 @@ sqs = boto3.client('sqs')
 def respond(err, res=None):
     return {
         'statusCode': '400' if err else '200',
-        'body': str(err) if err else json.dumps(res),
+        'body': json.dumps({"error": str(err)}) if err else json.dumps(res),
         'headers': {
             'Access-Control-Allow-Headers': 'Content-Type',
             'Access-Control-Allow-Origin': '*',

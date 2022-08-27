@@ -1,11 +1,10 @@
 import json
-import requests
 import boto3
 import os
 
 # connect to dynamoDb
 region_name = os.environ['REGION_NAME']
-dynamo = boto3.client('dynamodb', region_name=region_name)
+dynamo = boto3.resource('dynamodb')
 table_name = os.environ['CRAWLER_TABLE']
 
 def respond(err, res=None):
@@ -13,10 +12,13 @@ def respond(err, res=None):
         'statusCode': '400' if err else '200',
         'body': err.message if err else json.dumps(res),
         'headers': {
-            'Content-Type': 'application/json'
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         }
     }
 
 def lambda_handler(event, context):
-    scan_result = dynamo.scan(TableName=table_name)
+    oss_table = dynamo.Table(table_name)
+    scan_result = oss_table.scan()
     return respond(None, scan_result)
