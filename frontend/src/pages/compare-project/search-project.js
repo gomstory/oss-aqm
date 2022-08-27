@@ -41,7 +41,8 @@ function SearchProject() {
 
   return (
     <div className='search-bar'>
-      <input 
+      <input
+        type="text"
         className="search" 
         onChange={onChange} 
         onFocus={onFocus} 
