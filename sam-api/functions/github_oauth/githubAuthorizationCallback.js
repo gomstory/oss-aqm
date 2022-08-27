@@ -66,6 +66,8 @@ exports.handler = async (event) => {
     }
   };
 
+  print("process.env.OAUTH_CALLBACK_URL", process.env.OAUTH_CALLBACK_URL)
+
   try {
     var result = await ddb.put(params).promise();
     console.log(result)
