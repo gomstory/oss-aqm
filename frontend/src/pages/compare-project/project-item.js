@@ -32,7 +32,7 @@ function Project({ project }) {
                     <span>{project.star}</span>
                 </div>
                 <div className='item-list'>
-                    <span>{project.updated_at}</span>
+                    <span>{project.age_since}</span>
                 </div>
             </div>
 
