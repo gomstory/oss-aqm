@@ -13,7 +13,7 @@ class Popularity(ScoreCalculator):
         data = self.repo_info
         star = data['stargazers_count'] if 'stargazers_count' in data else 0
         number_watcher = data['watchers'] if 'watchers' in data else 0
-        self.value = (star / number_watcher)
+        self.value = (star / number_watcher) if number_watcher > 0 else 0
         return self.value
 
     def get_score(self):

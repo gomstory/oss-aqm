@@ -18,7 +18,7 @@ class Professional_Support(ScoreCalculator):
     def get_value(self) -> float:
         issues = self.get_issues()
         issue_with_support = self.get_issue_supported()
-        self.value = len(issue_with_support) / len(issues)
+        self.value = (len(issue_with_support) / len(issues)) if len(issues) > 0 else 0
         return self.value
 
     def get_score(self) -> float:
