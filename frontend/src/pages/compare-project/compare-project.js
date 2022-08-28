@@ -33,7 +33,7 @@ function CompareProject() {
                                 <span>Project Stars</span>
                             </div>
                             <div className='item-list'>
-                                <span>Create At</span>
+                                <span>Age</span>
                             </div>
                         </div>
 

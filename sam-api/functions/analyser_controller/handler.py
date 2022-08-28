@@ -19,6 +19,7 @@ from get_document import Document
 from get_project_size import ProjectSize
 from get_comminity_size import CommunitySize
 from get_available_forum import AvailableForum
+from utils import get_age_label
 
 # Connect to AWS services
 s3 = boto3.resource('s3')
@@ -149,6 +150,7 @@ def lambda_handler(event, context):
     project_row["topics"] = ",".join(repo_info["topics"])
     project_row["logo"] = get_logo(repo_info)
     project_row["github_url"] = f"https://github.com/{owner}/{repo}"
+    project_row['age_since'] = get_age_label(repo_info["created_at"])
 
     # Save/Update project to table
     oss_table = dynamo.Table(oss_table_name)

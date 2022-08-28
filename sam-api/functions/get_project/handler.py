@@ -14,7 +14,7 @@ class DecimalEncoder(json.JSONEncoder):
         if isinstance(o, int):
             return str(o)
         if isinstance(o, decimal.Decimal):
-            return "{:.2f}".format(o)
+            return "{:.0f}".format(o)
         return super(DecimalEncoder, self).default(o)
 
 def respond(err, res=None):
