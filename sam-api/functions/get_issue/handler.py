@@ -29,6 +29,7 @@ def lambda_handler(event, context):
     today = datetime.now()
     six_month_early = today - timedelta(days=180)
     api_quata = 5000
+    has_next_page = True
     rows = []
     issue_date = today
     page = 1
@@ -42,7 +43,7 @@ def lambda_handler(event, context):
         access_token = token_list.pop()
         headers={ 'Authorization': f'Bearer {access_token}' }
 
-    while (api_quata > 0) and (issue_date > six_month_early):
+    while has_next_page and (api_quata > 0) and (issue_date > six_month_early):
         # Get repository license
         response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/issues', 
             params={ 
@@ -62,6 +63,9 @@ def lambda_handler(event, context):
             headers={ 'Authorization': f'Bearer {access_token}' }
             api_quata = 5000
 
+        # Checking Next Page
+        has_next_page = 'next' in response.links
+
         # Status code is ok
         if response.status_code == 200:
             data = response.json()
@@ -69,11 +73,12 @@ def lambda_handler(event, context):
             page = page + 1
 
             # Check issue date is reached yet or not
-            last_row = data[-1]
-            issue_date = datetime.strptime(last_row['created_at'], "%Y-%m-%dT%H:%M:%SZ")
+            if len(data) > 0:
+                last_row = data[-1]
+                issue_date = datetime.strptime(last_row['created_at'], "%Y-%m-%dT%H:%M:%SZ")
 
-            # Slow down for 2 sec
-            time.sleep(2)
+        # Slow down for 2 sec
+        time.sleep(2)
 
     # Throw error when exceed maxumum request
     if api_quata <= 0:
