@@ -6,10 +6,9 @@ class License(ScoreCalculator):
 
     def get_value(self) -> str:
         data = self.license_info
-
-        if data is None:
-            self.value = 'none'
-        elif 'license' in data:
+        self.value = 'none'
+        
+        if 'license' in data:
             license = data['license']['key']
             self.value = license
 
