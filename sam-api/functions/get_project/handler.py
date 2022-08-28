@@ -11,8 +11,10 @@ table_name = os.environ['OSS_TABLE']
 
 class DecimalEncoder(json.JSONEncoder):
     def default(self, o):
-        if isinstance(o, decimal.Decimal):
+        if isinstance(o, int):
             return str(o)
+        if isinstance(o, decimal.Decimal):
+            return "{:.2f}".format(o)
         return super(DecimalEncoder, self).default(o)
 
 def respond(err, res=None):
@@ -48,7 +50,6 @@ def lambda_handler(event, context):
             Limit=per_page
         )
     
-    # TODO: Mapping field of database to real user to be easy
     return respond(None, {
         "page": page,
         "per_page": per_page,
