@@ -75,6 +75,7 @@ function NewProject(props) {
 
             {auth &&
                 <div className='mt-20'>
+                    <h2 className='title'>Your request status</h2>
                     <table className='table'>
                         <thead>
                             <tr>
