@@ -13,7 +13,7 @@ function Navbar() {
     }].map(menu => (
         <li className="nav-item" key={menu.id}>
             <NavLink
-                className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+                className={({ isActive }) => (isActive ? "nav-link active bold" : "nav-link bold")}
                 to={`/${menu.path}`}
                 key={menu.id}>
                 {menu.name}
