@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addProject } from '../../redux/projectReducer';
-import getProject from '../../services/getProject'
+import { getProject } from '../../services'
 
 function SearchProject() {
   const [project, setProject] = useState([])
@@ -10,12 +10,12 @@ function SearchProject() {
   const dispatch = useDispatch()
   const onSelect = (proj) => {
     if (proj) {
-        dispatch(addProject(proj))
-        setPopup(false)
+      dispatch(addProject(proj))
+      setPopup(false)
     }
   }
-  
-  const onChange = (event) => {   
+
+  const onChange = (event) => {
     let term = searchElm.current.value
     if (term.length >= 3) {
       setProject([])
@@ -56,7 +56,7 @@ function SearchProject() {
       <input
         type="text"
         ref={searchElm}
-        className="search" 
+        className="search"
         onInput={onChange}
         onFocus={onFocus}
         placeholder="Search Github Project">
@@ -64,12 +64,12 @@ function SearchProject() {
 
       {popup && <button className='close' onClick={onClose}>Clear</button>}
 
-      {popup && project && 
+      {popup && project &&
         <ul className='search-result'>
           {project
-            .map(project => 
+            .map(project =>
               <li className='search-item' key={project.id} onClick={() => onSelect(project)}>
-                <img className='icon' src={project.logo}/>
+                <img className='icon' src={project.logo} />
                 <span>{project.id}</span>
                 <span>{project.star}⭐</span>
               </li>)}

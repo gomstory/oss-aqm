@@ -1,7 +1,7 @@
 import { apiConfigs } from './configs'
 import axios from 'axios'
 
-export default function getProject(search = "") {
+export function getProject(search = "") {
     return axios.get(`${apiConfigs.baseUrl}/project`, { 
         params: {
             "search": search
