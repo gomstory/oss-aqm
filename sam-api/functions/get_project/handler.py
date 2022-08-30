@@ -45,8 +45,8 @@ def lambda_handler(event, context):
     if search == "":
         scan_result = oss_table.scan(Limit=per_page)
     else:
-        scan_result = oss_table.query(
-            KeyConditionExpression=Key('id').eq(search),
+        scan_result = oss_table.scan(
+            FilterExpression=Attr('id').contains(search),
             Limit=per_page
         )
     
