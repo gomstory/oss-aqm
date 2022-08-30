@@ -3,11 +3,43 @@ import { useDispatch } from 'react-redux';
 import { addProject } from '../../redux/projectReducer';
 import { getProject } from '../../services'
 
+function useOnClickOutside(ref, handler) {
+  useEffect(
+    () => {
+      const listener = (event) => {
+        // Do nothing if clicking ref's element or descendent elements
+        if (!ref.current || ref.current.contains(event.target)) {
+          return;
+        }
+        handler(event);
+      };
+      document.addEventListener("mousedown", listener);
+      document.addEventListener("touchstart", listener);
+      return () => {
+        document.removeEventListener("mousedown", listener);
+        document.removeEventListener("touchstart", listener);
+      };
+    },
+    // Add ref and handler to effect dependencies
+    // It's worth noting that because passed in handler is a new ...
+    // ... function on every render that will cause this effect ...
+    // ... callback/cleanup to run every render. It's not a big deal ...
+    // ... but to optimize you can wrap handler in useCallback before ...
+    // ... passing it into this hook.
+    [ref, handler]
+  );
+}
+
 function SearchProject() {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResult, setSearchResult] = useState([])
   const [popup, setPopup] = useState(false)
+  const popupRef = useRef()
   const dispatch = useDispatch()
+
+  useOnClickOutside(popupRef, () => {
+    setPopup(false)
+  })
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -40,13 +72,6 @@ function SearchProject() {
     setSearchTerm(value)
   }
 
-  const onClear = (event) => {
-    setPopup(false)
-    setSearchTerm("")
-    setSearchResult([])
-    event.preventDefault()
-  }
-
   return (
     <div className='search-bar'>
       <input
@@ -58,10 +83,8 @@ function SearchProject() {
         placeholder="Search Github Project">
       </input>
 
-      {popup && <button className='close' onClick={onClear}>Clear</button>}
-
       {popup && searchResult &&
-        <ul className='search-result'>
+        <ul ref={popupRef} className='search-result'>
           {searchResult
             .map(project =>
               <li className='search-item' key={project.id} onClick={() => onSelectProject(project)}>

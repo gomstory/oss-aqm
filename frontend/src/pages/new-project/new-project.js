@@ -83,42 +83,40 @@ function NewProject(props) {
 
             )}
 
-            {auth && user &&
-                <div className='mt-20'>
-                    <h1>Loged in by {user}</h1>
-                    <button className='btn primary ml-10' onClick={onLogout}>Logout</button>
-                </div>
-            }
-
             {auth &&
                 <div className='mt-20'>
                     <h1>Request New Github Projects</h1>
                     <input className='text-input' ref={inputEl} type="text" placeholder="Please Enter Github URL" />
                     <button className='btn primary ml-10' onClick={createRequest}>Create</button>
-                    <button className='btn primary ml-10' onClick={refreshTable}>Refresh</button>
                 </div>
             }
 
             {auth &&
                 <div className='mt-20'>
-                    <h2 className='bold'>Your request status</h2>
+                    <h2 className='bold'>Your request status (👤: {user})</h2>
+
+                    <div className='mt-20 mb-20'>
+                        <button className='btn primary ml-10' onClick={onLogout}>Logout</button>
+                        <button className='btn primary ml-10' onClick={refreshTable}>Refresh Status</button>
+                    </div>
+
                     <table className='table'>
                         <thead>
                             <tr>
-                                <th>Github</th>
+                                <th>Github Project</th>
                                 <th>Repo Information</th>
                                 <th>Release</th>
                                 <th>Source Code</th>
-                                <th>Users</th>
-                                <th>Contributors</th>
+                                <th>User</th>
+                                <th>Contributor</th>
                                 <th>Language</th>
                                 <th>Core Team</th>
                                 <th>License</th>
-                                <th>Issues</th>
+                                <th>Issue</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {auth && reqList.map(row => 
+                            {auth && reqList.map(row =>
                                 <tr key={row.github_id}>
                                     <td>{row.github_id}</td>
                                     <td>{row.repo_info_status}</td>
