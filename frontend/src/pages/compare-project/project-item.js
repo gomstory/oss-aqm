@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { removeProject } from '../../redux/projectReducer'
+import { ScoreCalculator } from './project-score'
 
 function Project({ project }) {
     const dispatch = useDispatch()
@@ -14,12 +15,12 @@ function Project({ project }) {
                 <div className='item-list'>
                     <span className='project-logo'>
                         <img className='logo' src={project.logo}></img>
-                        <a href={project.github_url} target="_blank" className='title'>{project.name}</a>
+                        <a href={project.github_url} target="_blank" className='bold'>{project.name}</a>
                         <button onClick={onRemove} className='clear-project'>Delete</button>
                     </span>
                 </div>
                 <div className='item-list hide'>
-                    <span className='title'>Empty</span>
+                    <span className='bold'>Empty</span>
                 </div>
                 <div className='item-list'>
                     <span><a href={project.website}>{project.website}</a></span>
@@ -38,7 +39,7 @@ function Project({ project }) {
 
             <div className="item-box">
             <div className='item-list hide'>
-                    <span className='title'>Empty</span>
+                    <span className='bold'>Empty</span>
                 </div>
                 <div className='item-list two-column'>
                     <span>{project.license_value || 0} </span>
@@ -48,7 +49,7 @@ function Project({ project }) {
 
             <div className="item-box">
             <div className='item-list hide'>
-                    <span className='title'>Empty</span>
+                    <span className='bold'>Empty</span>
                 </div>
                 <div className='item-list two-column'>
                     <span>{project.community_size_value} </span>
@@ -70,7 +71,7 @@ function Project({ project }) {
 
             <div className="item-box">
                 <div className='item-list hide'>
-                    <span className='title'>Empty</span>
+                    <span className='bold'>Empty</span>
                 </div>
                 <div className='item-list two-column'>
                     <span>{project.maturity_value || 0} </span>
@@ -88,7 +89,7 @@ function Project({ project }) {
 
             <div className="item-box">
                 <div className='item-list hide'>
-                    <span className='title'>Empty</span>
+                    <span className='bold'>Empty</span>
                 </div>
                 <div className='item-list two-column'>
                     <span>{project.security_value || 0} </span>
@@ -117,8 +118,8 @@ function Project({ project }) {
                     <span>Empty</span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>Total Avg.</span>
-                    <span className='title'>10/100</span>
+                    <span className='bold'>Score</span>
+                    <ScoreCalculator project={project}></ScoreCalculator>
                 </div>
             </div>
         </div>

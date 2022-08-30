@@ -1,3 +1,4 @@
 export const apiConfigs = {
-    baseUrl: '***REMOVED***'
+    baseUrl: '***REMOVED***',
+    clienId: '***REMOVED***'
 }

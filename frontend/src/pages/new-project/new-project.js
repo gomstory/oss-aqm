@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { apiConfigs } from '../../services/configs';
 import { useLocation } from "react-router-dom";
-import { login } from '../../redux/authReducer';
-import { createCrawler, getCrawler } from '../../services/crawler';
+import { login, logout, setUser } from '../../redux/authReducer';
+import { createCrawler, getCrawler, getME } from '../../services';
 
 
 function NewProject(props) {
     const auth = useSelector(state => state.auth.isAuth)
+    const token = useSelector(state => state.auth.auth)
+    const user = useSelector(state => state.auth.user)
     const [reqList, setReqList] = useState([])
     const loginURL = `${apiConfigs.baseUrl}/oauth/github/login`;
     const location = useLocation()
@@ -27,7 +29,19 @@ function NewProject(props) {
             loginUser(localToken)
             loadRequest();
         }
-    }, [])
+    }, [auth])
+
+    // Used to get user info
+    useEffect(() => {
+        if (token && !user) {
+            getME(token).then(username => {
+                dispatch(setUser(username))
+            }).catch(() => {
+                onLogout()
+            })
+        }
+
+    }, [token, user])
 
     const loadRequest = () => {
         if (auth) {
@@ -48,10 +62,15 @@ function NewProject(props) {
     }
 
     const createRequest = () => {
-        const url = inputEl.current.value
+        const url = inputEl.current.value;
+        const username = user;
         if (!url) return;
-        return createCrawler(url)
+        return createCrawler(url, user)
             .then(() => inputEl.current.value = "")
+    }
+
+    const onLogout = () => {
+        dispatch(logout())
     }
 
     return (
@@ -64,6 +83,13 @@ function NewProject(props) {
 
             )}
 
+            {auth && user &&
+                <div className='mt-20'>
+                    <h1>Loged in by {user}</h1>
+                    <button className='btn primary ml-10' onClick={onLogout}>Logout</button>
+                </div>
+            }
+
             {auth &&
                 <div className='mt-20'>
                     <h1>Request New Github Projects</h1>
@@ -75,7 +101,7 @@ function NewProject(props) {
 
             {auth &&
                 <div className='mt-20'>
-                    <h2 className='title'>Your request status</h2>
+                    <h2 className='bold'>Your request status</h2>
                     <table className='table'>
                         <thead>
                             <tr>
