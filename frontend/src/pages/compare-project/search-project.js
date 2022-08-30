@@ -1,74 +1,70 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addProject } from '../../redux/projectReducer';
 import { getProject } from '../../services'
 
 function SearchProject() {
-  const [project, setProject] = useState([])
-  const searchElm = useRef()
+  const [searchTerm, setSearchTerm] = useState('')
+  const [searchResult, setSearchResult] = useState([])
   const [popup, setPopup] = useState(false)
   const dispatch = useDispatch()
-  const onSelect = (proj) => {
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      setSearchResult([])
+      getProject(searchTerm)
+        .then(items => {
+          setSearchResult(items)
+          setPopup(true)
+        })
+    }, 2000)
+
+    return () => clearTimeout(delayDebounceFn)
+  }, [searchTerm])
+
+  const onSelectProject = (proj) => {
     if (proj) {
       dispatch(addProject(proj))
       setPopup(false)
     }
   }
 
-  const onChange = (event) => {
-    let term = searchElm.current.value
-    if (term.length >= 3) {
-      setProject([])
-      getProject(term)
-        .then(items => {
-          setProject(items)
-          setPopup(true)
-        })
-    } else {
-      setPopup(false)
-    }
-  }
-
   const onFocus = (event) => {
-    if (project.length == 0) {
-      getProject()
-        .then(items => {
-          setProject(items)
-          setPopup(true)
-        })
-    } else {
+    if (searchResult.length > 0) {
       setPopup(true)
     }
   }
 
-  const onClose = (event) => {
-    setPopup(false)
-    clearSearch()
-    event.preventDefault()
+  const onInput = (event) => {
+    const value = event.target.value
+    setSearchTerm(value)
   }
 
-  const clearSearch = () => {
-    searchElm.current.value = ""
+  const onClear = (event) => {
+    setPopup(false)
+    setSearchTerm("")
+    setSearchResult([])
+    event.preventDefault()
   }
 
   return (
     <div className='search-bar'>
       <input
         type="text"
-        ref={searchElm}
+        value={searchTerm}
         className="search"
-        onInput={onChange}
+        onInput={onInput}
         onFocus={onFocus}
         placeholder="Search Github Project">
       </input>
 
-      {popup && <button className='close' onClick={onClose}>Clear</button>}
+      {popup && <button className='close' onClick={onClear}>Clear</button>}
 
-      {popup && project &&
+      {popup && searchResult &&
         <ul className='search-result'>
-          {project
+          {searchResult
             .map(project =>
-              <li className='search-item' key={project.id} onClick={() => onSelect(project)}>
+              <li className='search-item' key={project.id} onClick={() => onSelectProject(project)}>
                 <img className='icon' src={project.logo} />
                 <span>{project.id}</span>
                 <span>{project.star}⭐</span>
