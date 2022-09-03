@@ -25,16 +25,22 @@ def respond(err, res=None):
 def lambda_handler(event, context):
     # Get owner and repo from event
     data = {}
-    max_pages = 10
     repo = event['repo']
     owner = event['owner']
+    has_next_page = True
+    api_quata = 5000
+    page = 1
+    result = {
+        # How many repository used by
+        "used_by": 0,
+        # Total of Stargazers who stared the repo
+        "result": []
+    }
+
+    # Get used by repository
     github_url = f'https://github.com/{owner}/{repo}/network/dependents'
     r = requests.get(github_url)
     soup = BeautifulSoup(r.content, "html.parser")
-
-    # Initial values
-    data['used_by'] = 0
-    data["result"] = []
 
     # Find total repositories that have been using
     used_by_div = soup.find('a', { 
@@ -45,55 +51,60 @@ def lambda_handler(event, context):
     if used_by_div is not None:
         used_by_text = used_by_div.text
         used_by_total = used_by_text.replace("\n", "").replace("Repositories", "").replace(" ", "").replace(",", "")
-        data['used_by'] = int(used_by_total)
-        data["result"] = []
+        result['used_by'] = int(used_by_total)
 
-    if data['used_by'] > 0:        
-        for i in range(max_pages):
-            r = requests.get(github_url)
-            soup = BeautifulSoup(r.content, "html.parser")
+    # Find startgazers list
+    # Add access token when calling the Github api
+    headers = None
+    token_list = []
 
-            # Get repo name from html
-            page_data = [
-                "{}/{}".format(
-                    t.find('a', {"data-repository-hovercards-enabled":""}).text,
-                    t.find('a', {"data-hovercard-type":"repository"}).text
-                )
+    if 'access_token' in event:
+        token_list = list(event['access_token'])
+        access_token = token_list.pop()
+        headers={ 'Authorization': f'Bearer {access_token}' }
 
-                for t in soup.findAll("div", {"class": "Box-row"})
-            ]
+    while has_next_page and api_quata > 0:
+        # Get repository license
+        response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/stargazers', 
+            params={ 
+                "state": 'all',
+                "per_page": 100, 
+                'page': page 
+            },
+            headers=headers
+        )
 
-            # Store user and repo of users
-            for row in page_data:
-                result = re.search(r"([\w\d\-\_]+)\/([\w\d\-\_]+)", row)
+        # Checking API Quata Every call
+        api_quata = int(response.headers["X-RateLimit-Remaining"])
 
-                if result is not None:                    
-                    group = result.groups()
-                    owner_key = group[0]
-                    repo_key = group[1]
-                    data["result"].append({
-                        "github_id": row,
-                        "owner": owner_key,
-                        "repo": repo_key
-                    })
+        # Fill API Quata by switching access token
+        if has_next_page and api_quata == 0 and len(token_list) > 0:
+            access_token = token_list.pop()
+            headers={ 'Authorization': f'Bearer {access_token}' }
+            api_quata = 5000
 
-            # Find Next pagination
-            paging_div = soup.find("div", {"class":"paginate-container"}).find('a')
+        # Checking Next Page
+        has_next_page = 'next' in response.links
 
-            if paging_div:
-                github_url = paging_div["href"]
-            else:
-                break
+        # Status code is ok
+        if response.status_code == 200:
+            data = response.json()
+            result["result"].extend(data)
+            page = page + 1
 
-            # Slow down for a sec
-            time.sleep(3)
+        # Slow down for 2 sec
+        time.sleep(2)
+
+    # Throw error when exceed maxumum request
+    if api_quata <= 0:
+        raise respond(ValueError("Exceed maximum request from Github"))
 
     # Create json file to tmp folder
     file_name = 'user.json'
     file_path = os.path.join('/tmp', repo, file_name)
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, 'w') as f:
-        json.dump(data, f)
+        json.dump(result, f)
 
     # Upload S3 bucket
     destination_url = f"{owner}/{repo}/{file_name}"
