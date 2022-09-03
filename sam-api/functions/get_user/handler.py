@@ -65,7 +65,7 @@ def lambda_handler(event, context):
 
     while has_next_page and api_quata > 0:
         # Get repository license
-        response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/stargazers', 
+        response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/subscribers', 
             params={ 
                 "state": 'all',
                 "per_page": 100, 

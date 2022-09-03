@@ -85,7 +85,8 @@ function SearchProject() {
 
       {popup && searchResult &&
         <ul ref={popupRef} className='search-result'>
-          {searchResult
+          {searchResult.length == 0 && <li className='search-item'>Project not found</li>}
+          {searchResult.length > 0  && searchResult
             .map(project =>
               <li className='search-item' key={project.id} onClick={() => onSelectProject(project)}>
                 <img className='icon' src={project.logo} />

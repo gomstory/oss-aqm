@@ -56,7 +56,7 @@ def lambda_handler(event, context):
     )
     
     
-    time.sleep(3)
+    time.sleep(5)
     
     # Get run command status
     ssm_command_id = ssm_response['Command']['CommandId']
@@ -73,7 +73,7 @@ def lambda_handler(event, context):
         )
         
         print(ssm_output["Status"])
-        time.sleep(3)
+        time.sleep(5)
 
     # Map last status and sent to queue
     print('SSM Status:', ssm_output["Status"])

@@ -31,6 +31,7 @@ def lambda_handler(event, context):
     # Get github url from body
     body = json.loads(event['body'])
     github_url = body['github_url']
+    username = body["username"] if "username" in body else ""
     requested_time = datetime.datetime.now()
 
     # Check repo is valid before proceed further
@@ -60,6 +61,10 @@ def lambda_handler(event, context):
             'requested_time': {
                 'StringValue': str(requested_time),
                 'DataType': 'String'
+            },
+            'requestor': {
+                'StringValue': username,
+                'DataType': 'String'
             }
         }
     )
@@ -69,5 +74,6 @@ def lambda_handler(event, context):
         "github_url": github_url,
         "owner":  owner,
         "repo": repo,
+        "requestor": username,
         'requested_time': str(requested_time)
     })

@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import boto3
 import os
@@ -154,6 +155,7 @@ def lambda_handler(event, context):
     project_row['day_since_created'] = str(get_days(repo_info["created_at"]))
     project_row["forks"] = str(repo_info["forks"])
     project_row["used_by"] = str(json_files["user"]["used_by"])
+    project_row['analysed_at'] = str(datetime.now())
 
     # Save/Update project to table
     oss_table = dynamo.Table(oss_table_name)
