@@ -90,7 +90,7 @@ function SearchProject() {
               <li className='search-item' key={project.id} onClick={() => onSelectProject(project)}>
                 <img className='icon' src={project.logo} />
                 <span>{project.id}</span>
-                <span>{project.star}⭐</span>
+                <span>{project.stars} ⭐</span>
               </li>)}
         </ul>}
     </div>
