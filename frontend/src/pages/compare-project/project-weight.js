@@ -18,19 +18,25 @@ export function ProjectWeight() {
                     <span className='bold'>Weight</span>
                 </div>
                 <div className='item-list hide'>
-                    <span className='bold'>Empty</span>
+                    <span className='bold'>None</span>
                 </div>
-                <div className='item-list hide'>
-                    <span className='bold'>Empty</span>
+                <div className='item-list'>
+                    <span className='bold'>-</span>
                 </div>
-                <div className='item-list hide'>
-                    <span className='bold'>Empty</span>
+                <div className='item-list'>
+                    <span className='bold'>-</span>
                 </div>
-                <div className='item-list hide'>
-                    <span className='bold'>Empty</span>
+                <div className='item-list'>
+                    <span className='bold'>-</span>
                 </div>
-                <div className='item-list hide'>
-                    <span className='bold'>Empty</span>
+                <div className='item-list'>
+                    <span className='bold'>-</span>
+                </div>
+                <div className='item-list'>
+                    <span className='bold'>-</span>
+                </div>
+                <div className='item-list'>
+                    <span className='bold'>-</span>
                 </div>
             </div>
 
@@ -119,6 +125,11 @@ export function ProjectWeight() {
                 <div className='item-list'>
                     <span>
                         <select name="popularity" onInput={onWeightChange}>{options}</select>
+                    </span>
+                </div>
+                <div className='item-list'>
+                    <span>
+                        <select name="reliability" onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
             </div>

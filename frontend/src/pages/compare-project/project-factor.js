@@ -3,7 +3,7 @@ export function ProjectMetric() {
         <div className="card-item project metric">
             <div className="item-box">
                 <div className='item-list'>
-                    <span className='bold'>Quality Factors</span>
+                    <span className='bold'>Information</span>
                 </div>
                 <div className='item-list'>
                     <span className='bold'>General</span>
@@ -18,7 +18,13 @@ export function ProjectMetric() {
                     <span>Project Stars</span>
                 </div>
                 <div className='item-list'>
-                    <span>Age</span>
+                    <span>Days Since Created</span>
+                </div>
+                <div className='item-list'>
+                    <span>Used By</span>
+                </div>
+                <div className='item-list'>
+                    <span>Number of Forks</span>
                 </div>
             </div>
 
@@ -42,7 +48,7 @@ export function ProjectMetric() {
                     <span>Availability of Forum</span>
                 </div>
                 <div className='item-list'>
-                    <span>Contribution</span>
+                    <span>Support Contributors</span>
                 </div>
                 <div className='item-list'>
                     <span>Quality of Professional Support</span>
@@ -51,7 +57,7 @@ export function ProjectMetric() {
 
             <div className="item-box">
                 <div className='item-list'>
-                    <span className='bold'>Characteristics</span>
+                    <span className='bold'>Operational SW Characteristics</span>
                 </div>
                 <div className='item-list'>
                     <span>Maturity</span>
@@ -82,6 +88,9 @@ export function ProjectMetric() {
                 </div>
                 <div className='item-list'>
                     <span>Popularity</span>
+                </div>
+                <div className='item-list'>
+                    <span>Reliability</span>
                 </div>
             </div>
 
