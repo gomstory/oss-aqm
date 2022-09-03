@@ -35,7 +35,7 @@ def lambda_handler(event, context):
         access_token = token_list.pop()
         headers={ 'Authorization': f'Bearer {access_token}' }
 
-    while has_next_page and api_quata > 0 and page < 10:
+    while has_next_page and api_quata > 0:
         # Get repository license
         response = requests.get(f'https://api.github.com/orgs/{owner}/members', 
             params={ 
