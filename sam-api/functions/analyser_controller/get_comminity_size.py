@@ -31,3 +31,6 @@ class CommunitySize(Contributor):
 
         self.score = (scale_range/5) * 100
         return self.score
+
+    def __str__(self) -> str:
+        return "{:.0f}".format(self.value)

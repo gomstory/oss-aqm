@@ -8,6 +8,9 @@ class Maturity(ScoreCalculator):
         self.repo_info = data['repo-info']
         self.release_info = data['release']
         self.issue = data['issue'] if 'issue' in data else []
+        self.total_age_day = 0
+        self.total_issue = 0
+        self.total_release = 0
 
     def get_age(self):
         """Project age from first created"""
@@ -105,6 +108,9 @@ class Maturity(ScoreCalculator):
         release_score = self.get_release_score(total_release)
         issues = self.get_total_issue()
         issue_score = self.get_bugless_score(issues)
+        self.total_release = total_release
+        self.total_issue = issues
+        self.total_age_day = days
         self.value = (age_score + release_score + issue_score) / 3
         return self.value
 
@@ -112,3 +118,6 @@ class Maturity(ScoreCalculator):
         """Get Final score (0, 100] """
         self.score = self.value * 100
         return self.score
+
+    def __str__(self) -> str:
+        return f"{self.total_age_day}/{self.total_issue}/{self.total_release}"

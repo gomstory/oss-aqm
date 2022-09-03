@@ -26,3 +26,14 @@ class Reliability(ScoreCalculator):
 
         self.score = switcher.get(self.value, 0)
         return self.score
+
+    def __str__(self) -> str:
+        switcher = {
+            1.0: "A",
+            2.0: "B",
+            3.0: "C",
+            4.0: "D",
+            5.0: "E"
+        }
+
+        return switcher.get(self.value, "N/A")

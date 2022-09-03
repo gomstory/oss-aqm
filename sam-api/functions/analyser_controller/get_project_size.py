@@ -32,3 +32,6 @@ class ProjectSize(Calculator.ScoreCalculator):
 
         self.score = self.size_label
         return self.score
+
+    def __str__(self) -> str:
+        return "{:.0f}".format(self.value)
