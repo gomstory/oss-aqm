@@ -62,8 +62,8 @@ function Project({ project }) {
                     <span>{project.community_size_score} </span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.contributor_value}</span>
-                    <span>{project.contributor_score}</span>
+                    <span>{project.availavility_forum_label}</span>
+                    <span>{project.availavility_forum_score}</span>
                 </div>
                 <div className='item-list two-column'>
                     <span>{project.contributor_value} people</span>

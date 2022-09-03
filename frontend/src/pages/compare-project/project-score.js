@@ -12,7 +12,9 @@ export function ScoreCalculator(props) {
       let field = pro
       let w = weight[field]
       let score = project[field + '_score']
-      return prev + (w * score)
+      let w_score = (w * score)
+      console.debug(field, w, score, w_score)
+      return prev + w_score
     }, 0)
     setSum((weightedScore / totalWeight).toFixed(2))
   }, [weight])
