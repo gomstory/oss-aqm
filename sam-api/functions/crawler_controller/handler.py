@@ -29,6 +29,7 @@ def lambda_handler(event, context):
     github_url = raw_data['body']
     repo = raw_data['messageAttributes']['repo']['stringValue']
     owner = raw_data['messageAttributes']['owner']['stringValue']
+    requestor = raw_data['messageAttributes']['requestor']['stringValue']
 
     # Check if github_id already exists ignore and remove q
     row = crawler_table.get_item(Key={'github_id': github_url})
@@ -43,6 +44,7 @@ def lambda_handler(event, context):
                 'github_id': github_url,
                 'repo': repo,
                 'owner': owner,
+                'requestor': requestor,
                 'requested_date': str(today),
                 'license_status': "in-progress",
                 'lang_status': "in-progress",
@@ -52,7 +54,7 @@ def lambda_handler(event, context):
                 'contributor_status': "in-progress",
                 'issue_status': "in-progress",
                 'core_team_status': 'in-progress',
-                'user_status': 'in-progress',
+                'user_status': 'in-progress'
             }
         )
 
