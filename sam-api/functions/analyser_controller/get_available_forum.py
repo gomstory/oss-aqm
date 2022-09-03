@@ -9,3 +9,6 @@ class AvailableForum(ScoreCalculator):
 
     def get_score(self):
         return 0
+
+    def __str__(self) -> str:
+        return f"{0}/{0}"

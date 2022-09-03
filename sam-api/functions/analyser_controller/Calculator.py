@@ -19,3 +19,6 @@ class ScoreCalculator(ABC):
     def get_score(self) -> dict:
         """ Get Calculate Score (0, 100) """
         return self.score
+
+    def __str__(self) -> str:
+        return str(self.value)

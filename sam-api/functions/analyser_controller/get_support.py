@@ -26,3 +26,6 @@ class Professional_Support(ScoreCalculator):
             return 100
         elif self.value > 0:
             return self.value * 100
+
+    def __str__(self) -> str:
+        return f"{len(self.issues_supported)}/{len(self.issues)}"

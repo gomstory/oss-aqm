@@ -8,6 +8,8 @@ class Document(ScoreCalculator):
     def __init__(self, data: dict) -> None:
         self.sonar = data['sonar-info']
         self.metrics = self.sonar['component']['measures']
+        self.comment_lines = 0
+        self.code_lines = 0
 
     def get_metric(self, metrics: dict, key: str):
         for item in metrics:
@@ -29,13 +31,16 @@ class Document(ScoreCalculator):
 
     def get_value(self) -> dict:
         """Get Code Comment Line Density"""
-        comment_lines = self.get_comment_lines()
-        code_lines = self.get_code_lines()
-        self.value = (comment_lines / (comment_lines + code_lines))
+        self.comment_lines = self.get_comment_lines()
+        self.code_lines = self.get_code_lines()
+        self.value = (self.comment_lines / (self.comment_lines + self.code_lines))
         return self.value
 
     def get_score(self) -> dict:
         """Convert to (0,100) score rank"""
         self.score = self.value * 100
         return self.score
+
+    def __str__(self) -> str:
+        return f"{self.comment_lines}/{self.code_lines}"
 

@@ -19,7 +19,7 @@ from get_document import Document
 from get_project_size import ProjectSize
 from get_comminity_size import CommunitySize
 from get_available_forum import AvailableForum
-from utils import get_age_label
+from utils import get_days
 
 # Connect to AWS services
 s3 = boto3.resource('s3')
@@ -137,6 +137,7 @@ def lambda_handler(event, context):
         score = calculator.get_score()
         project_row[f"{field}_score"] = score
         project_row[f"{field}_value"] = value
+        project_row[f"{field}_label"] = str(calculator)
 
     # Creating project info record
     repo_info = json_files.get("repo-info")
@@ -145,12 +146,14 @@ def lambda_handler(event, context):
     project_row["created_at"] = repo_info["created_at"]
     project_row["updated_at"] = repo_info["updated_at"]
     project_row["description"] = repo_info["description"]
-    project_row["star"] = repo_info["stargazers_count"]
+    project_row["stars"] = str(repo_info["stargazers_count"])
     project_row["website"] = repo_info["homepage"]
-    project_row["topics"] = ",".join(repo_info["topics"])
+    project_row["topics"] = ", ".join(repo_info["topics"])
     project_row["logo"] = get_logo(repo_info)
     project_row["github_url"] = f"https://github.com/{owner}/{repo}"
-    project_row['age_since'] = get_age_label(repo_info["created_at"])
+    project_row['day_since_created'] = str(get_days(repo_info["created_at"]))
+    project_row["forks"] = str(repo_info["forks"])
+    project_row["used_by"] = str(json_files["user"]["used_by"])
 
     # Save/Update project to table
     oss_table = dynamo.Table(oss_table_name)
