@@ -4,13 +4,13 @@ from get_contributor import Contributor
 class CommunitySize(Contributor):
     def __init__(self, data: dict) -> None:
         super().__init__(data)
-        self.users = data['user']['used_by'] if 'user' in data else 0
+        self.users = data['user']['result'] if 'user' in data else []
 
     def get_value(self) -> int:
         """ Summation of contributors + core team members + users"""
         contributos = len(self.contributors)
         core = len(self.core_team)
-        users = int(self.users)
+        users = len(self.users)
         self.value = contributos + core + users
         return self.value
 

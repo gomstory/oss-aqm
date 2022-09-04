@@ -9,6 +9,7 @@ class Contributor(ScoreCalculator):
     def __init__(self, data: dict) -> None:
         self.value = 0
         self.score = 0
+        # TODO: Filter contributors out from core-team member
         self.contributors = data['contributor'] if 'contributor' in data else []
         self.core_team = data['core-team'] if 'core-team' in data else []
 

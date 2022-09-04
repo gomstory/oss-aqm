@@ -113,6 +113,7 @@ function NewProject(props) {
                                 <th>Core Team</th>
                                 <th>License</th>
                                 <th>Issue</th>
+                                <th>Requested By</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -128,6 +129,7 @@ function NewProject(props) {
                                     <td>{row.core_team_status}</td>
                                     <td>{row.license_status}</td>
                                     <td>{row.issue_status}</td>
+                                    <td>{row.requestor}</td>
                                 </tr>
                             )}
                         </tbody>

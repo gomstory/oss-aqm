@@ -26,7 +26,7 @@ function Project({ project }) {
                     <span><a href={project.website}>{project.website}</a></span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.project_size_value} lines </span>
+                    <span>{project.project_size_label} lines </span>
                     <span>{project.project_size_score} </span>
                 </div>
                 <div className='item-list'>
@@ -49,7 +49,7 @@ function Project({ project }) {
                 </div>
                 <div className='item-list two-column'>
                     <span>{project.license_value} </span>
-                    <span>{project.license_scor} </span>
+                    <span>{project.license_score} </span>
                 </div>
             </div>
 

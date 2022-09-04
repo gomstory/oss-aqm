@@ -21,7 +21,7 @@ def respond(err, res=None):
     }
 
 def get_owner_and_project(github_url):
-    result = re.search(r"^https:\/\/github.com\/([\w\d\_\-]+)\/(([\w\d\-\_]+))", github_url)
+    result = re.search(r"^https:\/\/github.com\/([\w\d\_\-]+)\/(([\w\d\-\_\.]+))", github_url)
     group = result.groups()
     owner = group[0]
     projec = group[1]
