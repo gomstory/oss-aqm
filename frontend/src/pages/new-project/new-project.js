@@ -10,30 +10,31 @@ function NewProject(props) {
     const auth = useSelector(state => state.auth.isAuth)
     const token = useSelector(state => state.auth.auth)
     const user = useSelector(state => state.auth.user)
+    const [loading, setLoading] = useState(false)
     const [reqList, setReqList] = useState([])
     const loginURL = `${apiConfigs.baseUrl}/oauth/github/login`;
     const location = useLocation()
     const dispatch = useDispatch()
     const inputEl = useRef(null);
 
-    // Used to authentication
     useEffect(() => {
         const localToken = window.localStorage.getItem('token')
         const params = new URLSearchParams(location.search)
         const token = params.get('access_token')
-
+        
+        // Used to authentication
         if (token && !localToken) {
             window.localStorage.setItem('token', token)
             window.location.replace("/oss-aqm#/new")
         } else if (localToken) {
             loginUser(localToken)
-            loadRequest();
+            refreshTable();
         }
     }, [auth])
 
-    // Used to get user info
     useEffect(() => {
         if (token && !user) {
+            // Used to get user info
             getME(token).then(username => {
                 dispatch(setUser(username))
             }).catch(() => {
@@ -47,6 +48,7 @@ function NewProject(props) {
         if (auth) {
             getCrawler()
                 .then(list => {
+                    setLoading(false)
                     setReqList(list)
                 })
         }
@@ -58,6 +60,7 @@ function NewProject(props) {
 
     const refreshTable = () => {
         setReqList([])
+        setLoading(true)
         loadRequest()
     }
 
@@ -131,6 +134,14 @@ function NewProject(props) {
                                     <td>{row.issue_status}</td>
                                     <td>{row.requestor}</td>
                                 </tr>
+                            )}
+
+                            {auth && !loading && reqList.length == 0 && (
+                                <tr><td className='text-center' colSpan={11}>No record found</td></tr> 
+                            )}
+
+                            {auth && loading && (
+                                <tr><td className='text-center' colSpan={11}>Loading...</td></tr> 
                             )}
                         </tbody>
                     </table>
