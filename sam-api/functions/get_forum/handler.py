@@ -44,7 +44,8 @@ def lambda_handler(event, context):
 	PAGE = '&page='
 	PAGE_SIZE_URL = '&pageSize='
 	PAGE_SIZE = 50
-	MAX_PAGE = 25
+	# 260 pages, takes 13 min calculation
+	MAX_PAGE = 260 
 	MAX_DAYS_PERIOD = 30
 	start = 1
 	current_page = start
@@ -65,6 +66,10 @@ def lambda_handler(event, context):
 				'div', {'class': "s-post-summary"}, limit=50)
 
 			# TODO: questions is returned only 15 rows
+			# Question is empty before page end (no more question)
+			if len(questions) == 0:
+				break
+			
 			for question in questions:
 				# Html element tags
 				link_tag = question.find('a')
