@@ -25,7 +25,7 @@ function NewProject(props) {
         // Used to authentication
         if (token && !localToken) {
             window.localStorage.setItem('token', token)
-            window.location.replace("/#/new")
+            window.location.replace("/oss-aqm/#/new")
         } else if (localToken) {
             loginUser(localToken)
             refreshTable();
