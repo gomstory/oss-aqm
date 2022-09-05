@@ -47,7 +47,8 @@ def lambda_handler(event, context):
         'release_status',
         'issue_status',
         'core_team_status',
-        'user_status'
+        'user_status',
+        'forum_status'
     ]
     
     response = crawler_table.get_item(Key={'github_id': f'https://github.com/{owner}/{repo}'})
@@ -76,7 +77,7 @@ def lambda_handler(event, context):
         print('Analyses::Invoke', func_name)
 
         # Remove the record from Crawler Table
-        # crawler_table.delete_item(Key={ 'github_id': github_id })
+        crawler_table.delete_item(Key={ 'github_id': github_id })
 
     # Return success or fail
     return respond(None, 'OK')
