@@ -54,7 +54,8 @@ def lambda_handler(event, context):
                 'contributor_status': "in-progress",
                 'issue_status': "in-progress",
                 'core_team_status': 'in-progress',
-                'user_status': 'in-progress'
+                'user_status': 'in-progress',
+                'forum_status': 'in-progress'
             }
         )
 
@@ -68,7 +69,8 @@ def lambda_handler(event, context):
             os.environ["GET_RELEASE_FUNCTION"],
             os.environ["GET_ISSUE_FUNCTION"],
             os.environ["GET_CORE_TEAM_FUNCTION"],
-            os.environ["GET_USER_FUNCTION"]
+            os.environ["GET_USER_FUNCTION"],
+            os.environ["GET_FORUM_FUNCTION"]
         ]
 
         payload = {
