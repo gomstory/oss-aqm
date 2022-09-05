@@ -25,7 +25,7 @@ function NewProject(props) {
         // Used to authentication
         if (token && !localToken) {
             window.localStorage.setItem('token', token)
-            window.location.replace("/oss-aqm#/new")
+            window.location.replace("/#/new")
         } else if (localToken) {
             loginUser(localToken)
             refreshTable();
@@ -59,7 +59,6 @@ function NewProject(props) {
     }
 
     const refreshTable = () => {
-        setReqList([])
         setLoading(true)
         loadRequest()
     }
@@ -120,7 +119,7 @@ function NewProject(props) {
                             </tr>
                         </thead>
                         <tbody>
-                            {auth && reqList.map(row =>
+                            {auth && !loading && reqList.map(row =>
                                 <tr key={row.github_id}>
                                     <td>{row.github_id}</td>
                                     <td>{row.repo_info_status}</td>
