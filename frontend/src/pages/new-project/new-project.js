@@ -138,7 +138,7 @@ function NewProject(props) {
                             )}
 
                             {auth && !loading && reqList.length == 0 && (
-                                <tr><td className='text-center' colSpan={12}>No record found</td></tr> 
+                                <tr><td className='text-center' colSpan={12}>No crawling in progress</td></tr> 
                             )}
 
                             {auth && loading && (
