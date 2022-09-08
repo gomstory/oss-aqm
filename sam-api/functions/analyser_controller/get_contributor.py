@@ -5,13 +5,17 @@ from Calculator import ScoreCalculator
     Description: The number of core developer and contributor in the last 6 month
 """
 class Contributor(ScoreCalculator):
-    """Aka of Support Contributor"""
+    """Number of current core developers and contributors."""
     def __init__(self, data: dict) -> None:
         self.value = 0
         self.score = 0
-        # TODO: Filter contributors out from core-team member
-        self.contributors = data['contributor'] if 'contributor' in data else []
         self.core_team = data['core-team'] if 'core-team' in data else []
+        self.contributors = self.get_contributors(data['contributor']) if 'contributor' in data else []
+
+    def get_contributors(self, contributors: list = []):
+        """ Filter contributors out from core-team member """
+        core_team_name_list = list(map(lambda x: x['login'], self.core_team))
+        return list(filter(lambda x: not x['login'] in core_team_name_list, contributors))
 
     def get_value(self):
         """Number of Support Contributor + Core Team"""

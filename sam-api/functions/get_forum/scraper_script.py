@@ -87,10 +87,10 @@ def crawl_pages(num_pages):
 					print("Go Next Page!")
 					break
 
-			# Slow down for 2 seconds
+			# Slow down for 1 seconds
 			if current_page < end:
 				current_page += 1
-				timer.sleep(2)
+				timer.sleep(1)
 		
 		except (KeyboardInterrupt, EOFError, SystemExit):
 			print("\nStopped by user!")

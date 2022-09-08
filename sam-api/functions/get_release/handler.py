@@ -56,8 +56,8 @@ def lambda_handler(event, context):
         # Checking API Quata
         api_qata = int(response.headers["X-RateLimit-Remaining"])
 
-        # Slow down for 2 sec
-        time.sleep(2)
+        # Slow down for 1 sec
+        time.sleep(1)
 
     # Create json file to tmp folder
     file_name = 'release.json'

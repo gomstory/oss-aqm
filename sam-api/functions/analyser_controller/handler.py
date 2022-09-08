@@ -136,9 +136,11 @@ def lambda_handler(event, context):
         calculator = Class_n(json_files)
         value = calculator.get_value()
         score = calculator.get_score()
+        desc = calculator.desc()
         project_row[f"{field}_score"] = score
         project_row[f"{field}_value"] = value
         project_row[f"{field}_label"] = str(calculator)
+        project_row[f"{field}_desc"] = desc
 
     # Creating project info record
     repo_info = json_files.get("repo-info")

@@ -17,7 +17,20 @@ class AvailableForum(ScoreCalculator):
         return self.value
 
     def get_score(self):
-        self.score = self.value * 100
+        range = 0
+        
+        if self.value > 720:
+            range = 5
+        elif self.value > 300:
+            range = 4
+        elif self.value > 150:
+            range = 3
+        elif self.value > 30:
+            range = 2
+        elif self.value <= 30:
+            range = 1
+
+        self.score = (range/5) * 100
         return self.score
 
     def __str__(self) -> str:
