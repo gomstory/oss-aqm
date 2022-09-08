@@ -41,6 +41,7 @@ def lambda_handler(event, context):
     
     # Attract full_url, project, owner from the link
     owner, repo = get_owner_and_project(github_url)
+    github_url = f'https://github.com/{owner}/{repo}'
     
     # Create queue with body and additional attributes
     print('start sending queue', github_url, owner, repo)
