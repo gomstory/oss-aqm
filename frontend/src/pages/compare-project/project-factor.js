@@ -245,7 +245,7 @@ export function ProjectMetric() {
                         </span>
                     </div>
                 </div>
-                <div className='item-list'>
+                {/* <div className='item-list'>
                     <div class="tooltip">
                         <span>Popularity*</span>
                         <span class="tooltiptext">
@@ -260,7 +260,7 @@ export function ProjectMetric() {
                             </span>
                         </span>
                     </div>
-                </div>
+                </div> */}
                 <div className='item-list'>
                     <div class="tooltip">
                         <span>Reliability</span>

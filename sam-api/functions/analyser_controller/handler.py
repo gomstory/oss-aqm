@@ -118,7 +118,7 @@ def lambda_handler(event, context):
         ('maturity', Maturity),
         ('security', Security),
         ('document', Document),
-        ('popularity', Popularity),
+        # ('popularity', Popularity),
         ('contributor', Contributor),
         ('testibility', Testibility),
         ('reliability', Reliability),

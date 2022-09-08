@@ -122,11 +122,11 @@ export function ProjectWeight() {
                         <select name="maintainability" onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
-                <div className='item-list'>
+                {/* <div className='item-list'>
                     <span>
                         <select name="popularity" onInput={onWeightChange}>{options}</select>
                     </span>
-                </div>
+                </div> */}
                 <div className='item-list'>
                     <span>
                         <select name="reliability" onInput={onWeightChange}>{options}</select>

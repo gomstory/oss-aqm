@@ -113,10 +113,10 @@ function Project({ project }) {
                     <span>{project.maintainability_label} </span>
                     <span>{project.maintainability_score} </span>
                 </div>
-                <div className='item-list two-column'>
+                {/* <div className='item-list two-column'>
                     <span>{project.popularity_label} </span>
                     <span>{project.popularity_score} </span>
-                </div>
+                </div> */}
                 <div className='item-list two-column'>
                     <span>{project.reliability_label} </span>
                     <span>{project.reliability_score} </span>
