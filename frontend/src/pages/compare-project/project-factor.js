@@ -77,7 +77,7 @@ export function ProjectMetric() {
                                 Average number of questions with answers in forum in the last 6 months.
                             </span>
                             <span className="metric">
-                                <p>Value: Number of question with answers/Number of total questions</p>
+                                <p>Value: Number of question with answers</p>
                                 <p>Score: 0-100</p>
                             </span>
                         </span>
