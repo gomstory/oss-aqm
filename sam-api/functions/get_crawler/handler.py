@@ -22,7 +22,6 @@ def respond(err, res=None):
 
 def lambda_handler(event, context):
     oss_table = dynamo.Table(table_name)
-    # TODO: Get Latest 10 and ordered rows 
     scan_result = oss_table.scan(Limit=10)
     return respond(None, {
         "items": scan_result["Items"],
