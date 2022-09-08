@@ -77,8 +77,8 @@ def lambda_handler(event, context):
                 last_row = data[-1]
                 issue_date = datetime.strptime(last_row['created_at'], "%Y-%m-%dT%H:%M:%SZ")
 
-        # Slow down for 2 sec
-        time.sleep(2)
+        # Slow down for 1 sec
+        time.sleep(1)
 
     # Throw error when exceed maxumum request
     if api_quata <= 0:

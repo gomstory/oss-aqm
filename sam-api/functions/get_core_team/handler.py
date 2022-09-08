@@ -56,8 +56,8 @@ def lambda_handler(event, context):
             rows.extend(data)
             page = page + 1
 
-        # Slow down for 2 sec
-        time.sleep(2)
+        # Slow down for 1 sec
+        time.sleep(1)
 
    # Throw error when exceed maxumum request
     if api_quata <= 0:
