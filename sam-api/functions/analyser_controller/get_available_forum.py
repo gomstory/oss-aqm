@@ -13,7 +13,7 @@ class AvailableForum(ScoreCalculator):
     def get_value(self):
         self.total_forum = len(self.forum)
         self.forum_with_answer = len(self.get_forum_with_answer())
-        self.value = self.forum_with_answer / self.total_forum
+        self.value = self.forum_with_answer
         return self.value
 
     def get_score(self):
@@ -34,4 +34,4 @@ class AvailableForum(ScoreCalculator):
         return self.score
 
     def __str__(self) -> str:
-        return f"{self.forum_with_answer}/{self.total_forum}"
+        return f"{self.forum_with_answer}"
