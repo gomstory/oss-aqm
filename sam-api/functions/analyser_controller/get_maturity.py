@@ -24,27 +24,30 @@ class Maturity(ScoreCalculator):
     def get_release(self):
         """Get only manjor release"""
         data = self.release_info
-        major_releases = []
+        minor_releases = []
 
         for release in data:
             version = release['tag_name']
-            major_version = re.search(r"\w?(\d)", version)
-            #TODO: Get Minor Release
-            if major_version is not None:
-                major = major_version.groups()[0]
-                if (major in major_releases) == False:
-                    major_releases.append(major)
+            minor_release = re.findall(r"(\d+)", version)
 
-        return len(major_releases)
+            if minor_release is not None:
+                major = minor_release[0]
+                minor = minor_release[1]
+                major_minor = f"{major}.{minor}"
 
-    def get_release_score(self, number_of_major_release: int = 0) -> float:
+                if (major_minor in minor_releases) == False:
+                    minor_releases.append(major_minor)
+
+        return len(minor_releases)
+
+    def get_release_score(self, minor_release: int = 0) -> float:
         score_range = 1
 
-        if number_of_major_release > 3: 
+        if minor_release > 3: 
             score_range = 5
-        elif number_of_major_release <= 3 and number_of_major_release > 1: 
+        elif minor_release <= 3 and minor_release > 1: 
             score_range = 3
-        elif number_of_major_release <= 1: 
+        elif minor_release <= 1: 
             score_range = 1
 
         return (score_range / 5)
