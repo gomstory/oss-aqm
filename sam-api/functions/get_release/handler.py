@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import json
 import requests
 import boto3
@@ -24,10 +25,17 @@ def lambda_handler(event, context):
     repo = event['repo']
     owner = event['owner']
     has_next_page = True
+    today = datetime.now()
+    released_date = today
+    twelve_month_early = today - timedelta(days=365)
     headers = None
-    api_qata = 5000
+    api_quata = 5000
     page = 1
     rows = []
+
+    # Add access token when calling the Github api
+    headers = None
+    token_list = []
 
     # Add access token when calling the Github api
     if 'access_token' in event:
@@ -35,7 +43,7 @@ def lambda_handler(event, context):
         access_token = token_list.pop()
         headers={ 'Authorization': f'Bearer {access_token}' }
 
-    while(has_next_page and api_qata > 0 and page < 5):
+    while (has_next_page) and (api_quata > 0) and (released_date > twelve_month_early):
         # Get repository license
         response = requests.get(f'https://api.github.com/repos/{owner}/{repo}/releases',
             params={ 
@@ -45,19 +53,34 @@ def lambda_handler(event, context):
             headers=headers
         )
 
-        if response.status_code == 200:
-            data = response.json()
-            rows.extend(data)
-            page = page + 1
+        # Checking API Quata
+        api_quata = int(response.headers["X-RateLimit-Remaining"])
+        if api_quata == 0 and len(token_list) > 0:
+            # Fill API Quata by switching access token
+            access_token = token_list.pop()
+            headers={ 'Authorization': f'Bearer {access_token}' }
+            api_quata = 5000
 
         # Checking Next Page
         has_next_page = 'next' in response.links
 
-        # Checking API Quata
-        api_qata = int(response.headers["X-RateLimit-Remaining"])
+        # Status code is ok
+        if response.status_code == 200:
+            data = response.json()
+            rows.extend(data)
+            page = page + 1
+        
+            # Check issue date is reached yet or not
+            if len(data) > 0:
+                last_row = data[-1]
+                released_date = datetime.strptime(last_row['created_at'], "%Y-%m-%dT%H:%M:%SZ")
 
         # Slow down for 1 sec
         time.sleep(1)
+
+    # Throw error when exceed maxumum request
+    if api_quata <= 0:
+        raise respond(ValueError("Exceed maximum request from Github"))
 
     # Create json file to tmp folder
     file_name = 'release.json'
