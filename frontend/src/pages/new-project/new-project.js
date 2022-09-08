@@ -138,11 +138,11 @@ function NewProject(props) {
                             )}
 
                             {auth && !loading && reqList.length == 0 && (
-                                <tr><td className='text-center' colSpan={11}>No record found</td></tr> 
+                                <tr><td className='text-center' colSpan={12}>No record found</td></tr> 
                             )}
 
                             {auth && loading && (
-                                <tr><td className='text-center' colSpan={11}>Loading...</td></tr> 
+                                <tr><td className='text-center' colSpan={12}>Loading...</td></tr> 
                             )}
                         </tbody>
                     </table>
