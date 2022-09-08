@@ -39,10 +39,7 @@ def lambda_handler(event, context):
 	print(event)
 	repo = event['repo']
 	owner = event["owner"]
-	BASE_URL = f'https://stackoverflow.com/questions/tagged/{repo}'
-	SORT = '?sort=Newest'
-	PAGE = '&page='
-	PAGE_SIZE_URL = '&pageSize='
+	BASE_URL = f"https://stackoverflow.com/questions/tagged/{repo}"
 	PAGE_SIZE = 50
 	# 260 pages, takes 13 min calculation
 	MAX_PAGE = 260 
@@ -55,10 +52,21 @@ def lambda_handler(event, context):
 	
 	while current_page != end:
 		try:
-			page_url = BASE_URL + SORT + PAGE + str(current_page) + PAGE_SIZE_URL + str(PAGE_SIZE)
-			source_code = requests.get(page_url, headers=headers, timeout=10).text
+			page_url = BASE_URL
+			response = requests.get(page_url, headers=headers, params={
+				'tab': 'Newest',
+				'page': current_page,
+				'pageSize': PAGE_SIZE
+			}, timeout=10)
+			
+			source_code = response.text
 			soup = BeautifulSoup(source_code, 'html.parser')
 			q_no = 0
+
+			# Check wheater URL has redirected
+			reponse_url = response.url.split('?')[0]
+			if page_url != reponse_url:
+				BASE_URL = reponse_url
 
 			print('Crawling:' + str(current_page) + ': ' + page_url)
 
