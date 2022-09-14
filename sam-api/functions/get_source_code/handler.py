@@ -69,6 +69,10 @@ def shoud_analysis_project(owner: str, repo: str):
 
 # The lambda function requires git layer, checkout template.yml
 def lambda_handler(event, context):
+    # Show info for debuging purpose
+    print(event)
+    
+    # Get owner and repo from event
     repo = event['repo']
     owner = event['owner']
     lambda_status = "pending"

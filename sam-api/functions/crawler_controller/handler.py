@@ -89,5 +89,4 @@ def lambda_handler(event, context):
             
             print('Invoke func', func_name)
             
-    # Return success or fail
     return respond(None, 'OK')
