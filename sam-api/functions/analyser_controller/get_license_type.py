@@ -3,13 +3,16 @@ from Calculator import ScoreCalculator
 class License(ScoreCalculator):
     def __init__(self, data: dict) -> None:
         self.license_info = data['license']
+        self.repo_info = data["repo-info"]
 
     def get_value(self) -> str:
-        data = self.license_info
         self.value = 'none'
         
-        if 'license' in data:
-            license = data['license']['key']
+        if 'license' in self.license_info:
+            license = self.license_info['license']['key']
+            self.value = license
+        elif 'license' in self.repo_info:
+            license = self.repo_info['license']['key']
             self.value = license
 
         return self.value
