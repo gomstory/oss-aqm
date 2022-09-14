@@ -21,6 +21,9 @@ def respond(err, res=None):
     }
 
 def lambda_handler(event, context):
+    # Show info for debuging purpose
+    print(event)
+    
     # Get owner and repo from event
     repo = event['repo']
     owner = event['owner']
