@@ -50,6 +50,9 @@ def shoud_analysis_project(owner: str, repo: str):
             'projects': f"{owner}:{repo}",
     })
 
+    if response.status_code != 200:
+        raise ValueError("Sonarqube API is failed")
+
     data = response.json()
     project_list = data["components"]
 
