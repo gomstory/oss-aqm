@@ -1,7 +1,7 @@
 const { generateErrorObject } = require('./error')
 const baseUrl = 'https://github.com'
 const authorizePath = '/login/oauth/authorize'
-const scope = 'user:email,public_repo'
+const scope = 'user:email'
 const allowSignup = 'false'
 const authorizationUrl = `${baseUrl}${authorizePath}?client_id=${process.env.CLIENT_ID}&scope=${scope}&allow_signup=${allowSignup}`
 
