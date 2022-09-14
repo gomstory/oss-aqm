@@ -41,8 +41,8 @@ def lambda_handler(event, context):
 	owner = event["owner"]
 	BASE_URL = f"https://stackoverflow.com/questions/tagged/{repo}"
 	PAGE_SIZE = 50
-	# 260 pages, takes 13 min calculation
-	MAX_PAGE = 260 
+	# 200 pages, takes 13 min calculation
+	MAX_PAGE = 200 
 	MAX_DAYS_PERIOD = 30
 	start = 1
 	current_page = start
