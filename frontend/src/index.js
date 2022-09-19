@@ -25,7 +25,7 @@ root.render(
             <Route path="compare" element={<CompareProject />} />
             <Route path="new" element={<NewProject />} />
             <Route path="about-us" element={<AboutUs />} />
-            <Route path='*' element={<Navigate to="/compare" replace />} />
+            <Route path='' element={<Navigate to="/compare" replace />} />
           </Route>
         </Routes>
       </HashRouter>
