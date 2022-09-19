@@ -26,19 +26,21 @@
 }
 
 .tooltiptext {
-    .title {
+    .title,
+    .equation {
         font-weight: bold;
         display: block
     }
 
-    .definition {
+    .definition,
+    .metric,
+    .result {
         display: block;
         margin: 10px 0;
     }
 
-    .metric {
-        margin-top: 10px;
-        display: block;
+    .metric .row span:first-child {
+        margin-right: 20px;
     }
 
     a {

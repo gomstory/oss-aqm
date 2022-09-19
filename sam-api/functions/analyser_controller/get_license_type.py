@@ -30,8 +30,8 @@ class License(ScoreCalculator):
             "bsl-1.0": 4,
             "bsd-2-clause": 4,
             "bsd-3-clause": 4,
-            "mit": 4,
             "unlicense": 4,
+            "mit": 5,
             "apache-2.0": 5,
         }
 
