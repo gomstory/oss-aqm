@@ -7,40 +7,40 @@ import { createCrawler, getCrawler, getME } from '../../services';
 
 
 function NewProject(props) {
-    const auth = useSelector(state => state.auth.isAuth)
-    const token = useSelector(state => state.auth.auth)
-    const user = useSelector(state => state.auth.user)
-    const [loading, setLoading] = useState(false)
-    const [reqList, setReqList] = useState([])
-    const [submit, setSubmit] = useState(false)
+    const auth = useSelector(state => state.auth.isAuth);
+    const token = useSelector(state => state.auth.auth);
+    const user = useSelector(state => state.auth.user);
+    const [loading, setLoading] = useState(false);
+    const [reqList, setReqList] = useState([]);
+    const [submit, setSubmit] = useState(false);
     const loginURL = `${apiConfigs.baseUrl}/oauth/github/login`;
-    const location = useLocation()
-    const dispatch = useDispatch()
+    const location = useLocation();
+    const dispatch = useDispatch();
     const inputEl = useRef(null);
 
     useEffect(() => {
-        const localToken = window.localStorage.getItem('token')
-        const params = new URLSearchParams(location.search)
-        const token = params.get('access_token')
+        const localToken = window.localStorage.getItem('token');
+        const params = new URLSearchParams(location.search);
+        const token = params.get('access_token');
         
         // Used to authentication
         if (token && !localToken) {
-            window.localStorage.setItem('token', token)
-            window.location.replace("/oss-aqm/#/new")
-            loginUser(token)
+            window.localStorage.setItem('token', token);
+            window.location.replace("/oss-aqm/#/new");
+            loginUser(token);
         } else if (localToken && !auth) {
-            loginUser(localToken)
+            loginUser(localToken);
             refreshTable();
         }
-    }, [])
+    }, [localStorage])
 
     useEffect(() => {
         if (token && !user) {
             // Used to get user info
             getME(token).then(username => {
-                dispatch(setUser(username))
+                dispatch(setUser(username));
             }).catch(() => {
-                onLogout()
+                onLogout();
             })
         }
 
@@ -50,39 +50,39 @@ function NewProject(props) {
         if (auth) {
             getCrawler()
                 .then(list => {
-                    setLoading(false)
-                    setReqList(list)
+                    setLoading(false);
+                    setReqList(list);
                 })
         }
     }
 
     const loginUser = (token) => {
-        dispatch(login(token))
+        dispatch(login(token));
     }
 
     const refreshTable = () => {
-        setLoading(true)
-        loadRequest()
+        setLoading(true);
+        loadRequest();
     }
 
     const createRequest = () => {
         const url = inputEl.current.value;
         const username = user;
         if (!url) return;
-        return createCrawler(url, user)
+        return createCrawler(url, username)
             .then(() => inputEl.current.value = "")
-            .then(() => showSubmitMsg())
+            .then(() => showSubmitMsg());
     }
 
     const onLogout = () => {
-        dispatch(logout())
+        dispatch(logout());
     }
 
     const showSubmitMsg = () => {
         setSubmit(true)
         setTimeout(() => {
-            setSubmit(false)
-        }, 10000)
+            setSubmit(false);
+        }, 10000);
     }
 
     return (
@@ -148,7 +148,7 @@ function NewProject(props) {
                                 </tr>
                             )}
 
-                            {auth && !loading && reqList.length == 0 && (
+                            {auth && !loading && reqList.length === 0 && (
                                 <tr><td className='text-center' colSpan={12}>No project in progress</td></tr> 
                             )}
 
