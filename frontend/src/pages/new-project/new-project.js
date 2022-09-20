@@ -27,11 +27,12 @@ function NewProject(props) {
         if (token && !localToken) {
             window.localStorage.setItem('token', token)
             window.location.replace("/oss-aqm/#/new")
-        } else if (localToken) {
+            loginUser(token)
+        } else if (localToken && !auth) {
             loginUser(localToken)
             refreshTable();
         }
-    }, [auth])
+    }, [])
 
     useEffect(() => {
         if (token && !user) {
