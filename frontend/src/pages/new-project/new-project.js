@@ -31,8 +31,11 @@ function NewProject(props) {
         } else if (localToken && !auth) {
             loginUser(localToken);
             refreshTable();
+        } else if (auth) {
+            refreshTable()
         }
-    }, [localStorage])
+
+    }, [])
 
     useEffect(() => {
         if (token && !user) {
