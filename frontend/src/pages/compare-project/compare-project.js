@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React from 'react';
 import Project from "./project-item";
 import { useSelector } from 'react-redux'
 import SearchProject from './search-project'
@@ -7,9 +7,6 @@ import { ProjectMetric } from './project-factor';
 
 function CompareProject() {
     const projects = useSelector(state => state.project.value)
-    const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(option => <option key={option} value={option}>{option}</option>)
-    const selectOption = <select>{options}</select>
-
     return (
         <div className="container">
             <div className='search-container'>
