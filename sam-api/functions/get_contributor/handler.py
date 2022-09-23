@@ -81,6 +81,7 @@ def lambda_handler(event, context):
     response = sqs.send_message(
         QueueUrl=queue_name,
         MessageBody='contributor_status',
+        MessageDeduplicationId=destination_url,
         MessageGroupId=repo,
         MessageAttributes={
             'function_name': {
