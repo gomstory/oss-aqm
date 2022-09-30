@@ -196,23 +196,23 @@ export function ProjectMetric() {
                                 </div>  
                                 <div className="row">
                                     <span>S=1</span>
-                                    <span>Average Q&A in the last 6 months &#x2264; 30 messages per month</span>
+                                    <span>Average Q&A in the past 6 months &#x2264; 30 messages per month</span>
                                 </div>
                                 <div className="row">
                                     <span>S=2</span>
-                                    <span>Average Q&A in the last 6 months &gt; 30-150 messages per month</span>
+                                    <span>Average Q&A in the past 6 months &gt; 30-150 messages per month</span>
                                 </div>
                                 <div className="row">
                                     <span>S=3</span>
-                                    <span>Average Q&A in the last 6 months &gt; 150-300 </span>
+                                    <span>Average Q&A in the past 6 months &gt; 150-300 </span>
                                 </div>
                                 <div className="row">
                                     <span>S=4</span>
-                                    <span>Average Q&A in the last 6 months &gt; 300-720 </span>
+                                    <span>Average Q&A in the past 6 months &gt; 300-720 </span>
                                 </div>
                                 <div className="row">
                                     <span>S=5</span>
-                                    <span>Average Q&A in the last 6 months &gt; 720 messages per month</span>
+                                    <span>Average Q&A in the past 6 months &gt; 720 messages per month</span>
                                 </div>
                             </span>
                             <span className="result">

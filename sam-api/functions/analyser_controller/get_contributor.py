@@ -2,7 +2,7 @@ from Calculator import ScoreCalculator
 
 """
     Metric: Get Contributor
-    Description: The number of core developer and contributor in the last 6 month
+    Description: The number of core developer and contributor in the past 6 month
 """
 class Contributor(ScoreCalculator):
     """Number of current core developers and contributors."""

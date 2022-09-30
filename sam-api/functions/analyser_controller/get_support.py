@@ -2,7 +2,7 @@ from Calculator import ScoreCalculator
 
 class Professional_Support(ScoreCalculator):
     """Quality of Profession Support 
-    Number of supporters who respond to issues in the last 3 months. If there are no reported issues, 
+    Number of supporters who respond to issues in the past 6 months. If there are no reported issues, 
     it is a sign that information and help has been provided sufficiently 
     for users to efficiently resolve issues that they come across.
     """
@@ -37,8 +37,8 @@ class Professional_Support(ScoreCalculator):
         issue_with_support = self.get_supported_issues()
         pull_requests = self.get_pull_requests()
         pull_request_with_support = self.get_supported_pull_requests()
-        self.issue_support_rate = (len(issue_with_support) / len(issues)) if len(issues) > 0 else 1
-        self.pull_request_support_rate = (len(pull_request_with_support) / len(pull_requests)) if len(pull_requests) > 0 else 1
+        self.issue_support_rate = (len(issue_with_support) / len(issues)) if len(issues) > 0 else 0
+        self.pull_request_support_rate = (len(pull_request_with_support) / len(pull_requests)) if len(pull_requests) > 0 else 0
         self.value = (self.issue_support_rate + self.pull_request_support_rate) / 2
         return self.value
 
