@@ -67,15 +67,15 @@ export function ProjectMetric() {
 
             <div className="item-box">
                 <div className='item-list'>
-                    <span className='bold'>License</span>
+                    <span className='bold'>Software License</span>
                 </div>
                 <div className='item-list'>
                     <div className="tooltip">
-                        <span>License Type</span>
+                        <span>OSS License</span>
                         <span className="tooltiptext">
-                            <span className="title">License Type</span>
+                            <span className="title">OSS License</span>
                             <span className="definition">
-                                Open source software license and permission to distribute software or source code.
+                                Open-source software license and permission to distribute software or source code.
                                 Check <a className="ml-5" href="https://choosealicense.com/appendix" target="_blank">License Type Reference</a>
                             </span>
                             <span className="metric">
@@ -86,8 +86,12 @@ export function ProjectMetric() {
                                     <span>OSS License</span>
                                 </div>
                                 <div className="row">
+                                    <span>S</span>
+                                    <span>License Type</span>
+                                </div>
+                                <div className="row">
                                     <span>S=1</span>
-                                    <span>Undefined/Unknown</span>
+                                    <span>Undefined/Unclear</span>
                                 </div>
                                 <div className="row">
                                     <span>S=2</span>
@@ -109,7 +113,7 @@ export function ProjectMetric() {
                             <span className="result">
                                 <span className="title">Result</span>
                                 <p>Left: License Type</p>
-                                <p>Right: Metric quality score 0-100</p>
+                                <p>Right: Quality metric score 0-100</p>
                             </span>
                         </span>
                     </div>
@@ -122,9 +126,9 @@ export function ProjectMetric() {
                 </div>
                 <div className='item-list'>
                     <div className="tooltip">
-                        <span>Community Size</span>
+                        <span>Size of Community</span>
                         <span className="tooltiptext">
-                            <span className="title">Community Size</span>
+                            <span className="title">Size of Community</span>
                             <span className="definition">
                                 Number of Core team, contributors and watchers of the project.
                             </span>
@@ -134,6 +138,10 @@ export function ProjectMetric() {
                                 <div className="row">
                                     <span>V2</span>
                                     <span>Size of Community</span>
+                                </div>
+                                <div className="row">
+                                    <span>S</span>
+                                    <span>Number of Core Team Members, Contributors, and Watchers</span>
                                 </div>
                                 <div className="row">
                                     <span>S=1</span>
@@ -159,26 +167,30 @@ export function ProjectMetric() {
                             <span className="result">
                                 <span className="title">Result</span>
                                 <p>Left: Total number of people</p>
-                                <p>Right: Metric quality score 0-100</p>
+                                <p>Right: Quality metric score 0-100</p>
                             </span>
                         </span>
                     </div>
                 </div>
                 <div className='item-list'>
                     <div className="tooltip">
-                        <span>Availability of Forum</span>
+                        <span>Q&A Volume</span>
                         <span className="tooltiptext">
-                            <span className="title">Availability of Forum</span>
+                            <span className="title">Q&A Volume</span>
                             <span className="definition">
-                                Average number of questions with answers in forum in the last 6 months.
+                            Average number of questions and answers in the forum per month in the past 6 months.
                             </span>
                             <span className="metric">
                                 <span className="title">Metric</span>
                                 <div className="equation">V3 = S/5 * 100</div>
                                 <div className="row">
                                     <span>V3</span>
-                                    <span>Availability of Forum</span>
+                                    <span>Q&A Volume</span>
                                 </div>
+                                <div className="row">
+                                    <span>S</span>
+                                    <span>Average Q&A Per Month in the Past 6 Months</span>
+                                </div>  
                                 <div className="row">
                                     <span>S=1</span>
                                     <span>Average Q&A in the last 6 months &#x2264; 30 messages per month</span>
@@ -203,25 +215,29 @@ export function ProjectMetric() {
                             <span className="result">
                                 <span className="title">Result</span>
                                 <p>Left: Number of question with answers</p>
-                                <p>Right: Metric quality score 0-100</p>
+                                <p>Right: Quality metric score 0-100</p>
                             </span>
                         </span>
                     </div>
                 </div>
                 <div className='item-list'>
                     <div className="tooltip">
-                        <span>Support Contributors</span>
+                        <span>Number of Support Contributors</span>
                         <span className="tooltiptext">
-                            <span className="title">Support Contributors</span>
+                            <span className="title">Number of Support Contributors</span>
                             <span className="definition">
-                                Number of core developers and contributors.
+                                Number of contributors and core team members.
                             </span>
                             <span className="metric">
                                 <span className="title">Metric</span>
                                 <div className="equation">V4 = S/5 * 100</div>
                                 <div className="row">
                                     <span>V4</span>
-                                    <span>Number of Contributors</span>
+                                    <span>Number of Support Contributors</span>
+                                </div>
+                                <div className="row">
+                                    <span>S</span>
+                                    <span>Number of Contributors and Core Team Members</span>
                                 </div>
                                 <div className="row">
                                     <span>S=1</span>
@@ -247,25 +263,34 @@ export function ProjectMetric() {
                             <span className="result">
                                 <span className="title">Result</span>
                                 <p>Left: Number of core developers and contributors</p>
-                                <p>Right: Metric quality score 0-100</p>
+                                <p>Right: Quality metric score 0-100</p>
                             </span>
                         </span>
                     </div>
                 </div>
                 <div className='item-list'>
                     <div className="tooltip">
-                        <span>Quality of Professional Support</span>
+                        <span>Support Rate</span>
                         <span className="tooltiptext">
-                            <span className="title">Quality of Professional Support</span>
+                            <span className="title">Support Rate</span>
                             <span className="definition">
-                                Number of supported issues and supoorted pull requests. If there are no reported issues,
-                                it is a sign that information and help has been provided sufficiently for users to efficiently resolve issues that they come across.
+                                Support Rate refers to quality of supports in issues and pull requests. It consists of two quality metric elements:
+                                <ul>
+                                    <li>
+                                        Issue Support Rate is the rate of issues that have been responded in the past 6 months. 
+                                        If there are no reported issues, there will be no evidence to show whether the support is active recently. 
+                                    </li>
+                                    <li>
+                                        Pull Request Support Rate is the rate of pull requests that have been responded in the past 6 months. If there are no pull requests, 
+                                        there will be no evidence to show whether the support is active recently. 
+                                    </li>
+                                </ul>
                             </span>
                             <span className="metric">
                                 <span className="title">Metric</span>
-                                <div className="equation">V8 = ((M1+M2)/2)</div>
+                                <div className="equation">V5 = ((M1+M2)/2)</div>
                                 <div className="row">
-                                    <span>V8</span>
+                                    <span>V5</span>
                                     <span>Support Rate</span>
                                 </div>
                                 <div className="row">
@@ -284,7 +309,7 @@ export function ProjectMetric() {
                                 </div>
                                 <div className="row">
                                     <span>N</span>
-                                    <span>Total issues in the last 6 months</span>
+                                    <span>Total issues in the past 6 months</span>
                                 </div>
 
                                 <div className="equation mt-10">M2 = (Pull Requests/N) * 100</div>
@@ -294,13 +319,13 @@ export function ProjectMetric() {
                                 </div>
                                 <div className="row">
                                     <span>N</span>
-                                    <span>Total pull request in the last 6 months</span>
+                                    <span>Total pull request in the past 6 months</span>
                                 </div>
                             </span>
                             <span className="result">
                                 <span className="title">Result</span>
-                                <p>Left: Support issue rate/Support pull request rate</p>
-                                <p>Right: Metric quality score 0-100</p>
+                                <p>Left: Issue support rate/Pull request support rate</p>
+                                <p>Right: Quality metric score 0-100</p>
                             </span>
                         </span>
                     </div>
@@ -313,24 +338,23 @@ export function ProjectMetric() {
                 </div>
                 <div className='item-list'>
                     <div className="tooltip">
-                        <span>Maturity</span>
+                        <span>Maturity Level</span>
                         <span className="tooltiptext">
-                            <span className="title">Maturity</span>
+                            <span className="title">Maturity Level</span>
                             <span className="definition">
-                                The degree to which the open source meets needs for reliability under normal operation. It consists of two quality metric elements:
+                            The degree to which the open-source software meets the needs for reliability under normal operation. It consists of two quality metric elements:
                                 <ul>
-                                    <li>• Age is age of project repository from created date to last update.</li>
-                                    <li>• Bugless code refers to a characteristic of the code with small number of bugs in the last 6 months
-                                        which indicates that the open source is likely to be mature and work correctly under normal operation.</li>
-                                    <li>• Total minor release refers to how many release in the past 6 months</li>
+                                    <li>Age is age of project repository from created date to last update.</li>
+                                    <li>Issueless Code refers to a characteristic of the code with small number of issues in the past 6 months which indicates that the open-source software is likely to be mature and work correctly under normal operation.</li>
+                                    <li>Minor Releases refers to the number of minor releases in the past 12 months which typically indicates the project has planned updates and bug fixes.</li>
                                 </ul>
                             </span>
                             <span className="metric">
                                 <span className="title">Metric</span>
-                                <div className="equation">V5 = ((M1+M2)/2) * 100</div>
+                                <div className="equation">V6 = ((M1+M2+M3)/3) * 100</div>
                                 <div className="row">
-                                    <span>V5</span>
-                                    <span>Maturity Rating</span>
+                                    <span>V6</span>
+                                    <span>Maturity Level</span>
                                 </div>
                                 <div className="row">
                                     <span>M1</span>
@@ -338,11 +362,11 @@ export function ProjectMetric() {
                                 </div>
                                 <div className="row">
                                     <span>M2</span>
-                                    <span>Bugless Code</span>
+                                    <span>Issueless Code</span>
                                 </div>
                                 <div className="row">
                                     <span>M3</span>
-                                    <span>Release</span>
+                                    <span>Minor Releases</span>
                                 </div>
 
                                 <div className="equation mt-10">M1 = S/5</div>
@@ -371,56 +395,54 @@ export function ProjectMetric() {
                                     <span>Age &gt; 3 years </span>
                                 </div>
 
-
                                 <div className="equation mt-10">M2 = S/5</div>
                                 <div className="row">
                                     <span>M2</span>
-                                    <span>Bugless Code</span>
+                                    <span>Issueless Code</span>
                                 </div>
                                 <div className="row">
                                     <span>S=1</span>
-                                    <span>Number of bugs in the last 6 months &gt; 1000 bugs</span>
+                                    <span>Number of bugs in the past 6 months &gt; 1000 bugs</span>
                                 </div>
                                 <div className="row">
                                     <span>S=2</span>
-                                    <span>Number of bugs in the last 6 months 500-1000 bugs</span>
+                                    <span>Number of bugs in the past 6 months 500-1000 bugs</span>
                                 </div>
                                 <div className="row">
                                     <span>S=3</span>
-                                    <span>Number of bugs in the last 6 months 100-500 bugs</span>
+                                    <span>Number of bugs in the past 6 months 100-500 bugs</span>
                                 </div>
                                 <div className="row">
                                     <span>S=4</span>
-                                    <span>Number of bugs in the last 6 months 50-100 bugs</span>
+                                    <span>Number of bugs in the past 6 months 50-100 bugs</span>
                                 </div>
                                 <div className="row">
                                     <span>S=5</span>
-                                    <span>Number of bugs in the last 6 months &#x2264; 50 bugs</span>
+                                    <span>Number of bugs in the past 6 months &#x2264; 50 bugs</span>
                                 </div>
-
 
                                 <div className="equation mt-10">M3 = S/5</div>
                                 <div className="row">
                                     <span>M3</span>
-                                    <span>Minor Release in the last 12 months</span>
+                                    <span>Minor Releases</span>
                                 </div>
                                 <div className="row">
                                     <span>S=1</span>
-                                    <span>Number of minor releases 0 versions</span>
+                                    <span>Number of minor releases in the past 12 months  0 versions</span>
                                 </div>
                                 <div className="row">
                                     <span>S=3</span>
-                                    <span>Number of minor releases 1 - 3 versions</span>
+                                    <span>Number of minor releases in the past 12 months  1 - 3 versions</span>
                                 </div>
                                 <div className="row">
                                     <span>S=5</span>
-                                    <span>Number of minor releases &gt; 3 versions</span>
+                                    <span>Number of minor releases in the past 12 months  &gt; 3 versions</span>
                                 </div>
                             </span>
                             <span className="result">
                                 <span className="title">Result</span>
-                                <p>Left: Age in days/Total issues/Total minor release</p>
-                                <p>Right: Metric quality score 0-100</p>
+                                <p>Left: Age/Issueless Code/Minor Releases</p>
+                                <p>Right: Quality metric score 0-100</p>
                             </span>
                         </span>
                     </div>
@@ -428,55 +450,23 @@ export function ProjectMetric() {
 
                 <div className='item-list'>
                     <div className="tooltip">
-                        <span>Code Documentation</span>
+                        <span>Development Language Popularity</span>
                         <span className="tooltiptext">
-                            <span className="title">Code Documentation</span>
-                            <span className="definition">
-                                The degree to which the code documentation of the open source software is made available for effective use of the open source.
-                                Code Comments refers to the amount of code comments that can be later generated as API documents.
-                                Check <a href="https://docs.sonarqube.org/latest/user-guide/metric-definitions/" target="_blank">comment_lines_density</a>
-                            </span>
-                            <span className="metric">
-                                <span className="title">Metric</span>
-                                <div className="equation">V7 = (Comment Lines/Comment Lines + Line of code) * 100</div>
-                                <div className="row">
-                                    <span>V7</span>
-                                    <span>Code Comments</span>
-                                </div>
-                                <div className="row">
-                                    <span>Comment Lines</span>
-                                    <span>Number of lines containing either comment or commented-out code</span>
-                                </div>
-                                <div className="row">
-                                    <span>Line of code</span>
-                                    <span>Number of physical lines that contain at least one character which is neither a whitespace nor a tabulation nor part of a comment</span>
-                                </div>
-                            </span>
-                            <span className="result">
-                                <span className="title">Result</span>
-
-                                <p>Left: Comment lines/Code lines</p>
-                                <p>Right: Metric quality score 0-100</p>
-                            </span>
-                        </span>
-                    </div>
-                </div>
-
-                <div className='item-list'>
-                    <div className="tooltip">
-                        <span>Development Language</span>
-                        <span className="tooltiptext">
-                            <span className="title">Development Language</span>
+                            <span className="title">Development Language Popularity</span>
                             <span className="definition">
                                 Use of popular development languages which makes it easier to manage project operation and maintenance.
-                                Check <a href="https://insights.stackoverflow.com/survey/2020#technology-programming-scripting-and-markup-languages" target="_blank">Language Ranking Survey</a>
+                                Check <a href="https://insights.stackoverflow.com/survey/2020#technology-programming-scripting-and-markup-languages" target="_blank">Computer Language Ranking Survey</a>
                             </span>
                             <span className="metric">
                                 <span className="title">Metric</span>
-                                <div className="equation">V6 = S/5 * 100</div>
+                                <div className="equation">V7 = S/5 * 100</div>
                                 <div className="row">
-                                    <span>V6</span>
+                                    <span>V7</span>
                                     <span>Development Language Popularity</span>
+                                </div>
+                                <div className="row">
+                                    <span>S</span>
+                                    <span>Computer Language</span>
                                 </div>
                                 <div className="row">
                                     <span>S=1</span>
@@ -501,8 +491,53 @@ export function ProjectMetric() {
                             </span>
                             <span className="result">
                                 <span className="title">Result</span>
-                                <p>Left: Primary language</p>
-                                <p>Right: Metric quality score 0-100</p>
+                                <p>Left: Primary computer language</p>
+                                <p>Right: Quality metric score 0-100</p>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div className='item-list'>
+                    <div className="tooltip">
+                        <span>Code Documentation</span>
+                        <span className="tooltiptext">
+                            <span className="title">Code Documentation</span>
+                            <span className="definition">
+                                The degree to which the code documentation, i.e. code comments, is made available for effective use of the open-source software. It consists of one quality metric element:
+                                <ul>
+                                    <li>
+                                        Code Comments refers to the amount of code comments, compared with the total amount of code, which can be later generated as API documents.                                 
+                                        Check <a href="https://docs.sonarqube.org/latest/user-guide/metric-definitions/" target="_blank">comment_lines_density</a>
+                                    </li>
+                                </ul>
+                            </span>
+                            <span className="metric">
+                                <span className="title">Metric</span>
+                                <div className="equation">V8 = M * 100</div>
+                                <div className="row">
+                                    <span>V8</span>
+                                    <span>Code Documentation</span>
+                                </div>
+
+                                <div className="equation mt-10">M = Comment Lines/(Code Lines + Comment Lines)</div>
+                                <div className="row">
+                                    <span>M</span>
+                                    <span>Code Comments</span>
+                                </div>
+                                <div className="row">
+                                    <span>Comment Lines</span>
+                                    <span>Number of comment lines</span>
+                                </div>
+                                <div className="row">
+                                    <span>Code Lines</span>
+                                    <span>Number of lines of code</span>
+                                </div>
+                            </span>
+                            <span className="result">
+                                <span className="title">Result</span>
+                                <p>Left: Comment lines/Code lines</p>
+                                <p>Right: Quality metric score 0-100</p>
                             </span>
                         </span>
                     </div>
@@ -511,63 +546,19 @@ export function ProjectMetric() {
 
             <div className="item-box">
                 <div className='item-list'>
-                    <span className='bold'>Product Quality</span>
+                        <span className='bold'>Product Quality</span>
                 </div>
+
                 <div className='item-list'>
                     <div className="tooltip">
-                        <span>Security</span>
+                        <span>Code Quality Level</span>
                         <span className="tooltiptext">
-                            <span className="title">Security</span>
+                            <span className="title">Code Quality Level</span>
                             <span className="definition">
-                                Rating that indicates severity of the vulnerability issues in the project.
-                                Check <a href="https://docs.sonarqube.org/latest/user-guide/metric-definitions/#header-7"><code>security_rating</code></a>
-                            </span>
-                            <span className="metric">
-                                <span className="title">Metric</span>
-                                <div className="equation">V12 = S/5 * 100</div>
-                                <div className="row">
-                                    <span>V12</span>
-                                    <span>Security Rating</span>
-                                </div>
-                                <div className="row">
-                                    <span>S=1</span>
-                                    <span>E – at least 1 blocker vulnerability</span>
-                                </div>
-                                <div className="row">
-                                    <span>S=2</span>
-                                    <span>D – at least 1 critical vulnerability</span>
-                                </div>
-                                <div className="row">
-                                    <span>S=3</span>
-                                    <span>C – at least 1 major vulnerability</span>
-                                </div>
-                                <div className="row">
-                                    <span>S=4</span>
-                                    <span>B – at least 1 minor vulnerability</span>
-                                </div>
-                                <div className="row">
-                                    <span>S=5</span>
-                                    <span>A – no vulnerabilities</span>
-                                </div>
-                            </span>
-                            <span className="result">
-                                <span className="title">Result</span>
-                                <p>Left: Security rating level</p>
-                                <p>Right: Metric quality score 0-100</p>
-                            </span>
-                        </span>
-                    </div>
-                </div>
-                <div className='item-list'>
-                    <div className="tooltip">
-                        <span>Code Quality</span>
-                        <span className="tooltiptext">
-                            <span className="title">Code Quality</span>
-                            <span className="definition">
-                                The degree to which the code of the open source software exhibits good quality for long-term maintenance. It consists of two quality metric elements:
+                                The degree to which the code of the open-source software exhibits good quality for long-term maintenance and evolution. It consists of two quality metric elements:
                                 <ul>
-                                    <li>• Uncomplex Code refers to a characteristic of the code with less degree of cyclomatic complexity which indicates that the code has better quality.</li>
-                                    <li>• Unduplicated Code refers to a characteristic of the code with less degree of duplications which indicates that the code has better quality.</li>
+                                    <li>Uncomplex Code refers to a characteristic of the code with less degree of cyclomatic complexity which indicates that the code has better quality.</li>
+                                    <li>Unduplicated Code refers to a characteristic of the code with less degree of duplications which indicates that the code has better quality.</li>
                                 </ul>
                             </span>
                             <span className="metric">
@@ -575,7 +566,7 @@ export function ProjectMetric() {
                                 <div className="equation">V9 = ((M1+M2)/2) * 100</div>
                                 <div className="row">
                                     <span>V9</span>
-                                    <span>Code Quality Rating</span>
+                                    <span>Code Quality Level</span>
                                 </div>
                                 <div className="row">
                                     <span>M1</span>
@@ -608,7 +599,7 @@ export function ProjectMetric() {
                                     <span>Cyclomatic Complexity between 1 – 10</span>
                                 </div>
 
-                                <div className="equation mt-10">M2 = 1 - (Duplication Lines/Line of Code)</div>
+                                <div className="equation mt-10">M2 = 1 - (Duplication Lines/Code Lines)</div>
                                 <div className="row">
                                     <span>M2</span>
                                     <span>Uncomplex Code</span>
@@ -618,73 +609,87 @@ export function ProjectMetric() {
                                     <span>Number of lines involved in duplications</span>
                                 </div>
                                 <div className="row">
-                                    <span>Line of Code</span>
-                                    <span>Number of minor releases 1 - 3 versions</span>
+                                    <span>Code Lines</span>
+                                    <span>Number of lines of code</span>
                                 </div>
                             </span>
                             <span className="result">
                                 <span className="title">Result</span>
                                 <p>Left: Uncomplex code rate/Unduplicated code rate</p>
-                                <p>Right: Metric quality score 0-100</p>
+                                <p>Right: Quality metric score 0-100</p>
                             </span>
                         </span>
                     </div>
                 </div>
+
                 <div className='item-list'>
                     <div className="tooltip">
-                        <span>Testibility</span>
+                        <span>Reliability Level</span>
                         <span className="tooltiptext">
-                            <span className="title">Testibility</span>
+                            <span className="title">Reliability Level</span>
                             <span className="definition">
-                                Uncomplex Code refers to a characteristic of the code with less degree of cyclomatic complexity
-                                which indicates that there is less number of paths through the code, making it less complex to test.
+                                The degree of how well the open-source software works without bugs or blockers.
+                                Check <a href="https://docs.sonarqube.org/latest/user-guide/metric-definitions/#header-6"><code>reliability_rating</code></a>
                             </span>
                             <span className="metric">
                                 <span className="title">Metric</span>
-                                <div className="equation">V14 = S/4 * 100</div>
+                                <div className="equation">V10 = S/5 * 100</div>
                                 <div className="row">
-                                    <span>V14</span>
-                                    <span>Uncomplex Code (Avg. Cyclomatic Complexity)</span>
+                                    <span>V10</span>
+                                    <span>Reliability Level</span>
+                                </div>
+                                <div className="row">
+                                    <span>S</span>
+                                    <span>Reliability Rating</span>
                                 </div>
                                 <div className="row">
                                     <span>S=1</span>
-                                    <span>Cyclomatic Complexity &gt; 50</span>
+                                    <span>E - at least 1 Blocker Bug</span>
                                 </div>
                                 <div className="row">
                                     <span>S=2</span>
-                                    <span>Cyclomatic Complexity between 21 – 50</span>
+                                    <span>D - at least 1 Critical Bug</span>
                                 </div>
                                 <div className="row">
                                     <span>S=3</span>
-                                    <span>Cyclomatic Complexity between 11 – 20</span>
+                                    <span>C - at least 1 Major Bug</span>
                                 </div>
                                 <div className="row">
                                     <span>S=4</span>
-                                    <span>Cyclomatic Complexity between 1 – 10</span>
+                                    <span>B - at least 1 Minor Bug</span>
+                                </div>
+                                <div className="row">
+                                    <span>S=5</span>
+                                    <span>A - 0 Bug</span>
                                 </div>
                             </span>
                             <span className="result">
                                 <span className="title">Result</span>
-                                <p>Left: Average cyclomatic complexity</p>
-                                <p>Right: Metric quality score 0-100</p>
+                                <p>Left: Reliability Rating</p>
+                                <p>Right: Quality metric score 0-100</p>
                             </span>
                         </span>
                     </div>
                 </div>
+
                 <div className='item-list'>
                     <div className="tooltip">
-                        <span>Maintainability</span>
+                        <span>Maintainability Level</span>
                         <span className="tooltiptext">
-                            <span className="title">Maintainability</span>
+                            <span className="title">Maintainability Level</span>
                             <span className="definition">
-                                (Formerly the SQALE rating.) Rating given to the project related to the value of the Technical Debt Ratio.
+                                (Formerly the SQALE rating.) The degree of ease with which the open-source software can be maintained, defined in terms of the Technical Debt Ratio of the software, i.e. the ratio between the cost to develop the software and the cost to fix it.
                                 Check <a href="https://docs.sonarqube.org/latest/user-guide/metric-definitions/#header-4"><code>sqale_rating</code></a>
                             </span>
                             <span className="metric">
                                 <span className="title">Metric</span>
-                                <div className="equation">V3 = S/5 * 100</div>
+                                <div className="equation">V11 = S/5 * 100</div>
                                 <div className="row">
-                                    <span>V3</span>
+                                    <span>V11</span>
+                                    <span>Maintainability Level</span>
+                                </div>
+                                <div className="row">
+                                    <span>S</span>
                                     <span>Maintainability Rating</span>
                                 </div>
                                 <div className="row">
@@ -710,57 +715,112 @@ export function ProjectMetric() {
                             </span>
                             <span className="result">
                                 <span className="title">Result</span>
-                                <p>Left: SQALE rating level</p>
-                                <p>Right: Metric quality score 0-100</p>
+                                <p>Left: Maintainability Rating</p>
+                                <p>Right: Quality metric score 0-100</p>
                             </span>
                         </span>
                     </div>
                 </div>
+
                 <div className='item-list'>
                     <div className="tooltip">
-                        <span>Reliability</span>
+                        <span>Security Level</span>
                         <span className="tooltiptext">
-                            <span className="title">Reliability</span>
+                            <span className="title">Security Level</span>
                             <span className="definition">
-                                The degree of how well open source works without bugs or blockers.
-                                Check <a href="https://docs.sonarqube.org/latest/user-guide/metric-definitions/#header-6"><code>reliability_rating</code></a>
+                                The degree of severity of the vulnerability issues in the project.
+                                Check <a href="https://docs.sonarqube.org/latest/user-guide/metric-definitions/#header-7"><code>security_rating</code></a>
                             </span>
                             <span className="metric">
                                 <span className="title">Metric</span>
-                                <div className="equation">V3 = S/5 * 100</div>
+                                <div className="equation">V12 = S/5 * 100</div>
                                 <div className="row">
-                                    <span>V3</span>
-                                    <span>Q&A Voloum</span>
+                                    <span>V12</span>
+                                    <span>Security Level</span>
+                                </div>
+                                <div className="row">
+                                    <span>S</span>
+                                    <span>Security Rating</span>
                                 </div>
                                 <div className="row">
                                     <span>S=1</span>
-                                    <span>E - at least 1 Blocker Bug</span>
+                                    <span>E – at least 1 blocker vulnerability</span>
                                 </div>
                                 <div className="row">
                                     <span>S=2</span>
-                                    <span>D - at least 1 Critical Bug</span>
+                                    <span>D – at least 1 critical vulnerability</span>
                                 </div>
                                 <div className="row">
                                     <span>S=3</span>
-                                    <span>C - at least 1 Major Bug</span>
+                                    <span>C – at least 1 major vulnerability</span>
                                 </div>
                                 <div className="row">
                                     <span>S=4</span>
-                                    <span>B - at least 1 Minor Bug</span>
+                                    <span>B – at least 1 minor vulnerability</span>
                                 </div>
                                 <div className="row">
                                     <span>S=5</span>
-                                    <span>A - 0 Bug</span>
+                                    <span>A – no vulnerabilities</span>
                                 </div>
                             </span>
                             <span className="result">
                                 <span className="title">Result</span>
-                                <p>Left: Reliability rating level</p>
-                                <p>Right: Metric quality score 0-100</p>
+                                <p>Left: Security rating level</p>
+                                <p>Right: Quality metric score 0-100</p>
                             </span>
                         </span>
                     </div>
                 </div>
+
+                <div className='item-list'>
+                    <div className="tooltip">
+                        <span>Testability Level</span>
+                        <span className="tooltiptext">
+                            <span className="title">Testability Level</span>
+                            <span className="definition">
+                                The degree of ease with which the open-source software can be tested.  It consists of one quality metric element:
+                                <ul>
+                                    <li>Uncomplex Code refers to a characteristic of the code with less degree of cyclomatic complexity which indicates that there is less number of paths through the code, making it less complex to test. </li>
+                                </ul>
+                            </span>
+                            <span className="metric">
+                                <span className="title">Metric</span>
+                                <div className="equation">V13 = S/4 * 100</div>
+                                <div className="row">
+                                    <span>V13</span>
+                                    <span>Testability Level</span>
+                                </div>
+                                <div className="row">
+                                    <span>S</span>
+                                    <span>Uncomplex Code (Avg. Cyclomatic Complexity)</span>
+                                </div>
+                                <div className="row">
+                                    <span>S=1</span>
+                                    <span>Cyclomatic Complexity &gt; 50</span>
+                                </div>
+                                <div className="row">
+                                    <span>S=2</span>
+                                    <span>Cyclomatic Complexity between 21 – 50</span>
+                                </div>
+                                <div className="row">
+                                    <span>S=3</span>
+                                    <span>Cyclomatic Complexity between 11 – 20</span>
+                                </div>
+                                <div className="row">
+                                    <span>S=4</span>
+                                    <span>Cyclomatic Complexity between 1 – 10</span>
+                                </div>
+                            </span>
+                            <span className="result">
+                                <span className="title">Result</span>
+                                <p>Left: Uncomplex Code (Avg. Cyclomatic Complexity)</p>
+                                <p>Right: Quality metric score 0-100</p>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+      
             </div>
 
             <div className="item-box">

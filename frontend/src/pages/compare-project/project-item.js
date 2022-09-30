@@ -84,12 +84,12 @@ function Project({ project }) {
                     <span>{project.maturity_score} </span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.document_label} </span>
-                    <span>{project.document_score} </span>
-                </div>
-                <div className='item-list two-column'>
                     <span>{project.development_lang_value}</span>
                     <span>{project.development_lang_score}</span>
+                </div>
+                <div className='item-list two-column'>
+                    <span>{project.document_label} </span>
+                    <span>{project.document_score} </span>
                 </div>
             </div>
 
@@ -98,28 +98,24 @@ function Project({ project }) {
                     <span className='bold'>Empty</span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.security_label} </span>
-                    <span>{project.security_score} </span>
-                </div>
-                <div className='item-list two-column'>
                     <span>{project.code_quality_label} </span>
                     <span>{project.code_quality_score} </span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.testibility_value} complexity</span>
-                    <span>{project.testibility_score} </span>
+                    <span>{project.reliability_label} </span>
+                    <span>{project.reliability_score} </span>
                 </div>
                 <div className='item-list two-column'>
                     <span>{project.maintainability_label} </span>
                     <span>{project.maintainability_score} </span>
                 </div>
-                {/* <div className='item-list two-column'>
-                    <span>{project.popularity_label} </span>
-                    <span>{project.popularity_score} </span>
-                </div> */}
                 <div className='item-list two-column'>
-                    <span>{project.reliability_label} </span>
-                    <span>{project.reliability_score} </span>
+                    <span>{project.security_label} </span>
+                    <span>{project.security_score} </span>
+                </div>
+                <div className='item-list two-column'>
+                    <span>{project.testibility_value} complexity</span>
+                    <span>{project.testibility_score} </span>
                 </div>
             </div>
 

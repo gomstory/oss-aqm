@@ -39,8 +39,10 @@
         margin: 10px 0;
     }
 
-    .metric .row span:first-child {
-        margin-right: 20px;
+    .metric .row {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        row-gap: 10px;
     }
 
     a {
