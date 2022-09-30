@@ -70,8 +70,9 @@ export function ProjectMetric() {
                     <span className='bold'>Software License</span>
                 </div>
                 <div className='item-list'>
+                    <span className="sub-factor">License</span>
                     <div className="tooltip">
-                        <span>OSS License</span>
+                        <span className="quality-metric">OSS License</span>
                         <span className="tooltiptext">
                             <span className="title">OSS License</span>
                             <span className="definition">
@@ -125,8 +126,9 @@ export function ProjectMetric() {
                     <span className='bold'>Community and Support</span>
                 </div>
                 <div className='item-list'>
+                    <span className="sub-factor">Community Size</span>
                     <div className="tooltip">
-                        <span>Size of Community</span>
+                        <span className="quality-metric">Size of Community</span>
                         <span className="tooltiptext">
                             <span className="title">Size of Community</span>
                             <span className="definition">
@@ -173,8 +175,9 @@ export function ProjectMetric() {
                     </div>
                 </div>
                 <div className='item-list'>
+                    <span className="sub-factor">Availability of Forum</span>
                     <div className="tooltip">
-                        <span>Q&A Volume</span>
+                        <span className="quality-metric">Q&A Volume</span>
                         <span className="tooltiptext">
                             <span className="title">Q&A Volume</span>
                             <span className="definition">
@@ -221,8 +224,9 @@ export function ProjectMetric() {
                     </div>
                 </div>
                 <div className='item-list'>
+                    <span className="sub-factor">Support Contributors</span>
                     <div className="tooltip">
-                        <span>Number of Support Contributors</span>
+                        <span className="quality-metric">Number of Support Contributors</span>
                         <span className="tooltiptext">
                             <span className="title">Number of Support Contributors</span>
                             <span className="definition">
@@ -269,8 +273,9 @@ export function ProjectMetric() {
                     </div>
                 </div>
                 <div className='item-list'>
+                    <span className="sub-factor">Quality of Professional Support</span>
                     <div className="tooltip">
-                        <span>Support Rate</span>
+                        <span className="quality-metric">Support Rate</span>
                         <span className="tooltiptext">
                             <span className="title">Support Rate</span>
                             <span className="definition">
@@ -337,8 +342,9 @@ export function ProjectMetric() {
                     <span className='bold'>Operational SW Characteristics</span>
                 </div>
                 <div className='item-list'>
+                    <span className="sub-factor">Maturity</span>
                     <div className="tooltip">
-                        <span>Maturity Level</span>
+                        <span className="quality-metric">Maturity Level</span>
                         <span className="tooltiptext">
                             <span className="title">Maturity Level</span>
                             <span className="definition">
@@ -449,8 +455,9 @@ export function ProjectMetric() {
                 </div>
 
                 <div className='item-list'>
+                    <span className="sub-factor">Development Language</span>
                     <div className="tooltip">
-                        <span>Development Language Popularity</span>
+                        <span className="quality-metric">Development Language Popularity</span>
                         <span className="tooltiptext">
                             <span className="title">Development Language Popularity</span>
                             <span className="definition">
@@ -499,8 +506,9 @@ export function ProjectMetric() {
                 </div>
 
                 <div className='item-list'>
+                    <span className="sub-factor">Documentation</span>
                     <div className="tooltip">
-                        <span>Code Documentation</span>
+                        <span className="quality-metric">Code Documentation</span>
                         <span className="tooltiptext">
                             <span className="title">Code Documentation</span>
                             <span className="definition">
@@ -550,8 +558,9 @@ export function ProjectMetric() {
                 </div>
 
                 <div className='item-list'>
+                    <span className="sub-factor">Code Quality</span>
                     <div className="tooltip">
-                        <span>Code Quality Level</span>
+                        <span className="quality-metric">Code Quality Level</span>
                         <span className="tooltiptext">
                             <span className="title">Code Quality Level</span>
                             <span className="definition">
@@ -623,8 +632,9 @@ export function ProjectMetric() {
                 </div>
 
                 <div className='item-list'>
+                    <span className="sub-factor">Reliability</span>
                     <div className="tooltip">
-                        <span>Reliability Level</span>
+                        <span className="quality-metric">Reliability Level</span>
                         <span className="tooltiptext">
                             <span className="title">Reliability Level</span>
                             <span className="definition">
@@ -673,8 +683,9 @@ export function ProjectMetric() {
                 </div>
 
                 <div className='item-list'>
+                    <span className="sub-factor">Maintainability</span>
                     <div className="tooltip">
-                        <span>Maintainability Level</span>
+                        <span className="quality-metric">Maintainability Level</span>
                         <span className="tooltiptext">
                             <span className="title">Maintainability Level</span>
                             <span className="definition">
@@ -723,8 +734,9 @@ export function ProjectMetric() {
                 </div>
 
                 <div className='item-list'>
+                    <span className="sub-factor">Security </span>
                     <div className="tooltip">
-                        <span>Security Level</span>
+                        <span className="quality-metric">Security Level</span>
                         <span className="tooltiptext">
                             <span className="title">Security Level</span>
                             <span className="definition">
@@ -773,8 +785,9 @@ export function ProjectMetric() {
                 </div>
 
                 <div className='item-list'>
+                    <span className="sub-factor">Testability</span>
                     <div className="tooltip">
-                        <span>Testability Level</span>
+                        <span className="quality-metric">Testability Level</span>
                         <span className="tooltiptext">
                             <span className="title">Testability Level</span>
                             <span className="definition">
@@ -819,8 +832,6 @@ export function ProjectMetric() {
                         </span>
                     </div>
                 </div>
-
-      
             </div>
 
             <div className="item-box">

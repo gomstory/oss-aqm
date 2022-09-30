@@ -3,7 +3,11 @@
     display: inline-block;
     min-width: 100%;
     
-    .navbar-nav {        
+    .navbar-nav {   
+        list-style: none;   
+        padding: unset;
+        margin-top: unset;
+        
         .nav-item {
             display: inline-block;
             margin-left: 10px;
