@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/oss-aqm/static/css/main.988d0da4.css",
-    "main.js": "/oss-aqm/static/js/main.46d26fcd.js",
+    "main.js": "/oss-aqm/static/js/main.d13ddb49.js",
     "static/js/787.9d586f9e.chunk.js": "/oss-aqm/static/js/787.9d586f9e.chunk.js",
     "index.html": "/oss-aqm/index.html",
     "main.988d0da4.css.map": "/oss-aqm/static/css/main.988d0da4.css.map",
-    "main.46d26fcd.js.map": "/oss-aqm/static/js/main.46d26fcd.js.map",
+    "main.d13ddb49.js.map": "/oss-aqm/static/js/main.d13ddb49.js.map",
     "787.9d586f9e.chunk.js.map": "/oss-aqm/static/js/787.9d586f9e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.988d0da4.css",
-    "static/js/main.46d26fcd.js"
+    "static/js/main.d13ddb49.js"
   ]
 }
