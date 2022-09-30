@@ -88,12 +88,12 @@ export function ProjectWeight() {
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="document" onInput={onWeightChange}>{options}</select>
+                        <select name="development_lang" onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="development_lang" onInput={onWeightChange}>{options}</select>
+                        <select name="document" onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
             </div>
@@ -104,17 +104,12 @@ export function ProjectWeight() {
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="security" onInput={onWeightChange}>{options}</select>
-                    </span>
-                </div>
-                <div className='item-list'>
-                    <span>
                         <select name="code_quality" onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="testibility" onInput={onWeightChange}>{options}</select>
+                        <select name="reliability" onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
                 <div className='item-list'>
@@ -122,14 +117,14 @@ export function ProjectWeight() {
                         <select name="maintainability" onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
-                {/* <div className='item-list'>
-                    <span>
-                        <select name="popularity" onInput={onWeightChange}>{options}</select>
-                    </span>
-                </div> */}
                 <div className='item-list'>
                     <span>
-                        <select name="reliability" onInput={onWeightChange}>{options}</select>
+                        <select name="security" onInput={onWeightChange}>{options}</select>
+                    </span>
+                </div>
+                <div className='item-list'>
+                    <span>
+                        <select name="testibility" onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
             </div>
