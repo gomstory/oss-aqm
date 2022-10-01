@@ -408,23 +408,23 @@ export function ProjectMetric() {
                                 </div>
                                 <div className="row">
                                     <span>S=1</span>
-                                    <span>Number of bugs in the past 6 months &gt; 1000 bugs</span>
+                                    <span>Number of issues in the past 6 months &gt; 1000 bugs</span>
                                 </div>
                                 <div className="row">
                                     <span>S=2</span>
-                                    <span>Number of bugs in the past 6 months 500-1000 bugs</span>
+                                    <span>Number of issues in the past 6 months 500-1000 bugs</span>
                                 </div>
                                 <div className="row">
                                     <span>S=3</span>
-                                    <span>Number of bugs in the past 6 months 100-500 bugs</span>
+                                    <span>Number of issues in the past 6 months 100-500 bugs</span>
                                 </div>
                                 <div className="row">
                                     <span>S=4</span>
-                                    <span>Number of bugs in the past 6 months 50-100 bugs</span>
+                                    <span>Number of issues in the past 6 months 50-100 bugs</span>
                                 </div>
                                 <div className="row">
                                     <span>S=5</span>
-                                    <span>Number of bugs in the past 6 months &#x2264; 50 bugs</span>
+                                    <span>Number of issues in the past 6 months &#x2264; 50 bugs</span>
                                 </div>
 
                                 <div className="equation mt-10">M3 = S/5</div>
@@ -624,7 +624,7 @@ export function ProjectMetric() {
                             </span>
                             <span className="result">
                                 <span className="title">Result</span>
-                                <p>Left: Uncomplex code rate/Unduplicated code rate</p>
+                                <p>Left: Uncomplex Code/Unduplicated Code</p>
                                 <p>Right: Quality metric score 0-100</p>
                             </span>
                         </span>
