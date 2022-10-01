@@ -310,7 +310,7 @@ export function ProjectMetric() {
                                 <div className="equation mt-10">M1 = (Issues/N) * 100</div>
                                 <div className="row">
                                     <span>M1</span>
-                                    <span>Issue Support</span>
+                                    <span>Issue Support Rate</span>
                                 </div>
                                 <div className="row">
                                     <span>N</span>
@@ -320,11 +320,11 @@ export function ProjectMetric() {
                                 <div className="equation mt-10">M2 = (Pull Requests/N) * 100</div>
                                 <div className="row">
                                     <span>M2</span>
-                                    <span>Pull Request Support</span>
+                                    <span>Pull Request Support Rate</span>
                                 </div>
                                 <div className="row">
                                     <span>N</span>
-                                    <span>Total pull request in the past 6 months</span>
+                                    <span>Total pull requests in the past 6 months</span>
                                 </div>
                             </span>
                             <span className="result">
