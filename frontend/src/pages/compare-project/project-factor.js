@@ -293,7 +293,7 @@ export function ProjectMetric() {
                             </span>
                             <span className="metric">
                                 <span className="title">Metric</span>
-                                <div className="equation">V5 = ((M1+M2)/2)</div>
+                                <div className="equation">V5 = ((M1+M2)/2) * 100</div>
                                 <div className="row">
                                     <span>V5</span>
                                     <span>Support Rate</span>
@@ -307,7 +307,7 @@ export function ProjectMetric() {
                                     <span>Pull Request Support</span>
                                 </div>
 
-                                <div className="equation mt-10">M1 = (Issues/N) * 100</div>
+                                <div className="equation mt-10">M1 = (Issues/N)</div>
                                 <div className="row">
                                     <span>M1</span>
                                     <span>Issue Support Rate</span>
@@ -317,7 +317,7 @@ export function ProjectMetric() {
                                     <span>Total issues in the past 6 months</span>
                                 </div>
 
-                                <div className="equation mt-10">M2 = (Pull Requests/N) * 100</div>
+                                <div className="equation mt-10">M2 = (Pull Requests/N)</div>
                                 <div className="row">
                                     <span>M2</span>
                                     <span>Pull Request Support Rate</span>
