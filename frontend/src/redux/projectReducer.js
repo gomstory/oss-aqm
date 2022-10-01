@@ -5,7 +5,6 @@ export const defaultWeight = {
   'maturity': 1,
   'security': 1,
   'document': 1,
-  // 'popularity': 1,
   'contributor': 1,
   'testibility': 1,
   'reliability': 1,
