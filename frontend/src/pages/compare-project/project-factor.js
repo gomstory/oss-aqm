@@ -304,7 +304,7 @@ export function ProjectMetric() {
                                 </div>
                                 <div className="row">
                                     <span>M2</span>
-                                    <span>Pull Request Support</span>
+                                    <span>Pull Request Support Rate</span>
                                 </div>
 
                                 <div className="equation mt-10">M1 = (Issues/N)</div>
