@@ -37,13 +37,13 @@ class Professional_Support(ScoreCalculator):
         issue_with_support = self.get_supported_issues()
         pull_requests = self.get_pull_requests()
         pull_request_with_support = self.get_supported_pull_requests()
-        self.issue_support_rate = (len(issue_with_support) / len(issues)) if len(issues) > 0 else 0
-        self.pull_request_support_rate = (len(pull_request_with_support) / len(pull_requests)) if len(pull_requests) > 0 else 0
-        self.value = (self.issue_support_rate + self.pull_request_support_rate) / 2
+        self.issue_support_rate = (len(issue_with_support) / len(issues)) * 100 if len(issues) > 0 else 0
+        self.pull_request_support_rate = (len(pull_request_with_support) / len(pull_requests)) * 100 if len(pull_requests) > 0 else 0
+        self.value = (self.issue_support_rate + self.pull_request_support_rate)
         return self.value
 
     def get_score(self) -> float:
-        self.score = self.value * 100
+        self.score = self.value / 2
         return self.score
 
     def __str__(self) -> str:
