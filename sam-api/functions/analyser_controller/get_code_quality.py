@@ -45,6 +45,6 @@ class CodeQuality(ScoreCalculator):
         return self.score
 
     def __str__(self) -> str:
-        duplicate_round = "{:.2f}".format(self.duplicated_lines_score)
-        cyclomatic_round = "{:.2f}".format(self.avg_cyclomatic_score)
-        return f"{cyclomatic_round}/{duplicate_round}"
+        unduplicated_round = "{:.2f}".format(self.duplicated_lines_score)
+        uncomplex_round = "{:.2f}".format(self.avg_cyclomatic_score)
+        return f"{uncomplex_round}/{unduplicated_round}"
