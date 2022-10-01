@@ -48,7 +48,7 @@ function Project({ project }) {
                     <span className='bold'>Empty</span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.license_value} </span>
+                    <span>{project.license_label} </span>
                     <span>{project.license_score} </span>
                 </div>
             </div>

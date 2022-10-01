@@ -839,7 +839,7 @@ export function ProjectMetric() {
                     <span className='bold'>Overall Quality</span>
                 </div>
                 <div className='item-list'>
-                    <span>Quality Scores</span>
+                    <span>Quality Score</span>
                 </div>
             </div>
         </div>
