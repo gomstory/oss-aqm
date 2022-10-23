@@ -27,6 +27,6 @@ raw-data/*
 */.aws-sam/*
 .vscode/*
 */build/*
-**/template.yml
+**/configs.js
 **/samconfig.toml
-**/config.js
+**/template.yml
