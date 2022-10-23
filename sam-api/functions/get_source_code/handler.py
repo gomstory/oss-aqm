@@ -56,11 +56,11 @@ def shoud_analysis_project(owner: str, repo: str):
     data = response.json()
     project_list = data["components"]
 
-    # No project found, shoud analysis the new project
+    # No project found, should analysis the new project
     if len(project_list) == 0:
         return True
 
-    # Project found, did it pass 7 days already
+    # Project found, is it has passed for 7 days already?
     last_analysis_days =  get_days(project_list[0]["lastAnalysisDate"])
     if last_analysis_days >= 7:
         return True
