@@ -1,0 +1,348 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  OSS-AQM System is based on AWS infrastructure
+
+Globals:
+  Function:
+    Timeout: 20
+    EventInvokeConfig:
+      MaximumRetryAttempts: 0
+    Environment:
+      Variables:
+        REGION_NAME: !Ref AWS::Region
+        S3_BUCKET: !Ref SrcBucket
+        CRAWLER_TABLE: !Ref CrawlerTable
+        OSS_TABLE: !Ref OSSTable
+        TOKEN_TABLE: !Ref AccessTokenTable
+        START_CRAWLER_QUEUE: !Ref StartCrawlerQueue
+        STOP_CRAWLER_QUEUE: !Ref StopCrawlerQueue
+        EC2_SONAR_SERVER: !Ref SonarQubeInstance
+        EC2_SONAR_USERNAME: "admin"
+        EC2_SONAR_PASS: "sonaradmin"
+        
+Parameters:
+  GithubClientId:
+    Type: String
+    Default: "***REMOVED***"
+    Description: Github issued OAuth client ID
+  GithubClientSecret:
+    Type: String
+    Default: "***REMOVED***"
+    NoEcho: true
+    Description: Github issued OAuth client secret
+  GithubOauthCallbackUrl:
+    Type: String
+    Default: "http://gomstory.github.io/oss-aqm/#/new"
+    Description: Access token will be appended as parameter after which redirect will follow to this URL
+
+Resources:
+  # API Gateway
+  OSSApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: OSS-AQS-API
+      Description: "OSS-AQM APIs provide for https://gomstory.github.io/oss-aqm"
+      StageName: Staging
+      Cors:
+        AllowMethods: "'GET,POST,OPTIONS'"
+        AllowHeaders: "'*'"
+        AllowOrigin: "'*'"
+
+  # SonarQube Server Instance
+  SonarQubeInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0ff89c4ce7de192ea
+      InstanceType: t2.small
+      SecurityGroupIds:
+       - ***REMOVED***
+
+  # GET: crawler
+  GetCrawlerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/get_crawler/
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Events:
+        OSSApiGateway:
+          Type: Api
+          Properties:
+            RestApiId: !Ref OSSApiGateway
+            Path: /crawler
+            Method: GET
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CrawlerTable
+
+  # POST: crawler
+  CreateCrawlerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/create_crawler/
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Policies:
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt StartCrawlerQueue.QueueName
+      Events:
+        OSSApiGateway:
+          Type: Api
+          Properties:
+            RestApiId: !Ref OSSApiGateway
+            Path: /crawler
+            Method: POST
+    
+  # GET: /project
+  GetProjectFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/get_project/
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref OSSTable
+      Events:
+        OSSApiGateway:
+          Type: Api
+          Properties:
+            RestApiId: !Ref OSSApiGateway
+            Path: /project
+            Method: GET
+  
+  # Github OAuth2 /oauth/github/login
+  OauthGithubAuthorizeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/github_oauth/
+      Handler: githubAuthorization.handler
+      Runtime: nodejs14.x
+      Events:
+        OSSApiGateway:
+          Type: Api
+          Properties:
+            RestApiId: !Ref OSSApiGateway
+            Path: /oauth/github/login
+            Method: get
+      Environment:
+        Variables:
+          CLIENT_ID: !Ref GithubClientId
+
+  # Github OAuth2 /oauth/github/login/callback
+  OauthGithubCallbackFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/github_oauth/
+      Handler: githubAuthorizationCallback.handler
+      Runtime: nodejs14.x
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref AccessTokenTable
+      Events:
+        OSSApiGateway:
+          Type: Api
+          Properties:
+            RestApiId: !Ref OSSApiGateway
+            Path: /oauth/github/login/callback
+            Method: get
+      Environment:
+        Variables:
+          CLIENT_ID: !Ref GithubClientId
+          CLIENT_SECRET: !Ref GithubClientSecret
+          OAUTH_CALLBACK_URL: !Ref GithubOauthCallbackUrl
+
+  CrawlerControllerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/crawler_controller/
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Role: ***REMOVED***
+      Environment:
+        Variables:
+          GET_REPO_INFO_FUNCTION: !Ref GetRepoInfoFunction
+          GET_LICENSE_FUNCTION: !Ref GetLicenseFunction
+          GET_LANG_FUNCTION: !Ref GetLangFunction
+          GET_SOURCE_CODE_FUNCTION: !Ref GetSourceCodeFunction
+          GET_CONTRIBUTOR_FUNCTION: !Ref GetContributorFunction
+          GET_RELEASE_FUNCTION: !Ref GetReleaseFunction
+          GET_ISSUE_FUNCTION: !Ref GetIssueFunction
+          GET_CORE_TEAM_FUNCTION: !Ref GetCoreTeamFunction
+          GET_USER_FUNCTION: !Ref GetUserFunction
+          GET_FORUM_FUNCTION: !Ref GetForumFunction
+      Events:
+        NewProjectEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt StartCrawlerQueue.Arn
+            BatchSize: 1
+  
+  StopCrawlerControllerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/stop_crawler_controller/
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Role: ***REMOVED***
+      Environment:
+        Variables:
+          ANALYSER_FUNCTION: !Ref AnalyserFunction
+      Events:
+        SuccessCrawlerEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt StopCrawlerQueue.Arn
+            BatchSize: 1
+
+  AnalyserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/analyser_controller/
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Timeout: 900
+      Role: ***REMOVED***
+
+  GetSourceCodeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/get_source_code/
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Timeout: 900
+      Role: ***REMOVED***
+
+  GetRepoInfoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/get_repo_info/
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Role: ***REMOVED***
+
+  GetLicenseFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/get_license/
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Role: ***REMOVED***
+
+  GetLangFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/get_lang/
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Role: ***REMOVED***
+
+  GetContributorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/get_contributor/
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Timeout: 900
+      Role: ***REMOVED***
+
+  GetReleaseFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/get_release/
+      Handler: handler.lambda_handler
+      Timeout: 900
+      Runtime: python3.9
+      Role: ***REMOVED***
+
+  GetIssueFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/get_issue/
+      Timeout: 900
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Role: ***REMOVED***
+
+  GetCoreTeamFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/get_core_team/
+      Timeout: 900
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Role: ***REMOVED***
+
+  GetUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/get_user/
+      Timeout: 900
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Role: ***REMOVED***
+
+  GetForumFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/get_forum/
+      Timeout: 900
+      Handler: handler.lambda_handler
+      Runtime: python3.9
+      Role: ***REMOVED***
+
+  # SQS Queue
+  StartCrawlerQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      FifoQueue: true
+      ContentBasedDeduplication: True
+      DelaySeconds: 30
+
+  StopCrawlerQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      FifoQueue: true
+      ContentBasedDeduplication: True
+      DelaySeconds: 30
+  
+  # DynamoDB
+  CrawlerTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: github_id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 1
+
+  OSSTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 1
+
+  AccessTokenTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 1
+  
+  # S3 Bucket
+  SrcBucket:
+    Type: AWS::S3::Bucket
+
+Outputs:
+  OSSApiGateway:
+    Description: 'API Gateway endpoint URL for Staging stage for Hello World function'
+    Value: !Sub 'https://${OSSApiGateway}.execute-api.${AWS::Region}.amazonaws.com/Staging/'
