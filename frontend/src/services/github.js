@@ -1,4 +1,3 @@
-import { apiConfigs } from './configs'
 import axios from 'axios'
 
 export function getME(token) {
