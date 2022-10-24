@@ -15,8 +15,10 @@ class CodeQuality(ScoreCalculator):
     def get_duplicate_line(self):
         duplicated_lines = self.find_metric('duplicated_lines')
         lines = self.find_metric('lines')
-        duplicated_ratio = int(duplicated_lines) / int(lines)
-        self.duplicated_lines_score = (1 - duplicated_ratio)
+        duplicated_ratio = float(duplicated_lines) / float(lines)
+        unduplicate_ratio = (1 - duplicated_ratio)
+        # Truncate float long number to 2 digits
+        self.duplicated_lines_score = float(str(unduplicate_ratio)[:4])
         return self.duplicated_lines_score
 
     def get_uncomplex_code(self):

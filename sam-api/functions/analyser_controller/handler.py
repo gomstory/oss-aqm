@@ -27,6 +27,7 @@ s3 = boto3.resource('s3')
 dynamo = boto3.resource('dynamodb')
 ec2 = boto3.resource('ec2')
 is_local = 'AWS_SAM_LOCAL' in os.environ
+sonar_server = os.environ["EC2_SONAR_SERVER"]
 sonar_username = os.environ["EC2_SONAR_USERNAME"]
 sonar_password = os.environ["EC2_SONAR_PASS"]
 s3_bucket_name = os.environ["S3_BUCKET"]
@@ -67,7 +68,7 @@ def get_sonar_info(owner: str, repo: str) -> dict:
     ]
     
     # Get all metrics from SonarQube server
-    sonarqube_name = os.environ["EC2_SONAR_SERVER"]
+    sonarqube_name = sonar_server
     instances = ec2.Instance(sonarqube_name)
 
     if instances.state["Name"] != "running":
