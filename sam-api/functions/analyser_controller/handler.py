@@ -1,4 +1,3 @@
-from datetime import datetime
 import json
 import boto3
 import os
@@ -20,7 +19,11 @@ from get_document import Document
 from get_project_size import ProjectSize
 from get_comminity_size import CommunitySize
 from get_available_forum import AvailableForum
+from get_co_existence import Co_Existence
+from get_continuing_change import ContinuingChange
+from get_new_feature import NewFeature
 from utils import get_days
+from datetime import datetime
 
 # Connect to AWS services
 s3 = boto3.resource('s3')
@@ -44,6 +47,10 @@ def respond(err, res=None):
 
 def get_filename(link):
     result = re.search(r"([\w\d\-]+)\.json$", link)
+    
+    if result is None: 
+        return ""
+    
     group = result.groups()
     name = group[0]
     return name
@@ -69,7 +76,7 @@ def get_sonar_info(owner: str, repo: str) -> dict:
     
     # Get all metrics from SonarQube server
     sonarqube_name = sonar_server
-    instances = ec2.Instance(sonarqube_name)
+    instances = ec2.Instance(sonarqube_name) # type: ignore
 
     if instances.state["Name"] != "running":
         raise ValueError("Please turn on the sonarqube server")
@@ -99,8 +106,11 @@ def lambda_handler(event, context):
     project_row = {}
     json_files = {}
 
+    # Download sonarqube metrics
+    json_files['sonar-info'] = get_sonar_info(owner, repo)
+
     # Download all files and store to /tmp folder
-    bucket = s3.Bucket(s3_bucket_name)
+    bucket = s3.Bucket(s3_bucket_name) # type: ignore
     file_list = bucket.objects.filter(Prefix=f"{owner}/{repo}")
     
     for obj in file_list:
@@ -110,16 +120,13 @@ def lambda_handler(event, context):
         with open(output_path, 'r') as f:
             json_files[json_filename] = json.load(f)
 
-    # Download sonarqube metrics
-    json_files['sonar-info'] = get_sonar_info(owner, repo)
-
     # Calculate value, score base on given key, function, file name
     func_list = [
         ('license', License), 
         ('maturity', Maturity),
         ('security', Security),
         ('document', Document),
-        # ('popularity', Popularity),
+        ('popularity', Popularity),
         ('contributor', Contributor),
         ('testibility', Testibility),
         ('reliability', Reliability),
@@ -129,22 +136,22 @@ def lambda_handler(event, context):
         ('maintainability', Maintainability),
         ('development_lang', Developmet_Lang),
         ('availavility_forum', AvailableForum),
-        ('professional_support', Professional_Support)
+        ('professional_support', Professional_Support),
+        ('co_existence', Co_Existence),
+        ('continuing_change', ContinuingChange),
+        ('new_feature', NewFeature)
     ]
 
-    for field, Class_n in func_list:
+    # Build metric information
+    project_row["metrics"] = []
+    for field, instanceClass in func_list:
         print('calculate quality:', field)
-        calculator = Class_n(json_files)
-        value = calculator.get_value()
-        score = calculator.get_score()
-        desc = calculator.desc()
-        project_row[f"{field}_score"] = score
-        project_row[f"{field}_value"] = value
-        project_row[f"{field}_label"] = str(calculator)
-        project_row[f"{field}_desc"] = desc
+        calculator = instanceClass(json_files)
+        result = calculator.to_json()
+        project_row["metrics"].append(result)
 
     # Creating project info record
-    repo_info = json_files.get("repo-info")
+    repo_info = json_files.get("repo-info", {})
     project_row['id'] = repo_info["full_name"]
     project_row["name"] = repo_info["name"]
     project_row["created_at"] = repo_info["created_at"]
@@ -161,7 +168,7 @@ def lambda_handler(event, context):
     project_row['analysed_at'] = str(datetime.now())
 
     # Save/Update project to table
-    oss_table = dynamo.Table(oss_table_name)
+    oss_table = dynamo.Table(oss_table_name) # type: ignore
     item = json.loads(json.dumps(project_row), parse_float=Decimal)
     oss_table.put_item(Item=item)
 

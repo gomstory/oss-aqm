@@ -2,6 +2,7 @@ from Calculator import ScoreCalculator
 
 class AvailableForum(ScoreCalculator):
     def __init__(self, data: dict) -> None:
+        self.metric_key = "availavility_forum"
         self.forum = data["forum"] if "forum" in data else []
         self.total_forum = 0
         self.forum_with_answer = 0
@@ -35,3 +36,9 @@ class AvailableForum(ScoreCalculator):
 
     def __str__(self) -> str:
         return f"{self.forum_with_answer}"
+    
+    def to_json(self) -> dict:
+        data = super().to_json()
+        data['total_forum'] = self.total_forum
+        data['forum_with_answer'] = self.forum_with_answer
+        return data

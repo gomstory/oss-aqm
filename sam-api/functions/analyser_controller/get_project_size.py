@@ -2,22 +2,20 @@ import Calculator
 
 class ProjectSize(Calculator.ScoreCalculator):
     def __init__(self, data: dict) -> None:
+        self.metric_key = "project_size"
         self.sonar = data['sonar-info']
         self.metrics = self.sonar['component']['measures']
         self.size_label = "XS"
+        self.total_lines = 0
 
     def find_metric(self, key: str):
         for item in self.metrics:
             if item['metric'] == key:
                 return item['value']
+        return 0
 
-    def get_value(self) -> int:
-        lines = self.find_metric('lines')
-        self.value = int(lines)
-        return self.value
-
-    def get_score(self) -> dict:
-        total_lines = self.value
+    def get_value(self) -> str:
+        total_lines = int(self.find_metric('lines'))
 
         if (total_lines < 1000):
             self.size_label = "XS"
@@ -30,8 +28,18 @@ class ProjectSize(Calculator.ScoreCalculator):
         elif total_lines > 500000:
             self.size_label = "XL"
 
-        self.score = self.size_label
+        self.total_lines = total_lines
+        self.value = self.size_label
+        return  self.value
+    
+    def get_score(self) -> int:
+        self.score = 0
         return self.score
 
     def __str__(self) -> str:
-        return "{:.0f}".format(self.value)
+        return self.value
+    
+    def to_json(self) -> dict:
+        data = super().to_json()
+        data['total_lines'] = self.total_lines
+        return data

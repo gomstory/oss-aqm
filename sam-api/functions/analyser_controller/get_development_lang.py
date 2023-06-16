@@ -2,6 +2,7 @@ from Calculator import ScoreCalculator
 
 class Developmet_Lang(ScoreCalculator):
     def __init__(self, data: dict) -> None:
+        self.metric_key = "development_lang"
         self.languages = data['language']
 
     def get_value(self):

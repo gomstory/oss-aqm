@@ -5,6 +5,7 @@ from Calculator import ScoreCalculator
 
 class Maturity(ScoreCalculator):
     def __init__(self, data: dict) -> None:
+        self.metric_key = "maturity"
         self.repo_info = data['repo-info']
         self.release_info = data['release']
         self.issue = data['issue'] if 'issue' in data else []

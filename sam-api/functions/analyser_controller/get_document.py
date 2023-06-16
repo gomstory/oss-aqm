@@ -6,6 +6,7 @@ class Document(ScoreCalculator):
     Number of Comment Lines / Number of Line of Code + Number of Comment Lines
     """
     def __init__(self, data: dict) -> None:
+        self.metric_key = "document"
         self.sonar = data['sonar-info']
         self.metrics = self.sonar['component']['measures']
         self.comment_lines = 0
@@ -15,6 +16,7 @@ class Document(ScoreCalculator):
         for item in metrics:
             if item['metric'] == key:
                 return item['value']
+        return 0
 
     def get_comment_lines(self):
         """Number of lines containing either comment or commented-out code."""
@@ -33,14 +35,20 @@ class Document(ScoreCalculator):
         """Get Code Comment Line Density"""
         self.comment_lines = self.get_comment_lines()
         self.code_lines = self.get_code_lines()
-        self.value = (self.comment_lines / (self.comment_lines + self.code_lines))
+        self.value = round(self.comment_lines / (self.comment_lines + self.code_lines), 2)
         return self.value
 
     def get_score(self) -> dict:
         """Convert to (0,100) score rank"""
         self.score = self.value * 100
-        return self.score
+        return round(self.score, 2)
 
     def __str__(self) -> str:
         return f"{self.comment_lines}/{self.code_lines}"
+    
+    def to_json(self) -> dict:
+        data =  super().to_json()
+        data['comment_lines'] = self.comment_lines
+        data['code_lines'] = self.code_lines
+        return data
 

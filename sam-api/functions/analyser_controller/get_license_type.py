@@ -2,6 +2,7 @@ from Calculator import ScoreCalculator
 
 class License(ScoreCalculator):
     def __init__(self, data: dict) -> None:
+        self.metric_key = "license_type"
         self.license_info = data['license']
         self.repo_info = data["repo-info"]
 

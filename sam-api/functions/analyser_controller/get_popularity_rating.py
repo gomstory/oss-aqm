@@ -7,12 +7,12 @@ class Popularity(ScoreCalculator):
     """
 
     def __init__(self, data: dict) -> None:
+        self.metric_key = "popularity_rating_score"
         self.repo_info = data['repo-info']
         self.number_users = 0
         self.stars = 0
 
     def get_value(self):
-        # TODO: Fixes watcher == star, since 2012
         data = self.repo_info
         self.stars = data['stargazers_count'] if 'stargazers_count' in data else 0
         self.number_users = data['watchers'] if 'watchers' in data else 0
@@ -30,4 +30,10 @@ class Popularity(ScoreCalculator):
         return self.score
     
     def __str__(self) -> str:
-        return f"{self.stars}/{self.number_users}"
+        return f"{self.stars}/{self.value}"
+    
+    def to_json(self) -> dict:
+        data = super().to_json()
+        data['number_users'] = self.number_users
+        data['stars'] = self.stars
+        return data

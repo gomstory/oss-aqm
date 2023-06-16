@@ -8,6 +8,7 @@ class Contributor(ScoreCalculator):
     """Number of current core developers and contributors."""
     def __init__(self, data: dict) -> None:
         self.value = 0
+        self.metric_key = "contributor"
         self.score = 0
         self.core_team = data['core-team'] if 'core-team' in data else []
         self.contributors = self.get_contributors(data['contributor']) if 'contributor' in data else []

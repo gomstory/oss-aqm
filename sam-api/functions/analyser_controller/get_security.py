@@ -2,14 +2,15 @@ from Calculator import ScoreCalculator
 
 class Security(ScoreCalculator):
     def __init__(self, data: dict) -> None:
+        self.metric_key = "security"
         self.sonar = data['sonar-info']
         self.metrics = self.sonar['component']['measures']
-        self.label = ""
 
     def find_metric(self, key):
         for item in self.metrics:
             if item['metric'] == key:
                 return item['value']
+        return 0
 
     def get_value(self):
         self.value = self.find_metric('security_rating')

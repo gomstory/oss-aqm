@@ -1,12 +1,9 @@
 from Calculator import ScoreCalculator
 
 class Professional_Support(ScoreCalculator):
-    """Quality of Profession Support 
-    Number of supporters who respond to issues in the past 6 months. If there are no reported issues, 
-    it is a sign that information and help has been provided sufficiently 
-    for users to efficiently resolve issues that they come across.
-    """
+    """Quality of Profession Support"""
     def __init__(self, data: dict) -> None:
+        self.metric_key = 'support'
         self.issue_and_pull_requests = data['issue'] if 'issue' in data else []
         self.issues = []
         self.issues_supported = []
@@ -14,7 +11,6 @@ class Professional_Support(ScoreCalculator):
         self.supported_pull_requests = []
         self.issue_support_rate = 0
         self.pull_request_support_rate = 0
-
 
     def get_issues(self) -> list:
         self.issues = list(filter(lambda x: (('pull_request' in x) == False), self.issue_and_pull_requests))
@@ -40,11 +36,11 @@ class Professional_Support(ScoreCalculator):
         self.issue_support_rate = (len(issue_with_support) / len(issues)) if len(issues) > 0 else 0
         self.pull_request_support_rate = (len(pull_request_with_support) / len(pull_requests)) if len(pull_requests) > 0 else 0
         self.value = (self.issue_support_rate + self.pull_request_support_rate) / 2
-        return self.value
+        return round(self.value, 2)
 
     def get_score(self) -> float:
         self.score = self.value * 100
-        return self.score
+        return round(self.score, 2)
 
     def __str__(self) -> str:
         issue_rate = "{:.2f}".format(self.issue_support_rate)

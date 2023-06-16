@@ -2,6 +2,7 @@ from Calculator import ScoreCalculator
 
 class CodeQuality(ScoreCalculator):
     def __init__(self, data: dict) -> None:
+        self.metric_key = "quality_code"
         self.sonar = data['sonar-info']
         self.metrics = self.sonar['component']['measures']
         self.duplicated_lines_score = 0
@@ -11,19 +12,26 @@ class CodeQuality(ScoreCalculator):
         for item in self.metrics:
             if item['metric'] == key:
                 return item['value']
+        return 0
 
     def get_duplicate_line(self):
         duplicated_lines = self.find_metric('duplicated_lines')
         lines = self.find_metric('lines')
-        duplicated_ratio = float(duplicated_lines) / float(lines)
-        unduplicate_ratio = (1 - duplicated_ratio)
-        # Truncate float long number to 2 digits
-        self.duplicated_lines_score = float(str(unduplicate_ratio)[:4])
+
+        if lines == 0:
+            self.duplicated_lines_score = 0
+        else:
+            duplicated_ratio = float(duplicated_lines) / float(lines)
+            unduplicate_ratio = (1 - duplicated_ratio)
+            # Truncate float long number to 2 digits
+            self.duplicated_lines_score = float(str(unduplicate_ratio)[:4])
+            
         return self.duplicated_lines_score
 
     def get_uncomplex_code(self):
         complexity = self.find_metric('file_complexity')
         avg_cyclomatic = float(complexity)
+        rank = 1
         
         if avg_cyclomatic > 50:
             rank = 1
@@ -34,13 +42,14 @@ class CodeQuality(ScoreCalculator):
         elif avg_cyclomatic >= 1 and avg_cyclomatic <= 10:
             rank = 4  
 
-        self.avg_cyclomatic_score =  (rank / 4)
+        self.avg_cyclomatic_score = (rank / 4)
         return self.avg_cyclomatic_score
     
     def get_value(self) -> float:
         dup = self.get_duplicate_line()
         cyclo = self.get_uncomplex_code()
         self.value = (dup + cyclo) / 2
+        return self.value
 
     def get_score(self) -> float:
         self.score = self.value * 100

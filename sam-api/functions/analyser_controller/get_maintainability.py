@@ -2,6 +2,7 @@ from Calculator import ScoreCalculator
 
 class Maintainability(ScoreCalculator):
     def __init__(self, data: dict) -> None:
+        self.metric_key = "maintainability"
         self.sonar = data['sonar-info']
         self.metrics = self.sonar['component']['measures']
 
@@ -9,6 +10,7 @@ class Maintainability(ScoreCalculator):
         for item in self.metrics:
             if item['metric'] == key:
                 return item['value']
+        return 0
 
     def get_value(self):
         self.value = self.find_metric('sqale_rating')

@@ -4,6 +4,7 @@ from get_contributor import Contributor
 class CommunitySize(Contributor):
     def __init__(self, data: dict) -> None:
         super().__init__(data)
+        self.metric_key = "community_size"
         self.watchers = data['user']['result'] if 'user' in data else []
 
     def get_value(self) -> int:
