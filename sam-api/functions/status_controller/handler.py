@@ -26,6 +26,7 @@ def lambda_handler(event, context):
     attributes = record['messageAttributes']
     owner = attributes['owner']['stringValue']
     repo = attributes['repo']['stringValue']
+    status = attributes['status']['stringValue']
     
     # Update status of specific row
     github_id = f'https://github.com/{owner}/{repo}'
@@ -33,7 +34,7 @@ def lambda_handler(event, context):
         Key={'github_id': github_id},
         UpdateExpression=f'SET {queue_key} = :val',
         ExpressionAttributeValues={
-            ':val': 'completed'
+            ':val': status
         }
     )
 
@@ -48,7 +49,9 @@ def lambda_handler(event, context):
         'issue_status',
         'core_team_status',
         'user_status',
-        'forum_status'
+        'forum_status',
+        'book_status',
+        'course_status'
     ]
     
     response = crawler_table.get_item(Key={'github_id': f'https://github.com/{owner}/{repo}'})
@@ -61,7 +64,7 @@ def lambda_handler(event, context):
                 is_all_ready = False
                 break
 
-    # Invoke Analyser Function to callculate score once crawler has done
+    # Invoke Analyser Function to callculate score once all crawlers have finished
     if is_all_ready is True:
         func_name = os.environ['ANALYSER_FUNCTION']
         

@@ -76,7 +76,12 @@ def lambda_handler(event, context):
     repo = event['repo']
     owner = event['owner']
     lambda_status = "pending"
-    shoud_analysis = shoud_analysis_project(owner=owner, repo=repo)
+    shoud_analysis = False
+    
+    try:
+        shoud_analysis = shoud_analysis_project(owner=owner, repo=repo)
+    except ValueError:
+        lambda_status = "failed"
 
     if shoud_analysis is True:
         # Send Command to ec2 instance
@@ -109,15 +114,15 @@ def lambda_handler(event, context):
         # Get run command status
         ssm_command_id = ssm_response['Command']['CommandId']
         ssm_output = ssm.get_command_invocation(
-        CommandId=ssm_command_id,
-        InstanceId=sonarqube_name,
+            CommandId=ssm_command_id,
+            InstanceId=sonarqube_name,
         )
         
         # Waiting command to be finished
         while (ssm_output["Status"] == "InProgress"):
             ssm_output = ssm.get_command_invocation(
-            CommandId=ssm_command_id,
-            InstanceId=sonarqube_name,
+                CommandId=ssm_command_id,
+                InstanceId=sonarqube_name,
             )
             
             print(ssm_output["Status"])
@@ -136,8 +141,6 @@ def lambda_handler(event, context):
 
         lambda_status = status_switcher.get(
             ssm_output["Status"], 'failed')
-    else:
-        lambda_status = "completed"
 
     # Add queue to inform completion
     sqs.send_message(

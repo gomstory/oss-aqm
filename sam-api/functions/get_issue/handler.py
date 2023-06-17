@@ -83,7 +83,7 @@ def lambda_handler(event, context):
 
     # Throw error when exceed maxumum request
     if api_quata <= 0:
-        raise respond(ValueError("Exceed maximum request from Github"))
+        return respond(ValueError("Exceed maximum request from Github"))
 
     # Create json file to tmp folder
     file_name = 'issue.json'
