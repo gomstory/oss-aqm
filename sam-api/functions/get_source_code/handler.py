@@ -73,6 +73,7 @@ def send_message_to_queue(owner: str, repo: str, status: str):
     sqs.send_message(
         QueueUrl=queue_name,
         MessageBody='source_code_status',
+        MessageDeduplicationId=status,
         MessageGroupId=repo,
         MessageAttributes={
             'function_name': {
