@@ -18,6 +18,7 @@ sonarqube_name = os.environ["EC2_SONAR_SERVER"]
 sonar_username = os.environ["EC2_SONAR_USERNAME"]
 sonar_password = os.environ["EC2_SONAR_PASS"]
 bucket_name = os.environ['S3_BUCKET']
+region_name = os.environ['REGION_NAME']
 
 def respond(err, res=None):
     return {
@@ -111,14 +112,17 @@ def lambda_handler(event, context):
     if shoud_analysis is True:
         github_url = f"https://www.github.com/{owner}/{repo}"
         message_attributes = json.dumps({
-            "owner": {"DataType": "String", "StringValue": "vuejs"},
-            "repo": {"DataType": "String", "StringValue": "vue"},
-            "status": {"DataType": "String", "StringValue": "pending"}
+            "owner": {"DataType": "String", "StringValue": owner},
+            "repo": {"DataType": "String", "StringValue": repo},
+            "status": {"DataType": "String", "StringValue": "completed"}
         })
+
+        # Send Queue as In-progress
+        send_message_to_queue(owner, repo, "in-progress")
 
         # Send Command to ec2 instance
         ssm.send_command( 
-            InstanceIds=[ sonarqube_name ], 
+            InstanceIds=[sonarqube_name], 
             DocumentName='AWS-RunShellScript', 
             Comment=f'{github_url}: clone source code and scan by sonarqube', 
             Parameters={
@@ -140,7 +144,8 @@ def lambda_handler(event, context):
                     f"--queue-url {queue_url} \\",
                     f"--message-group-id {repo} \\",
                     "--message-body 'source_code_status' \\" ,
-                    f"--message-attributes {message_attributes}"
+                    f"--message-attributes '{message_attributes}' \\"
+                    f"--region {region_name}"
                 ]
             }
         )
