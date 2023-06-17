@@ -18,6 +18,7 @@ class Maintainability(ScoreCalculator):
         return self.value
 
     def get_score(self):
+        value = self.get_value()
         switcher = {
             1.0: 100, # A
             2.0: 80,  # B
@@ -26,7 +27,7 @@ class Maintainability(ScoreCalculator):
             5.0: 20   # E
         }
 
-        self.score = switcher.get(self.value, 0)
+        self.score = switcher.get(value, 0)
         return self.score
 
     def __str__(self) -> str:

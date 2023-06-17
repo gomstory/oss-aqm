@@ -31,14 +31,14 @@ class Document(ScoreCalculator):
         total_lines = self.get_metric(self.metrics, 'ncloc')
         return int(total_lines)
 
-    def get_value(self) -> dict:
+    def get_value(self) -> float:
         """Get Code Comment Line Density"""
         self.comment_lines = self.get_comment_lines()
         self.code_lines = self.get_code_lines()
         self.value = round(self.comment_lines / (self.comment_lines + self.code_lines), 2)
         return self.value
 
-    def get_score(self) -> dict:
+    def get_score(self) -> float:
         """Convert to (0,100) score rank"""
         self.score = self.value * 100
         return round(self.score, 2)

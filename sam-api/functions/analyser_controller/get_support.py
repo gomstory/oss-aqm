@@ -39,7 +39,8 @@ class Professional_Support(ScoreCalculator):
         return round(self.value, 2)
 
     def get_score(self) -> float:
-        self.score = self.value * 100
+        value = self.get_value()
+        self.score = value * 100
         return round(self.score, 2)
 
     def __str__(self) -> str:

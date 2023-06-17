@@ -117,10 +117,10 @@ def lambda_handler(event, context):
     bucket = s3.Bucket(s3_bucket_name) # type: ignore
     file_list = bucket.objects.filter(Prefix=f"{owner}/{repo}")
     
-    for obj in file_list:
-        json_filename = get_filename(obj.key)
+    for _class in file_list:
+        json_filename = get_filename(_class.key)
         output_path = tmp_folder + '/' + json_filename
-        bucket.download_file(obj.key, output_path)
+        bucket.download_file(_class.key, output_path)
         with open(output_path, 'r') as f:
             json_files[json_filename] = json.load(f)
 
@@ -156,9 +156,9 @@ def lambda_handler(event, context):
 
     # Build metric information
     project_row["metrics"] = []
-    for field, instanceClass in metric_list:
+    for field, _class in metric_list:
         print('calculate quality:', field)
-        calculator = instanceClass(json_files)
+        calculator = _class(json_files)
         result = calculator.to_json()
         project_row["metrics"].append(result)
 
