@@ -83,7 +83,9 @@ def lambda_handler(event, context):
             os.environ["GET_ISSUE_FUNCTION"],
             os.environ["GET_CORE_TEAM_FUNCTION"],
             os.environ["GET_USER_FUNCTION"],
-            os.environ["GET_FORUM_FUNCTION"]
+            os.environ["GET_FORUM_FUNCTION"],
+            os.environ["GET_BOOK_FUNCTION"],
+            os.environ["GET_COURSE_FUNCTION"]
         ]
 
         payload = {

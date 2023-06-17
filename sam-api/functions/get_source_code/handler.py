@@ -119,7 +119,7 @@ def lambda_handler(event, context):
         })
 
         # Send Queue as In-progress
-        send_message_to_queue(owner, repo, "in-progress")
+        send_message_to_queue(owner, repo, "sonar-in-progress")
 
         # Send Command to ec2 instance
         ssm.send_command( 
@@ -152,5 +152,7 @@ def lambda_handler(event, context):
         )
         
         time.sleep(5)
+    else:
+        send_message_to_queue(owner, repo, 'completed')
 
     return respond(None, "OK")
