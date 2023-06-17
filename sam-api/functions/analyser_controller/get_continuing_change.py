@@ -17,16 +17,18 @@ class ContinuingChange(ScoreCalculator):
         if len(self.issue_and_pull_requests) == 0: return []
         return list(filter(lambda x: (('pull_request' in x) == True), self.issue_and_pull_requests))
     
-    def generate_last_30_days(self):
+    def generate_30_days(self):
         today = datetime.today()
-        dates = dict()
+        dates = dict[str, int]()
+
         for x in range(30):
             date = today.date() - timedelta(days=x)
             dates[str(date)] = 0
+
         return dates
 
     def get_value(self) -> float:
-        last_30_days = self.generate_last_30_days()
+        last_30_days = self.generate_30_days()
         pull_requests = self.get_pull_requests()
         total_count = 0
         
@@ -60,5 +62,6 @@ class ContinuingChange(ScoreCalculator):
     
     def to_json(self) -> dict:
         date = super().to_json()
+        date['pull_request_frequency'] = self.value
         date['total_pull_requests'] = self.total_pull_requests
         return date

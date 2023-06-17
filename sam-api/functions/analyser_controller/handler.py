@@ -4,9 +4,10 @@ import os
 import re
 import requests
 from decimal import Decimal
+from Calculator import ScoreCalculator
 from get_license_type import License
 from get_maturity import Maturity
-from get_contributor import Contributor
+from get_contributor import SupportContributor
 from get_popularity_rating import Popularity
 from get_development_lang import Developmet_Lang
 from get_testibility import Testibility
@@ -22,6 +23,7 @@ from get_available_forum import AvailableForum
 from get_co_existence import Co_Existence
 from get_continuing_change import ContinuingChange
 from get_new_feature import NewFeature
+from get_performance import PerformanceIssue
 from utils import get_days
 from datetime import datetime
 
@@ -121,30 +123,40 @@ def lambda_handler(event, context):
             json_files[json_filename] = json.load(f)
 
     # Calculate value, score base on given key, function, file name
-    func_list = [
+    metric_list = list[tuple]([
+        # License
         ('license', License), 
-        ('maturity', Maturity),
-        ('security', Security),
-        ('document', Document),
+
+        # Community and Support
         ('popularity', Popularity),
-        ('contributor', Contributor),
-        ('testibility', Testibility),
-        ('reliability', Reliability),
-        ('code_quality', CodeQuality),
         ('project_size', ProjectSize),
         ('community_size', CommunitySize),
-        ('maintainability', Maintainability),
-        ('development_lang', Developmet_Lang),
         ('availavility_forum', AvailableForum),
+        ('support_contributor', SupportContributor),
         ('professional_support', Professional_Support),
-        ('co_existence', Co_Existence),
+
+        # Operational SW Char
+        ('maturity', Maturity),
+        ('development_lang_popularity', Developmet_Lang),
+        ('document', Document),
+        
+        # Economics
+        ('new_feature', NewFeature),
         ('continuing_change', ContinuingChange),
-        ('new_feature', NewFeature)
-    ]
+
+        # Produc Quality
+        ('code_quality', CodeQuality),
+        ('reliability', Reliability),
+        ('maintainability', Maintainability),
+        ('security', Security),
+        ('testibility', Testibility),
+        ('co_existence', Co_Existence),
+        ('performance', PerformanceIssue)
+    ])
 
     # Build metric information
     project_row["metrics"] = []
-    for field, instanceClass in func_list:
+    for field, instanceClass in metric_list:
         print('calculate quality:', field)
         calculator = instanceClass(json_files)
         result = calculator.to_json()

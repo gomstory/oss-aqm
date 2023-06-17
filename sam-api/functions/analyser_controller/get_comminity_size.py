@@ -1,7 +1,7 @@
 
-from get_contributor import Contributor
+from get_contributor import SupportContributor
 
-class CommunitySize(Contributor):
+class CommunitySize(SupportContributor):
     def __init__(self, data: dict) -> None:
         super().__init__(data)
         self.metric_key = "community_size"

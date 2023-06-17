@@ -4,11 +4,11 @@ from Calculator import ScoreCalculator
     Metric: Get Contributor
     Description: The number of core developer and contributor in the past 6 month
 """
-class Contributor(ScoreCalculator):
+class SupportContributor(ScoreCalculator):
     """Number of current core developers and contributors."""
     def __init__(self, data: dict) -> None:
         self.value = 0
-        self.metric_key = "contributor"
+        self.metric_key = "support_contributor"
         self.score = 0
         self.core_team = data['core-team'] if 'core-team' in data else []
         self.contributors = self.get_contributors(data['contributor']) if 'contributor' in data else []
