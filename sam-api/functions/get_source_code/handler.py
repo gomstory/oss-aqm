@@ -13,6 +13,7 @@ ec2 = boto3.resource('ec2')
 s3 = boto3.client('s3')
 
 queue_name = os.environ['STOP_CRAWLER_QUEUE']
+queue_url = os.environ['STOP_CRAWLER_QUEUE_URL']
 sonarqube_name = os.environ["EC2_SONAR_SERVER"]
 sonar_username = os.environ["EC2_SONAR_USERNAME"]
 sonar_password = os.environ["EC2_SONAR_PASS"]
@@ -66,83 +67,8 @@ def shoud_analysis_project(owner: str, repo: str):
         return True
     else:
         return False
-
-# The lambda function requires git layer, checkout template.yml
-def lambda_handler(event, context):
-    # Show info for debuging purpose
-    print(event)
     
-    # Get owner and repo from event
-    repo = event['repo']
-    owner = event['owner']
-    lambda_status = "pending"
-    shoud_analysis = False
-    
-    try:
-        shoud_analysis = shoud_analysis_project(owner=owner, repo=repo)
-    except ValueError:
-        lambda_status = "failed"
-
-    if shoud_analysis is True:
-        # Send Command to ec2 instance
-        github_url = f"https://www.github.com/{owner}/{repo}"
-        ssm_response = ssm.send_command( 
-            InstanceIds=[ sonarqube_name ], 
-            DocumentName='AWS-RunShellScript', 
-            Comment=f'{github_url}: clone source code and scan by sonarqube', 
-            Parameters={
-                "commands":[
-                    "sodu su -",
-                    "cd /home/download",
-                    f"git clone {github_url}.git",
-                    f"cd {repo}",
-                    "/opt/sonar-scanner/bin/sonar-scanner \\",
-                    "-Dsonar.host.url=http://localhost:9000 \\",
-                    "-Dsonar.scm.provider=git \\",
-                    "-Dsonar.sources=. \\",
-                    f"-Dsonar.projectKey={owner}:{repo} \\",
-                    f"-Dsonar.login={sonar_username} \\",
-                    f"-Dsonar.password={sonar_password}",
-                    "cd ..",
-                    f"rm -rf {repo}"
-                ]
-            }
-        )
-        
-        time.sleep(3)
-    
-        # Get run command status
-        ssm_command_id = ssm_response['Command']['CommandId']
-        ssm_output = ssm.get_command_invocation(
-            CommandId=ssm_command_id,
-            InstanceId=sonarqube_name,
-        )
-        
-        # Waiting command to be finished
-        while (ssm_output["Status"] == "InProgress"):
-            ssm_output = ssm.get_command_invocation(
-                CommandId=ssm_command_id,
-                InstanceId=sonarqube_name,
-            )
-            
-            print(ssm_output["Status"])
-            time.sleep(2)
-
-        # Map last status and sent to queue
-        print('SSM Status:', ssm_output["Status"])
-        status_switcher = {
-            "Pending": "pending",
-            "Delayed": "delayed",
-            "Success": "completed",
-            "Cancelled": "cancelled",
-            "TimedOut": "timed-out",
-            "Failed": "failed"
-        }
-
-        lambda_status = status_switcher.get(
-            ssm_output["Status"], 'failed')
-
-    # Add queue to inform completion
+def send_message_to_queue(owner: str, repo: str, status: str):
     sqs.send_message(
         QueueUrl=queue_name,
         MessageBody='source_code_status',
@@ -161,10 +87,64 @@ def lambda_handler(event, context):
                 'DataType': 'String'
             },
             'status': {
-                'StringValue': lambda_status,
+                'StringValue': status,
                 'DataType': 'String'
             }
         }
     )
+
+# The lambda function requires git layer, checkout template.yml
+def lambda_handler(event, context):
+    # Show info for debuging purpose
+    print(event)
+    
+    # Get owner and repo from event
+    repo = event['repo']
+    owner = event['owner']
+    shoud_analysis = False
+    
+    try:
+        shoud_analysis = shoud_analysis_project(owner=owner, repo=repo)
+    except ValueError:
+        send_message_to_queue(owner, repo, "failed")
+
+    if shoud_analysis is True:
+        github_url = f"https://www.github.com/{owner}/{repo}"
+        message_attributes = json.dumps({
+            "owner": {"DataType": "String", "StringValue": "vuejs"},
+            "repo": {"DataType": "String", "StringValue": "vue"},
+            "status": {"DataType": "String", "StringValue": "pending"}
+        })
+
+        # Send Command to ec2 instance
+        ssm.send_command( 
+            InstanceIds=[ sonarqube_name ], 
+            DocumentName='AWS-RunShellScript', 
+            Comment=f'{github_url}: clone source code and scan by sonarqube', 
+            Parameters={
+                "commands":[
+                    "sodu su -",
+                    "cd /home/download",
+                    f"git clone {github_url}.git",
+                    f"cd {repo}",
+                    "/opt/sonar-scanner/bin/sonar-scanner \\",
+                    "-Dsonar.host.url=http://localhost:9000 \\",
+                    "-Dsonar.scm.provider=git \\",
+                    "-Dsonar.sources=. \\",
+                    f"-Dsonar.projectKey={owner}:{repo} \\",
+                    f"-Dsonar.login={sonar_username} \\",
+                    f"-Dsonar.password={sonar_password}",
+                    "cd ..",
+                    f"rm -rf {repo}",
+                    "aws sqs send-message \\"
+                    f"--queue-url {queue_url} \\",
+                    f"--message-group-id {repo} \\",
+                    "--message-body 'source_code_status' \\" ,
+                    f"--message-attributes {message_attributes}"
+                ]
+            }
+        )
+        
+        time.sleep(5)
 
     return respond(None, "OK")
