@@ -24,6 +24,8 @@ from get_co_existence import Co_Existence
 from get_continuing_change import ContinuingChange
 from get_new_feature import NewFeature
 from get_performance import PerformanceIssue
+from get_ownership_cost import OwnershipCost
+from get_learning_material import LearningMaterial
 from utils import get_days
 from datetime import datetime
 
@@ -126,7 +128,6 @@ def lambda_handler(event, context):
     metric_list = list[tuple]([
         # License
         ('license', License), 
-
         # Community and Support
         ('popularity', Popularity),
         ('project_size', ProjectSize),
@@ -134,16 +135,15 @@ def lambda_handler(event, context):
         ('availavility_forum', AvailableForum),
         ('support_contributor', SupportContributor),
         ('professional_support', Professional_Support),
-
         # Operational SW Char
         ('maturity', Maturity),
         ('development_lang_popularity', Developmet_Lang),
         ('document', Document),
-        
+        ("learning_material", LearningMaterial),
         # Economics
+        ('cost', OwnershipCost),
         ('new_feature', NewFeature),
         ('continuing_change', ContinuingChange),
-
         # Produc Quality
         ('code_quality', CodeQuality),
         ('reliability', Reliability),

@@ -36,11 +36,11 @@ def lambda_handler(event, context):
     
     if event["queryStringParameters"] is not None:
         params = event['queryStringParameters']
-        page = int(params["page"]) if "page" in params else page
+        page = int(params["page"]) if "page" in params and params["page"] != "" else page
         search = params["search"] if "search" in params else ""
         per_page = int(params["per_page"]) if "per_page" in params else per_page
     
-    oss_table = dynamo.Table(table_name)
+    oss_table = dynamo.Table(table_name) # type: ignore
     
     if search == "":
         scan_result = oss_table.scan(Limit=per_page)

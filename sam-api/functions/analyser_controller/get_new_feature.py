@@ -29,7 +29,8 @@ class NewFeature(ScoreCalculator):
         for pr in pull_requests:
             # Check date must be in 6 months
             date = pr['updated_at'] if 'updated_at' in pr else pr['created_at']
-            if (parser.parse(date) < last_6_months):
+            pr_date = parser.parse(date)
+            if (pr_date.date() < last_6_months.date()):
                 continue
 
             # Check new feature in title

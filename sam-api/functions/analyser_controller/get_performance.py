@@ -46,7 +46,8 @@ class PerformanceIssue(ScoreCalculator):
         for issue in issues:
             # Check date must be in 6 months
             date = issue['updated_at'] if 'updated_at' in issue else issue['created_at']
-            if (parser.parse(date) < last_6_months):
+            issue_date = parser.parse(date)
+            if (issue_date.date() < last_6_months.date()):
                 continue
 
             # Check new feature in title
@@ -74,7 +75,7 @@ class PerformanceIssue(ScoreCalculator):
         return round(self.performance_issues, 2) 
 
     def get_score(self) -> float:
-        if self.total_issues == 0:
+        if self.performance_issues == 0:
             self.score = 100
             return self.score
         else:

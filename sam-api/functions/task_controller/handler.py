@@ -1,15 +1,14 @@
-from datetime import datetime
 import json
 import os
 import boto3
-import datetime
+from boto3 import resource
 
 # Connect to dynamoDb, Lambda
 region_name = os.environ['REGION_NAME']
 table_name = os.environ['CRAWLER_TABLE']
 token_table_name = os.environ["TOKEN_TABLE"]
-crawler_table = boto3.resource('dynamodb').Table(table_name)
-token_table = boto3.resource('dynamodb').Table(token_table_name)
+crawler_table = boto3.resource('dynamodb').Table(table_name) # type: ignore
+token_table = boto3.resource('dynamodb').Table(token_table_name) # type: ignore
 lamb = boto3.client('lambda')
 
 def respond(err, res=None):
@@ -29,34 +28,48 @@ def lambda_handler(event, context):
     github_url = raw_data['body']
     repo = raw_data['messageAttributes']['repo']['stringValue']
     owner = raw_data['messageAttributes']['owner']['stringValue']
-    requestor = raw_data['messageAttributes']['requestor']['stringValue']
 
-    # Check if github_id already exists ignore and remove q
+    # Check record already created, else ingnore it.
     row = crawler_table.get_item(Key={'github_id': github_url})
     row_token = token_table.scan(Limit=3)
     access_token = list(map(lambda x: x["access_token"], row_token["Items"]))
 
-    if 'Item' not in row:
-        # Create a new project record
-        today = datetime.datetime.now()
-        crawler_table.put_item(
-            Item={
-                'github_id': github_url,
-                'repo': repo,
-                'owner': owner,
-                'requestor': requestor,
-                'requested_date': str(today),
-                'license_status': "in-progress",
-                'lang_status': "in-progress",
-                'repo_info_status': "in-progress",
-                'release_status': "in-progress",
-                'source_code_status': "in-progress",
-                'contributor_status': "in-progress",
-                'issue_status': "in-progress",
-                'core_team_status': 'in-progress',
-                'user_status': 'in-progress',
-                'forum_status': 'in-progress'
-            }
+    if 'Item' in row:
+        # Update task status to in-progress
+        crawler_table.update_item(
+            Key={
+                'github_id': github_url
+            },
+            UpdateExpression=f"SET #1=:1, #2=:2, #3=:3, #4=:4, #5=:5, #6=:6, #7=:7, #8=:8, #9=:9, #10=:10, #11=:11, #12=:12",
+            ExpressionAttributeNames={
+                '#1': "license_status",
+                '#2': "lang_status",
+                '#3': "repo_info_status",
+                '#4': "release_status",
+                '#5': "source_code_status",
+                '#6': "contributor_status",
+                '#7': "issue_status",
+                '#8': "core_team_status",
+                '#9': "user_status",
+                '#10': "forum_status",
+                '#11': "book_status",
+                '#12': "course_status",
+            },
+            ExpressionAttributeValues={
+                ':1': "in-progress",
+                ':2': "in-progress",
+                ':3': "in-progress",
+                ':4': "in-progress",
+                ':5': "in-progress",
+                ':6': "in-progress",
+                ':7': "in-progress",
+                ':8': "in-progress",
+                ':9': "in-progress",
+                ':10': "in-progress",
+                ':11': "in-progress",
+                ':12': "in-progress",
+            },
+            ReturnValues="UPDATED_NEW"
         )
 
         # Call crawler lambdars
