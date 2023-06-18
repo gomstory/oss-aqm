@@ -111,7 +111,7 @@ def lambda_handler(event, context):
     json_files = {}
 
     # Download sonarqube metrics
-    json_files['sonar-info'] = get_sonar_info(owner, repo)
+    sonar_info = get_sonar_info(owner, repo)
 
     # Download all files and store to /tmp folder
     bucket = s3.Bucket(s3_bucket_name) # type: ignore
@@ -123,6 +123,9 @@ def lambda_handler(event, context):
         bucket.download_file(_class.key, output_path)
         with open(output_path, 'r') as f:
             json_files[json_filename] = json.load(f)
+
+    # Replace sonar info, if s3 file exists
+    json_files['sonar-info'] = sonar_info
 
     # Calculate value, score base on given key, function, file name
     metric_list = list[tuple]([

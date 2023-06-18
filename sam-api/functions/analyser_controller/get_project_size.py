@@ -37,7 +37,7 @@ class ProjectSize(Calculator.ScoreCalculator):
         return self.score
 
     def __str__(self) -> str:
-        return self.value
+        return f"{self.total_lines} lines"
     
     def to_json(self) -> dict:
         data = super().to_json()

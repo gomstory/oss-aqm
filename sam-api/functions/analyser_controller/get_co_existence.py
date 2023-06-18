@@ -98,4 +98,4 @@ class Co_Existence(ScoreCalculator):
         return data
     
     def __str__(self) -> str:
-        return f"{self.value}/{self.platforms} platform(s)"
+        return f"{self.platforms} platform(s)"

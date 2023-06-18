@@ -35,20 +35,20 @@ class NewFeature(ScoreCalculator):
 
             # Check new feature in title
             title = pr['title'] or ""
-            if re.match(keywords, title):
+            if re.search(keywords, title):
                 new_pull_requests.append(pr)
                 continue
 
             # Check new feature in body
             body = pr['body'] or ""
-            if re.match(keywords, body):
+            if re.search(keywords, body):
                 new_pull_requests.append(pr)
                 continue
             
             # Check new feature in label
             labels = map(lambda x: x['name'], pr['labels']) if 'labels' in pr else []
             label_text = " ".join(labels)
-            if re.match(keywords, label_text):
+            if re.search(keywords, label_text):
                 new_pull_requests.append(pr)
                 continue
 

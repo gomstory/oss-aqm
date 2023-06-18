@@ -41,7 +41,7 @@ class ContinuingChange(ScoreCalculator):
 
             date = str(parser.parse(created_date).date())
             if date in last_30_days:
-                last_30_days[date] += last_30_days[date]
+                last_30_days[date] += 1
         
         # Count last 30 day
         for date, value in last_30_days.items():
@@ -50,15 +50,14 @@ class ContinuingChange(ScoreCalculator):
 
         self.value = total_count
         self.total_pull_requests = len(pull_requests)
-        return round(self.value, 2) 
+        return self.value
 
     def get_score(self) -> float:
         self.score = (self.value / 30) * 100
         return round(self.score, 2)
 
     def __str__(self) -> str:
-        total_pull_request = "{:.2f}".format(self.value)
-        return f"{total_pull_request}/{self.value}"
+        return f"{self.value}/30"
     
     def to_json(self) -> dict:
         date = super().to_json()
