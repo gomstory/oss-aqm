@@ -52,34 +52,34 @@ class PerformanceIssue(ScoreCalculator):
 
             # Check new feature in title
             title = issue['title'] or ""
-            if re.match(keywords, title):
+            if re.search(keywords, title):
                 performance_issues.append(issue)
                 continue
 
             # Check new feature in body
             body = issue['body'] or ""
-            if re.match(keywords, body):
+            if re.search(keywords, body):
                 performance_issues.append(issue)
                 continue
             
             # Check new feature in label
             labels = map(lambda x: x['name'], issue['labels']) if 'labels' in issue else []
             label_text = " ".join(labels)
-            if re.match(keywords, label_text):
+            if re.search(keywords, label_text):
                 performance_issues.append(issue)
                 continue
 
         self.total_issues = len(issues)
         self.performance_issues = len(performance_issues)
         self.value = self.performance_issues
-        return round(self.performance_issues, 2) 
+        return self.performance_issues
 
     def get_score(self) -> float:
         if self.performance_issues == 0:
             self.score = 100
             return self.score
         else:
-            self.score = 1 - ((self.performance_issues / self.total_issues) * 100)
+            self.score = (1 - (self.performance_issues / self.total_issues)) * 100
             return round(self.score, 2)
 
     def __str__(self) -> str:
