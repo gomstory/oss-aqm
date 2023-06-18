@@ -51,7 +51,7 @@ class Maturity(ScoreCalculator):
         elif minor_release <= 1: 
             score_range = 1
 
-        return (score_range / 5)
+        return round((score_range / 5), 2)
 
     def get_age_score(self, days: int = 1) -> float:
         age_range = 0
@@ -72,7 +72,7 @@ class Maturity(ScoreCalculator):
             # > 3 years
             age_range = 5
         
-        return (age_range / 5)
+        return round((age_range / 5), 2)
 
     def get_total_issue(self):
         """Get number of issues the last 6 months reported in Github"""
@@ -116,7 +116,7 @@ class Maturity(ScoreCalculator):
         self.total_issue = issues
         self.total_age_day = days
         self.value = (age_score + release_score + issue_score) / 3
-        return self.value
+        return round(self.value, 2)
 
     def get_score(self) -> float:
         """Get Final score (0, 100] """

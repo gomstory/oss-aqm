@@ -15,13 +15,13 @@ class OwnershipCost(ScoreCalculator):
         maintain_score = self.maintain.get_score()
         support_score = self.support.get_score()
         material_score = self.material.get_score()
-        self.value = round(maintain_score + support_score + material_score)
+        self.value = round((maintain_score + support_score + material_score), 2)
         return self.value
 
     def get_score(self) -> float:
         summation_score = self.get_value()
         if summation_score > 0:
-            self.score = round(summation_score / 3)
+            self.score = round((summation_score / 3), 2)
             return self.score
         else:
             self.score = 0
