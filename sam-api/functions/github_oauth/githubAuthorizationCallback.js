@@ -8,6 +8,10 @@ function extractCode (event) {
   return queryStringParameters.code
 }
 
+function convertEpoc(date) {
+  return Math.floor(date.getTime()/1000.0)
+}
+
 async function exchangeCodeForToken (code) {
   const api = new URL('/login/oauth/access_token', 'https://github.com')
   api.searchParams.set('client_id', process.env.CLIENT_ID)
@@ -55,19 +59,23 @@ exports.handler = async (event) => {
   const AWS = require('aws-sdk');
   AWS.config.update({ region: region });
   const ddb = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
-  const now = Date.now().toString()
+  const now = new Date()
+  const id = now.getTime().toString()
+  const createdAt = now.toISOString()
+  const expiredAt = convertEpoc(new Date(now.setDate(now.getDate() + 2))) 
   const params = {
     TableName: table_name,
     Item: {
-      "id": now,
+      "id": id,
       "access_token": response.data.access_token,
       "token_type": response.data.token_type,
-      "created_time": now
+      "created_time": createdAt,
+      "expired_at": expiredAt
     }
   };
   
   try {
-    var result = await ddb.put(params).promise();
+    await ddb.put(params).promise();
   } catch (e) {
     console.error('error', e)
     return generateErrorObject('Failed to save data to dynamoDb')
