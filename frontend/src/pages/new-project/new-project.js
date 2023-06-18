@@ -130,6 +130,8 @@ function NewProject(props) {
                                 <th>License</th>
                                 <th>Issue</th>
                                 <th>Forum</th>
+                                <th>Books</th>
+                                <th>Courses</th>
                                 <th>Requested By</th>
                             </tr>
                         </thead>
@@ -147,16 +149,18 @@ function NewProject(props) {
                                     <td>{row.license_status}</td>
                                     <td>{row.issue_status}</td>
                                     <td>{row.forum_status}</td>
+                                    <td>{row.book_status}</td>
+                                    <td>{row.course_status}</td>
                                     <td>{row.requestor}</td>
                                 </tr>
                             )}
 
                             {auth && !loading && reqList.length === 0 && (
-                                <tr><td className='text-center' colSpan={12}>No project in progress</td></tr> 
+                                <tr><td className='text-center' colSpan={14}>No project in progress</td></tr> 
                             )}
 
                             {auth && loading && (
-                                <tr><td className='text-center' colSpan={12}>Loading...</td></tr> 
+                                <tr><td className='text-center' colSpan={14}>Loading...</td></tr> 
                             )}
                         </tbody>
                     </table>
