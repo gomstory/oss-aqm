@@ -19,7 +19,7 @@ class Popularity(ScoreCalculator):
         self.value = (self.stars / self.number_users) if self.number_users > 0 else 0
         return self.value
 
-    def get_score(self):
+    def get_score(self) -> float:
         star_per_watcher = self.value
 
         if star_per_watcher > 1:

@@ -17,7 +17,7 @@ class AvailableForum(ScoreCalculator):
         self.value = self.forum_with_answer
         return self.value
 
-    def get_score(self):
+    def get_score(self) -> float:
         range = 0
         
         if self.value > 720:
@@ -35,7 +35,7 @@ class AvailableForum(ScoreCalculator):
         return self.score
 
     def __str__(self) -> str:
-        return f"{self.forum_with_answer}"
+        return f"{self.forum_with_answer}/{self.total_forum}"
     
     def to_json(self) -> dict:
         data = super().to_json()

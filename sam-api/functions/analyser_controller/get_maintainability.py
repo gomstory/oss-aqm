@@ -17,7 +17,7 @@ class Maintainability(ScoreCalculator):
         self.value = float(self.value)
         return self.value
 
-    def get_score(self):
+    def get_score(self) -> float:
         value = self.get_value()
         switcher = {
             1.0: 100, # A

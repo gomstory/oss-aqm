@@ -5,6 +5,7 @@ class Testibility(ScoreCalculator):
         self.metric_key = "testibility"
         self.sonar = data['sonar-info']
         self.metrics = self.sonar['component']['measures']
+        self.complexity = 0
 
     def find_metric(self, arr, key):
         for item in arr:
@@ -15,11 +16,12 @@ class Testibility(ScoreCalculator):
     def get_value(self):
         metrics = self.metrics
         complexity = self.find_metric(metrics, 'file_complexity')
+        self.complexity = float(complexity)
         self.value = float(complexity)
         return self.value
 
 
-    def get_score(self):
+    def get_score(self) -> float:
         rank = 1
         avg_cyclimetric = self.value
 
@@ -34,3 +36,8 @@ class Testibility(ScoreCalculator):
 
         self.score = (rank / 4) * 100
         return self.score
+    
+    def to_json(self) -> dict:
+        data = super().to_json()
+        data['file_complexity'] = self.complexity
+        return data

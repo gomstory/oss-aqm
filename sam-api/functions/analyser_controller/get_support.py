@@ -3,7 +3,7 @@ from Calculator import ScoreCalculator
 class Professional_Support(ScoreCalculator):
     """Quality of Profession Support"""
     def __init__(self, data: dict) -> None:
-        self.metric_key = 'support'
+        self.metric_key = 'professional_support'
         self.issue_and_pull_requests = data['issue'] if 'issue' in data else []
         self.issues = []
         self.issues_supported = []
@@ -44,6 +44,6 @@ class Professional_Support(ScoreCalculator):
         return round(self.score, 2)
 
     def __str__(self) -> str:
-        issue_rate = "{:.2f}".format(self.issue_support_rate)
-        pr_rate = "{:.2f}".format(self.pull_request_support_rate)
+        issue_rate = "{:.2f}".format(self.issue_support_rate * 100)
+        pr_rate = "{:.2f}".format(self.pull_request_support_rate * 100)
         return f"{issue_rate}/{pr_rate}"

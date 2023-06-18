@@ -17,7 +17,7 @@ class Reliability(ScoreCalculator):
         self.value = float(self.value)
         return self.value
 
-    def get_score(self):
+    def get_score(self) -> int:
         switcher = {
             1.0: 100, # A
             2.0: 80,  # B

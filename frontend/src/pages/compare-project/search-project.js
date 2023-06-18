@@ -56,9 +56,19 @@ function SearchProject() {
 
   const onSelectProject = (proj) => {
     if (proj) {
-      dispatch(addProject(proj))
+      const mappedProj = convertMetric(proj, proj.metrics)
+      dispatch(addProject(mappedProj))
       setPopup(false)
     }
+  }
+
+  const convertMetric = (project = {}, metrics = []) => {
+    for (let metric of metrics) {
+      const metricKey = metric.metric_key
+      project[metricKey] = { ...metric }
+    }
+
+    return project
   }
 
   const onFocus = (event) => {
@@ -85,11 +95,11 @@ function SearchProject() {
 
       {popup && searchResult &&
         <ul ref={popupRef} className='search-result'>
-          {searchResult.length == 0 && <li className='search-item'>Project not found</li>}
+          {searchResult.length === 0 && <li className='search-item'>Project not found</li>}
           {searchResult.length > 0  && searchResult
             .map(project =>
               <li className='search-item' key={project.id} onClick={() => onSelectProject(project)}>
-                <img className='icon' src={project.logo} />
+                <img alt={project.id} className='icon' src={project.logo} />
                 <span>{project.id}</span>
                 <span>{project.stars} ⭐</span>
               </li>)}

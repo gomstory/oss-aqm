@@ -83,7 +83,7 @@ class PerformanceIssue(ScoreCalculator):
             return round(self.score, 2)
 
     def __str__(self) -> str:
-        return f"{self.value}/{self.total_issues}"
+        return f"{self.performance_issues}/{self.total_issues}"
     
     def to_json(self) -> dict:
         date = super().to_json()

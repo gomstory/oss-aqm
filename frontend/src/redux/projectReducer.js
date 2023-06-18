@@ -1,20 +1,43 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const defaultWeight = {
-  'license': 1,
-  'maturity': 1,
-  'security': 1,
-  'document': 1,
-  'contributor': 1,
-  'testibility': 1,
-  'reliability': 1,
-  'code_quality': 1,
-  'community_size': 1,
-  'maintainability': 1,
-  'development_lang': 1,
-  'availavility_forum': 1,
-  'professional_support': 1
+export const metricWeight = [
+  'license_type', 
+  'popularity_rating_score', 
+  'project_size', 
+  'community_size', 
+  'availavility_forum', 
+  'support_contributor', 
+  'professional_support', 
+  'maturity', 
+  'development_lang_popularity', 
+  'document', 
+  'learning_material', 
+  'cost', 
+  'new_feature', 
+  'continuing_change', 
+  'code_quality', 
+  'reliability', 
+  'maintainability', 
+  'security', 
+  'testibility', 
+  'co_existence', 
+  'performance'
+]
+
+export const generateKeyValue = (keys = []) => {
+  const obj = {}
+
+  for (let key of keys) {
+    obj[key] = { 
+      weight: 1,
+      disabled: false
+    }
+  }
+
+  return obj
 }
+
+export const defaultWeight = generateKeyValue(metricWeight)
 
 export const projectReducer = createSlice({
   name: 'project',
@@ -24,7 +47,7 @@ export const projectReducer = createSlice({
   },
   reducers: {
     addProject: (state, action) => {
-      const exists = state.value.find(x => x.id == action.payload.id)
+      const exists = state.value.find(x => x.id === action.payload.id)
       if (!exists) {
         state.value.push(action.payload)
       }
@@ -34,7 +57,10 @@ export const projectReducer = createSlice({
         .filter(proj => action.payload.id !== proj.id)
     },
     setWeight: (state, action) => {
-      state.weight[action.payload.key] = action.payload.value
+      state.weight[action.payload.key] = {
+        weight: action.payload.weight,
+        disabled: action.payload.disabled
+      }
     }
   }
 })

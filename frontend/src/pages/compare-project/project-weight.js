@@ -9,7 +9,7 @@ export function ProjectWeight() {
     function onWeightChange(event) {
         let metricName = event.target.name
         let value = event.target.value
-        dispatch(setWeight({ key: metricName, value: +value }));
+        dispatch(setWeight({ key: metricName, weight: +value, disabled: true }));
     }
 
     return (
@@ -47,7 +47,7 @@ export function ProjectWeight() {
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="license" value={weight.license} onInput={onWeightChange}>{options}</select>
+                        <select name="license_type" value={weight.license_type.weight} onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
             </div>
@@ -58,43 +58,22 @@ export function ProjectWeight() {
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="community_size" value={weight.community_size} onInput={onWeightChange}>{options}</select>
+                        <select name="community_size" value={weight.community_size.weight} onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="availavility_forum" value={weight.availavility_forum} onInput={onWeightChange}>{options}</select>
+                        <select name="availavility_forum" value={weight.availavility_forum.weight} onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="contributor" value={weight.contributor} onInput={onWeightChange}>{options}</select>
+                        <select name="support_contributor" value={weight.support_contributor.weight} onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="professional_support" value={weight.professional_support} onInput={onWeightChange}>{options}</select>
-                    </span>
-                </div>
-            </div>
-
-            <div className="item-box">
-                <div className='item-list hide'>
-                    <span className='bold'>Empty</span>
-                </div>
-                <div className='item-list'>
-                    <span>
-                        <select name="maturity" value={weight.maturity} onInput={onWeightChange}>{options}</select>
-                    </span>
-                </div>
-                <div className='item-list'>
-                    <span>
-                        <select name="development_lang" value={weight.development_lang} onInput={onWeightChange}>{options}</select>
-                    </span>
-                </div>
-                <div className='item-list'>
-                    <span>
-                        <select name="document" value={weight.document} onInput={onWeightChange}>{options}</select>
+                        <select name="professional_support" value={weight.professional_support.weight} onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
             </div>
@@ -105,27 +84,84 @@ export function ProjectWeight() {
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="code_quality" value={weight.code_quality} onInput={onWeightChange}>{options}</select>
+                        <select name="maturity" value={weight.maturity.weight} onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="reliability" value={weight.reliability} onInput={onWeightChange}>{options}</select>
+                        <select name="development_lang_popularity" value={weight.development_lang_popularity.weight} onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="maintainability" value={weight.maintainability} onInput={onWeightChange}>{options}</select>
+                        <select name="document" value={weight.document.weight} onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="security" value={weight.security} onInput={onWeightChange}>{options}</select>
+                        <select name="learning_material" value={weight.learning_material.weight} onInput={onWeightChange}>{options}</select>
+                    </span>
+                </div>
+            </div>
+
+            <div className="item-box">
+                <div className='item-list hide'>
+                    <span className='bold'>Empty</span>
+                </div>
+                <div className='item-list'>
+                    <span>
+                        <select name="cost" value={weight.cost.weight} onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="testibility" value={weight.testibility} onInput={onWeightChange}>{options}</select>
+                        <select name="new_feature" value={weight.new_feature.weight} onInput={onWeightChange}>{options}</select>
+                    </span>
+                </div>
+                <div className='item-list'>
+                    <span>
+                        <select name="continuing_change" value={weight.continuing_change.weight} onInput={onWeightChange}>{options}</select>
+                    </span>
+                </div>
+            </div>
+
+            <div className="item-box">
+                <div className='item-list hide'>
+                    <span className='bold'>Empty</span>
+                </div>
+                <div className='item-list'>
+                    <span>
+                        <select name="code_quality" value={weight.code_quality.weight} onInput={onWeightChange}>{options}</select>
+                    </span>
+                </div>
+                <div className='item-list'>
+                    <span>
+                        <select name="reliability" value={weight.reliability.weight} onInput={onWeightChange}>{options}</select>
+                    </span>
+                </div>
+                <div className='item-list'>
+                    <span>
+                        <select name="maintainability" value={weight.maintainability.weight} onInput={onWeightChange}>{options}</select>
+                    </span>
+                </div>
+                <div className='item-list'>
+                    <span>
+                        <select name="security" value={weight.security.weight} onInput={onWeightChange}>{options}</select>
+                    </span>
+                </div>
+                <div className='item-list'>
+                    <span>
+                        <select name="testibility" value={weight.testibility.weight} onInput={onWeightChange}>{options}</select>
+                    </span>
+                </div>
+                <div className='item-list'>
+                    <span>
+                        <select name="co_existence" value={weight.testibility.weight} onInput={onWeightChange}>{options}</select>
+                    </span>
+                </div>
+                <div className='item-list'>
+                    <span>
+                        <select name="performance" value={weight.testibility.weight} onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
             </div>

@@ -18,7 +18,7 @@ class OwnershipCost(ScoreCalculator):
         self.value = round(maintain_score + support_score + material_score)
         return self.value
 
-    def get_score(self):
+    def get_score(self) -> float:
         summation_score = self.get_value()
         if summation_score > 0:
             self.score = round(summation_score / 3)
@@ -33,3 +33,6 @@ class OwnershipCost(ScoreCalculator):
         date['support_score'] = self.support.get_score()
         date['material_score'] = self.material.get_score()
         return date
+    
+    def __str__(self) -> str:
+        return f"{self.maintain.score}/{self.support.score}/{self.material.score}"

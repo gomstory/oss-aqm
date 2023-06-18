@@ -23,7 +23,7 @@ class SupportContributor(ScoreCalculator):
         self.value = len(self.contributors) + len(self.core_team)
         return self.value
 
-    def get_score(self):
+    def get_score(self) -> float:
         """Calculate Contributor score"""
         score = 0
         total_contributors = self.value

@@ -15,7 +15,7 @@ class Co_Existence(ScoreCalculator):
         return self.value
 
 
-    def get_score(self):
+    def get_score(self) -> float:
         primary_lang = self.value
         # language : how many platform are supported
         # https://spectrum.ieee.org/top-programming-languages-2021
@@ -96,3 +96,6 @@ class Co_Existence(ScoreCalculator):
         data = super().to_json()
         data['platform_supported'] = self.platforms
         return data
+    
+    def __str__(self) -> str:
+        return f"{self.value}/{self.platforms} platform(s)"

@@ -550,6 +550,121 @@ export function ProjectMetric() {
                         </span>
                     </div>
                 </div>
+
+                <div className='item-list'>
+                    <span className="sub-factor">Books/Online</span>
+                    <div className="tooltip">
+                        <span className="quality-metric">Learning Materials</span>
+                        <span className="tooltiptext">
+                            <span className="title">Learning Material</span>
+                            <span className="definition">
+                                Learning Materials refers to the number of published learning materials for the open-source software. If there are none of these materials, learning about the software will have to rely on the published source code and code documentation. It consists of two quality metric elements:
+                                <ul>
+                                    <li>
+                                        Books refers to the number of book titles about the software.                                 
+                                    </li>
+                                    <li>
+                                        Courses refers to the number of videos about the software.                                
+                                    </li>
+                                </ul>
+                            </span>
+                            <span className="metric">
+                                <span className="title">Metric</span>
+                                <div className="equation">V9 = (M/5) * 100</div>
+                                <div className="row">
+                                    <span>V9</span>
+                                    <span>Learning Materials</span>
+                                </div>
+
+                                <div className="row">
+                                    <span>M</span>
+                                    <span>Books and Courses</span>
+                                </div>
+                                <div className="row">
+                                    <span>M1</span>
+                                    <span>None</span>
+                                </div>
+                                <div className="row">
+                                    <span>M2</span>
+                                    <span>1-3 materials</span>
+                                </div>
+                                <div className="row">
+                                    <span>M2</span>
+                                    <span>&gt; 3-6 materials</span>
+                                </div>
+                                <div className="row">
+                                    <span>M2</span>
+                                    <span>&gt; 6-15 materials</span>
+                                </div>  <div className="row">
+                                    <span>M5</span>
+                                    <span>&gt; 15 materials</span>
+                                </div>
+                            </span>
+                            <span className="result">
+                                <span className="title">Result</span>
+                                <p>Left: Total books/online</p>
+                                <p>Right: Quality metric score 0-100</p>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div className="item-box">
+                <div className='item-list'>
+                    <span className='bold'>Economics</span>
+                </div>
+                <div className='item-list'>
+                    <span className="sub-factor">Cost</span>
+                    <div className="tooltip">
+                        <span className="quality-metric">Cost of Ownership Reduction</span>
+                        <span className="tooltiptext">
+                            <span className="title">Cost of Ownership Reduction</span>
+                            <span className="definition">
+                                Cost of Ownership Reduction refers to the degree to which the cost of owning a piece of software is reduced when the software is open source. It consists of three quality metric elements:
+                                <ul>
+                                    <li>Maintainability Level (V15) refers to the degree of ease with which the open-source software can be maintained and is defined in terms of the Technical Debt Ratio of the software, i.e. the ratio between the cost to fix all code smells in the software and the cost to develop the software. When maintainability is high, maintenance costs can be reduced.</li>
+                                    <li>Support Activity (V5) refers to the degree of support activity for issues and pull requests in the past 6 months. If there are no reported issues and pull requests, there will be no evidence to show whether the support is active recently. With active support from the contributors and core team members, development costs and maintenance costs can be reduced.</li>
+                                    <li>Learning Materials (V9) refers to the number of published learning materials for the open-source software, i.e. books and courses. If there are none of these materials, learning about the software will have to rely on the published source code and code documentation. The materials can reduce training costs.</li>
+                                </ul>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div className='item-list'>
+                    <span className="sub-factor">Innovativeness</span>
+                    <div className="tooltip">
+                        <span className="quality-metric">New Features</span>
+                        <span className="tooltiptext">
+                            <span className="title">New Features</span>
+                            <span className="definition">
+                                New Features refers to the degree to which the change as new feature enhancement has been introduced to the open-source software which indicates innovativeness of the open source. Enhancing the open source helps with keeping the software that utilizes the open source upgraded and modernized, making it beneficial for economic reasons. The metric consists of one quality metric element:
+                                <ul>
+                                    <li>New Feature Pull Requests refers to the proportion of pull requests labeled with new features in the past 6 months.</li>
+                                </ul>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div className='item-list'>
+                    <span className="sub-factor">Competitiveness</span>
+                    <div className="tooltip">
+                        <span className="quality-metric">Continuing Change</span>
+                        <span className="tooltiptext">
+                            <span className="title">Continuing Change</span>
+                            <span className="definition">
+                                Continuing Change refers to the degree to which the change to correct, improve, and enhance has been introduced to the open-source software. For the open source to stay competitive with other open source of a similar kind, such change needs to be incorporated regularly and in a timely manner, or else the open source becomes less satisfactory. Such change also helps with keeping the software that utilizes the open source upgraded, modernized, and competitive, making it beneficial for economic reasons. The metric consists of one quality metric element:
+                                <ul>
+                                    <li>
+                                        Pull Request Frequency refers to the frequency of pull requests that have proposed change to the project in the past 30 days.
+                                    </li>
+                                </ul>
+                            </span>
+                        </span>
+                    </div>
+                </div>
             </div>
 
             <div className="item-box">
@@ -828,6 +943,38 @@ export function ProjectMetric() {
                                 <span className="title">Result</span>
                                 <p>Left: Uncomplex Code (Avg. Cyclomatic Complexity)</p>
                                 <p>Right: Quality metric score 0-100</p>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div className='item-list'>
+                    <span className="sub-factor">Compatibility</span>
+                    <div className="tooltip">
+                        <span className="quality-metric">Co-existence</span>
+                        <span className="tooltiptext">
+                            <span className="title">Co-existence</span>
+                            <span className="definition">
+                                Co-existence refers to the degree to which the open-source software can co-exist or work with other software in various development environment, and is dependent on the various development environment that the programming language of the project is used for. It consists of one quality metric element:
+                                <ul>
+                                    <li>Development Environment refers to the types of development environment, i.e. web, mobile, desktop, or embedded development environment, which the primary programming language of the project can support.</li>
+                                </ul>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div className='item-list'>
+                    <span className="sub-factor">Performance</span>
+                    <div className="tooltip">
+                        <span className="quality-metric">Lack of Performance Issues Level</span>
+                        <span className="tooltiptext">
+                            <span className="title">Lack of Performance Issues Level</span>
+                            <span className="definition">
+                                Lack of Performance Issues Level refers to the degree to which the open-source software works without performance issues. It consists of one quality metric element:
+                                <ul>
+                                    <li>•	Lack of Performance Issues refers to the proportion of non-performance issues in relation to other reported issues in the past 6 months. </li>
+                                </ul>
                             </span>
                         </span>
                     </div>

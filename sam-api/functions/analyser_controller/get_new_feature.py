@@ -9,7 +9,7 @@ class NewFeature(ScoreCalculator):
     Metric: New Feature (V11)
     """
     def __init__(self, data: dict) -> None:
-        self.metric_key = 'continuing_change'
+        self.metric_key = 'new_feature'
         self.issue_and_pull_requests = data['issue'] if 'issue' in data else []
         self.new_feature_tags = ['feature', 'new feature', 'user request', 'redesign', 'new function', 'new item', 'new component']
         self.total_pull_requests = 0
@@ -66,7 +66,7 @@ class NewFeature(ScoreCalculator):
             return round(self.score, 2)
 
     def __str__(self) -> str:
-        return f"{self.value}/{self.total_pull_requests}"
+        return f"{self.total_new_pull_requests}/{self.total_pull_requests}"
     
     def to_json(self) -> dict:
         date = super().to_json()

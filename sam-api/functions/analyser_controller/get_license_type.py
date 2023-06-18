@@ -18,7 +18,7 @@ class License(ScoreCalculator):
 
         return self.value
 
-    def get_score(self):
+    def get_score(self) -> float:
         switcher = {
             "none":         1,
             "other":        1,

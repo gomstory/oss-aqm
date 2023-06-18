@@ -2,7 +2,7 @@ from Calculator import ScoreCalculator
 
 class CodeQuality(ScoreCalculator):
     def __init__(self, data: dict) -> None:
-        self.metric_key = "quality_code"
+        self.metric_key = "code_quality"
         self.sonar = data['sonar-info']
         self.metrics = self.sonar['component']['measures']
         self.duplicated_lines_score = 0

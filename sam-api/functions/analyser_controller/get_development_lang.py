@@ -14,7 +14,7 @@ class Developmet_Lang(ScoreCalculator):
         return self.value
 
 
-    def get_score(self):
+    def get_score(self) -> float:
         primary_lang = self.value
         switcher = {
             'julia': 1, 'cobol': 1, 'pascal': 1, 'fortran': 1,

@@ -6,6 +6,8 @@ class LearningMaterial(ScoreCalculator):
         self.metric_key = "learning_material"
         self.book = data['book'] if 'book' in data else {}
         self.course = data['course'] if 'course' in data else {}
+        self.total_book = 0
+        self.total_course = 0
 
     def get_total_book(self) -> int:
         return int(self.book['totalItems']) if 'totalItems' in self.book else 0
@@ -14,13 +16,13 @@ class LearningMaterial(ScoreCalculator):
         return len(self.course['items']) if 'items' in self.course else 0
     
     def get_value(self) -> int:
-        total_book = self.get_total_book()
-        total_course = self.get_total_course()
-        total_material = total_book + total_course
+        self.total_book = self.get_total_book()
+        self.total_course = self.get_total_course()
+        total_material = self.total_book + self.total_course
         self.value = total_material
         return self.value
 
-    def get_score(self):
+    def get_score(self) -> float:
         total_material = self.get_value()
         range = 1
 
@@ -44,7 +46,9 @@ class LearningMaterial(ScoreCalculator):
         data['course'] = self.get_total_course()
         return data
     
-
+    def __str__(self) -> str:
+        return f"{self.total_book}/{self.total_course}"
+    
 if __name__ == "__main__":
     data = {
         "book": {"totalItems": 1},

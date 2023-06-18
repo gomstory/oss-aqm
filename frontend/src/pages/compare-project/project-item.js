@@ -1,9 +1,10 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { removeProject } from '../../redux/projectReducer'
-import { ScoreCalculator } from './project-score'
+import { ScoreCalculator } from './project-calculator'
 
 function Project({ project }) {
+    console.log(project)
     const dispatch = useDispatch()
     const onRemove = () => {
         dispatch(removeProject(project))
@@ -26,8 +27,8 @@ function Project({ project }) {
                     <span><a href={project.website}>{project.website}</a></span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.project_size_label} lines </span>
-                    <span>{project.project_size_score} </span>
+                    <span>{project.project_size.label} lines </span>
+                    <span>{project.project_size.score} </span>
                 </div>
                 <div className='item-list'>
                     <span>{project.stars} stars</span>
@@ -48,8 +49,8 @@ function Project({ project }) {
                     <span className='bold'>Empty</span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.license_label} </span>
-                    <span>{project.license_score} </span>
+                    <span>{project.license_type.label}</span>
+                    <span>{project.license_type.score}</span>
                 </div>
             </div>
 
@@ -58,20 +59,20 @@ function Project({ project }) {
                     <span className='bold'>Empty</span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.community_size_label} people </span>
-                    <span>{project.community_size_score} </span>
+                    <span>{project.community_size.label}</span>
+                    <span>{project.community_size.score} </span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.availavility_forum_label} Forums</span>
-                    <span>{project.availavility_forum_score}</span>
+                    <span>{project.availavility_forum.label}</span>
+                    <span>{project.availavility_forum.score}</span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.contributor_label} people</span>
-                    <span>{project.contributor_score}</span>
+                    <span>{project.support_contributor.label}</span>
+                    <span>{project.support_contributor.score}</span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.professional_support_label}</span>
-                    <span>{project.professional_support_score}</span>
+                    <span>{project.professional_support.label}</span>
+                    <span>{project.professional_support.score}</span>
                 </div>
             </div>
 
@@ -80,16 +81,38 @@ function Project({ project }) {
                     <span className='bold'>Empty</span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.maturity_label} </span>
-                    <span>{project.maturity_score} </span>
+                    <span>{project.maturity.label} </span>
+                    <span>{project.maturity.score} </span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.development_lang_value}</span>
-                    <span>{project.development_lang_score}</span>
+                    <span>{project.development_lang_popularity.label}</span>
+                    <span>{project.development_lang_popularity.score}</span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.document_label} </span>
-                    <span>{project.document_score} </span>
+                    <span>{project.document.label} </span>
+                    <span>{project.document.score} </span>
+                </div>
+                <div className='item-list two-column'>
+                    <span>{project.learning_material.label} </span>
+                    <span>{project.learning_material.score} </span>
+                </div>
+            </div>
+
+            <div className="item-box" data-attr="Economics">
+                <div className='item-list hide'>
+                    <span className='bold'>Empty</span>
+                </div>
+                <div className='item-list two-column'>
+                    <span>{project.cost.label} </span>
+                    <span>{project.cost.score} </span>
+                </div>
+                <div className='item-list two-column'>
+                    <span>{project.new_feature.label}</span>
+                    <span>{project.new_feature.score}</span>
+                </div>
+                <div className='item-list two-column'>
+                    <span>{project.continuing_change.label} </span>
+                    <span>{project.continuing_change.score} </span>
                 </div>
             </div>
 
@@ -98,24 +121,32 @@ function Project({ project }) {
                     <span className='bold'>Empty</span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.code_quality_label} </span>
-                    <span>{project.code_quality_score} </span>
+                    <span>{project.code_quality.label} </span>
+                    <span>{project.code_quality.score} </span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.reliability_label} </span>
-                    <span>{project.reliability_score} </span>
+                    <span>{project.reliability.label} </span>
+                    <span>{project.reliability.score} </span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.maintainability_label} </span>
-                    <span>{project.maintainability_score} </span>
+                    <span>{project.maintainability.label} </span>
+                    <span>{project.maintainability.score} </span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.security_label} </span>
-                    <span>{project.security_score} </span>
+                    <span>{project.security.label} </span>
+                    <span>{project.security.score} </span>
                 </div>
                 <div className='item-list two-column'>
-                    <span>{project.testibility_value} complexity</span>
-                    <span>{project.testibility_score} </span>
+                    <span>{project.testibility.label}</span>
+                    <span>{project.testibility.score} </span>
+                </div>
+                <div className='item-list two-column'>
+                    <span>{project.co_existence.label}</span>
+                    <span>{project.co_existence.score} </span>
+                </div>
+                <div className='item-list two-column'>
+                    <span>{project.performance.label}</span>
+                    <span>{project.performance.score} </span>
                 </div>
             </div>
 
