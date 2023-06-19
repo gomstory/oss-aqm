@@ -4,12 +4,20 @@ import { setWeight } from "../../redux/projectReducer"
 export function ProjectWeight() {
     const dispatch = useDispatch();
     const weight = useSelector(it => it.project.weight)
-    const options = Array.from({ length: 10 }, (_, i) => i + 1).map(option => <option key={option} value={option}>{option}</option>);
 
-    function onWeightChange(event) {
+    const options = Array.from({ length: 10 }, (_, i) => i + 1).map(option => <option key={option} value={option}>{option}</option>)
+    options.unshift(<option key="un-select" value="-1">DISABLE</option>)
+    
+    const onWeightChange = (event) => {
         let metricName = event.target.name
         let value = event.target.value
-        dispatch(setWeight({ key: metricName, weight: +value, disabled: true }));
+        let disabled = value === "-1"
+
+        return dispatch(setWeight({ 
+            key: metricName, 
+            weight: +value, 
+            disabled: disabled 
+        }));
     }
 
     return (
@@ -156,12 +164,12 @@ export function ProjectWeight() {
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="co_existence" value={weight.testibility.weight} onInput={onWeightChange}>{options}</select>
+                        <select name="co_existence" value={weight.co_existence.weight} onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
                 <div className='item-list'>
                     <span>
-                        <select name="performance" value={weight.testibility.weight} onInput={onWeightChange}>{options}</select>
+                        <select name="performance" value={weight.performance.weight} onInput={onWeightChange}>{options}</select>
                     </span>
                 </div>
             </div>

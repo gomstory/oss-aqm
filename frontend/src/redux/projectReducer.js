@@ -2,8 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const metricWeight = [
   'license_type', 
-  'popularity_rating_score', 
-  'project_size', 
   'community_size', 
   'availavility_forum', 
   'support_contributor', 

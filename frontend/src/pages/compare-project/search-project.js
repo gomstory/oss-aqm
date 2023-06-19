@@ -62,7 +62,7 @@ function SearchProject() {
     }
   }
 
-  const convertMetric = (project = {}, metrics = []) => {
+  const convertMetric = ({...project} = {}, metrics = []) => {
     for (let metric of metrics) {
       const metricKey = metric.metric_key
       project[metricKey] = { ...metric }
