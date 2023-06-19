@@ -15,6 +15,10 @@
             justify-content: space-between;
             align-items: center;
         }
+
+        select {
+            min-height: 30px;
+        }
         
         span {
             font-size: 15px;

@@ -12,15 +12,22 @@ function CompareProject() {
             <div className='search-container'>
                 <SearchProject></SearchProject>
             </div>
-            <div className='outer-wrapper'>
-                <div className='inner-wrapper'>
+            <div className='grid-container'>
+                <div className='grid-column'>
                     <ProjectMetric></ProjectMetric>
                     <ProjectWeight></ProjectWeight>
-                    {projects.map(project =>
-                        <Project key={project.id} project={project} />
-                    )}
+                </div>
+                <div className='grid-column'>
+                    <div className='outer-wrapper'>
+                        <div className='inner-wrapper'>
+                            {projects.map(project =>
+                                <Project key={project.id} project={project} />
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
     )
 }

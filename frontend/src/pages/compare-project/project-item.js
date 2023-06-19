@@ -28,7 +28,7 @@ function Project({ project }) {
                 <div className='item-list'>
                     <span className='project-logo'>
                         <img className='logo' alt={project.github_url} src={project.logo}></img>
-                        <a href={project.github_url} target="_blank" hidden rel="noreferrer" className='bold'>{project.name}</a>
+                        <a href={project.github_url} target="_blank" rel="noreferrer" className='bold'>{project.name}</a>
                         <button onClick={onRemove} className='clear-project'>Delete</button>
                     </span>
                 </div>

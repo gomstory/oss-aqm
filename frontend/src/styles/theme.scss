@@ -37,7 +37,7 @@
 
 .App-container {
   background-color: white;
-  width: 80%;
+  width: 90%;
   height: 80%;
   font-size: calc(10px + 2vmin);
 }
@@ -45,4 +45,9 @@
 .container {
   padding: 20px;
   height: 100%;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 400px calc(100% - 400px);
 }
