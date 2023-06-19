@@ -49,5 +49,6 @@
 
 .grid-container {
   display: grid;
+  gap: 5px;
   grid-template-columns: 400px calc(100% - 400px);
 }
