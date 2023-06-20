@@ -31,7 +31,7 @@ def lambda_handler(event, context):
 
     # Check record already created, else ingnore it.
     row = crawler_table.get_item(Key={'github_id': github_url})
-    row_token = token_table.scan(Limit=3)
+    row_token = token_table.scan(Limit=5)
     access_token = list(map(lambda x: x["access_token"], row_token["Items"]))
 
     if 'Item' in row:
