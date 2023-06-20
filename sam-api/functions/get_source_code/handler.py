@@ -4,7 +4,7 @@ import boto3
 import time
 import requests
 from datetime import datetime
-from dateutil import parser, relativedelta
+from dateutil import parser
 
 # Connect to Queue
 sqs = boto3.client('sqs')
@@ -14,10 +14,10 @@ s3 = boto3.client('s3')
 
 queue_name = os.environ['STOP_CRAWLER_QUEUE']
 queue_url = os.environ['STOP_CRAWLER_QUEUE_URL']
+sonar_scanner_name = os.environ["EC2_SONAR_SCANNER"]
 sonarqube_name = os.environ["EC2_SONAR_SERVER"]
 sonar_username = os.environ["EC2_SONAR_USERNAME"]
 sonar_password = os.environ["EC2_SONAR_PASS"]
-bucket_name = os.environ['S3_BUCKET']
 region_name = os.environ['REGION_NAME']
 
 def respond(err, res=None):
@@ -68,6 +68,15 @@ def shoud_analysis_project(owner: str, repo: str):
         return True
     else:
         return False
+    
+def get_host_url():
+    sonarqube_name = os.environ["EC2_SONAR_SERVER"]
+    instances = ec2.Instance(sonarqube_name)
+
+    if instances.state["Name"] != "running":
+        raise ValueError("Please turn on the sonarqube server")
+    
+    return instances.public_ip_address
     
 def send_message_to_queue(owner: str, repo: str, status: str):
     sqs.send_message(
@@ -122,18 +131,19 @@ def lambda_handler(event, context):
         send_message_to_queue(owner, repo, "sonar-in-progress")
 
         # Send Command to ec2 instance
+        ec2_ip_address = get_host_url()
         ssm.send_command( 
-            InstanceIds=[sonarqube_name], 
+            InstanceIds=[sonar_scanner_name], 
             DocumentName='AWS-RunShellScript', 
             Comment=f'{github_url}: clone source code and scan by sonarqube', 
             Parameters={
                 "commands":[
-                    "sodu su -",
+                    "sudo su -",
                     "cd /home/download",
                     f"git clone {github_url}.git",
                     f"cd {repo}",
                     "/opt/sonar-scanner/bin/sonar-scanner \\",
-                    "-Dsonar.host.url=http://localhost:9000 \\",
+                    f"-Dsonar.host.url=http://{ec2_ip_address}:9000 \\",
                     "-Dsonar.scm.provider=git \\",
                     "-Dsonar.sources=. \\",
                     f"-Dsonar.projectKey={owner}:{repo} \\",

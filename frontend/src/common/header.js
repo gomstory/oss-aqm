@@ -4,7 +4,7 @@ function Header() {
   return(
     <div>
       <div className='header'>
-        <h3 className='title'>OSS-AQM</h3>
+        <h3 className='title'>OSS-AQM | An Open-Source Software Quality Tool</h3>
       </div>
     </div>
   );

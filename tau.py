@@ -15,7 +15,7 @@ Web Framwork:
 4. JQuery / 
 5. Next
 6. Svelte
-7. Ember
+7. Ember /
 8. Flutter
 9. Nuxt
 10. Flask
