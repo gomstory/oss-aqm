@@ -57,10 +57,12 @@ def lambda_handler(event, context):
 
         # Checking API Quata Every call
         api_quata = int(response.headers["X-RateLimit-Remaining"])
+        print("API QUATA:", str(api_quata))
 
         # Fill API Quata by switching access token
         if api_quata == 0 and len(token_list) > 0:
             access_token = token_list.pop()
+            print("Switch Access Token", str(access_token))
             headers={ 'Authorization': f'Bearer {access_token}' }
             api_quata = 5000
 
