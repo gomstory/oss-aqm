@@ -35,8 +35,13 @@ class Document(ScoreCalculator):
         """Get Code Comment Line Density"""
         self.comment_lines = self.get_comment_lines()
         self.code_lines = self.get_code_lines()
-        self.value = round(self.comment_lines / (self.comment_lines + self.code_lines), 2)
-        return self.value
+        
+        if (self.code_lines + self.comment_lines == 0):
+            self.value = 0
+            return self.value
+        else:
+            self.value = round(self.comment_lines / (self.comment_lines + self.code_lines), 2)
+            return self.value
 
     def get_score(self) -> float:
         """Convert to (0,100) score rank"""
