@@ -53,7 +53,7 @@ def lambda_handler(event, context):
         
     if used_by_div is not None:
         used_by_text = used_by_div.text
-        used_by_total = used_by_text.replace("\n", "").replace("Repositories", "").replace(" ", "").replace(",", "")
+        used_by_total = used_by_text.replace("\n", "").replace("Repositories", "").replace("Repository", "").replace(" ", "").replace(",", "")
         result['used_by'] = int(used_by_total)
 
     # Find startgazers list
@@ -61,7 +61,7 @@ def lambda_handler(event, context):
     headers = None
     token_list = []
 
-    if 'access_token' in event:
+    if 'access_token' in event and len(event['access_token']) > 0:
         token_list = list(event['access_token'])
         access_token = token_list.pop()
         headers={ 'Authorization': f'Bearer {access_token}' }
