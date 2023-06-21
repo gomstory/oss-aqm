@@ -47,3 +47,10 @@ class Professional_Support(ScoreCalculator):
         issue_rate = "{:.2f}".format(self.issue_support_rate * 100)
         pr_rate = "{:.2f}".format(self.pull_request_support_rate * 100)
         return f"{issue_rate}/{pr_rate}"
+    
+    def to_json(self) -> dict:
+        data = super().to_json()
+        data['total_issue'] = len(self.issues)
+        data['total_pr_supported'] = len(self.supported_pull_requests)
+        data["total_issue_supported"] = len(self.issues_supported)
+        return data

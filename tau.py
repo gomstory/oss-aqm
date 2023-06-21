@@ -9,16 +9,15 @@ Kendall Tau Correlation เป็นการหาความสัมพั�
 
 """
 Web Framwork:
-1. React.js x
+1. React.js /
 2. Angular /
 3. Vue.js /
 4. JQuery / 
-5. Next
-6. Svelte
+5. Next /
+6. Svelte /
 7. Ember /
-8. Flutter
-9. Nuxt
-10. Flask
+8. Nuxt /
+9. Flask / 
 """
 
 x1 = [1, 2, 3, 4, 5, 6]

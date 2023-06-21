@@ -30,7 +30,7 @@ def respond(err, res=None):
     
 def lambda_handler(event, context):    
     # Default pagination
-    per_page = 10
+    per_page = 15
     search = ""
     page = 1
     
@@ -46,8 +46,7 @@ def lambda_handler(event, context):
         scan_result = oss_table.scan(Limit=per_page)
     else:
         scan_result = oss_table.scan(
-            FilterExpression=Attr('id').contains(search),
-            Limit=per_page
+            FilterExpression=Attr('id').contains(search)
         )
     
     return respond(None, {
