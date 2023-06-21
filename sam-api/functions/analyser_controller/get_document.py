@@ -40,7 +40,7 @@ class Document(ScoreCalculator):
             self.value = 0
             return self.value
         else:
-            self.value = round(self.comment_lines / (self.comment_lines + self.code_lines), 2)
+            self.value = round(self.comment_lines / (self.comment_lines + self.code_lines), 3)
             return self.value
 
     def get_score(self) -> float:

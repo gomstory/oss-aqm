@@ -7,6 +7,10 @@ class CodeQuality(ScoreCalculator):
         self.metrics = self.sonar['component']['measures']
         self.duplicated_lines_score = 0
         self.avg_cyclomatic_score = 0
+        self.duplicate_density = 0
+        self.duplicated_lines = 0
+        self.avg_complexity = 0
+        self.lines = 0
 
     def find_metric(self, key):
         for item in self.metrics:
@@ -15,17 +19,15 @@ class CodeQuality(ScoreCalculator):
         return 0
 
     def get_duplicate_line(self):
-        duplicated_lines = self.find_metric('duplicated_lines')
-        lines = self.find_metric('lines')
+        self.duplicated_lines = self.find_metric('duplicated_lines')
+        self.lines = self.find_metric('lines')
 
-        if lines == 0:
+        if self.lines == 0:
             self.duplicated_lines_score = 0
         else:
-            duplicated_ratio = float(duplicated_lines) / float(lines)
+            duplicated_ratio = float(self.duplicated_lines) / float(self.lines)
             unduplicate_ratio = (1 - duplicated_ratio)
-            # Truncate float long number to 2 digits
-            self.duplicated_lines_score = float(str(unduplicate_ratio)[:4])
-            
+            self.duplicated_lines_score = round(unduplicate_ratio, 2)
         return self.duplicated_lines_score
 
     def get_uncomplex_code(self):
@@ -42,6 +44,7 @@ class CodeQuality(ScoreCalculator):
         elif avg_cyclomatic >= 1 and avg_cyclomatic <= 10:
             rank = 4  
 
+        self.avg_complexity = avg_cyclomatic
         self.avg_cyclomatic_score = (rank / 4)
         return self.avg_cyclomatic_score
     
@@ -59,3 +62,10 @@ class CodeQuality(ScoreCalculator):
         unduplicated_round = "{:.2f}".format(self.duplicated_lines_score)
         uncomplex_round = "{:.2f}".format(self.avg_cyclomatic_score)
         return f"{uncomplex_round}/{unduplicated_round}"
+    
+    def to_json(self) -> dict:
+        data = super().to_json()
+        data['duplicated_lines'] = int(self.duplicated_lines)
+        data['avg_complexity'] = round(self.avg_complexity, 3)
+        data['lines'] = int(self.lines)
+        return data

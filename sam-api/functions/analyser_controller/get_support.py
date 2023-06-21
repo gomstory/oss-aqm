@@ -36,7 +36,7 @@ class Professional_Support(ScoreCalculator):
         self.issue_support_rate = (len(issue_with_support) / len(issues)) if len(issues) > 0 else 0
         self.pull_request_support_rate = (len(pull_request_with_support) / len(pull_requests)) if len(pull_requests) > 0 else 0
         self.value = (self.issue_support_rate + self.pull_request_support_rate) / 2
-        return round(self.value, 2)
+        return round(self.value, 3)
 
     def get_score(self) -> float:
         value = self.get_value()

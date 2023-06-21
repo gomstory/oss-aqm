@@ -116,12 +116,12 @@ class Maturity(ScoreCalculator):
         self.total_issue = issues
         self.total_age_day = days
         self.value = (age_score + release_score + issue_score) / 3
-        return round(self.value, 2)
+        return round(self.value, 3)
 
     def get_score(self) -> float:
         """Get Final score (0, 100] """
         self.score = self.value * 100
-        return self.score
+        return round(self.score, 2)
 
     def __str__(self) -> str:
         return f"{self.total_age_day}/{self.total_issue}/{self.total_release}"

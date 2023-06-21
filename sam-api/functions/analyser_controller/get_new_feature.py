@@ -55,7 +55,7 @@ class NewFeature(ScoreCalculator):
         self.total_pull_requests = len(pull_requests)
         self.total_new_pull_requests = len(new_pull_requests)
         self.value = self.total_new_pull_requests
-        return round(self.total_new_pull_requests, 2) 
+        return round(self.total_new_pull_requests, 3) 
 
     def get_score(self) -> float:
         if self.total_pull_requests == 0:

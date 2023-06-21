@@ -17,10 +17,25 @@ Web Framwork:
 6. Svelte /
 7. Ember /
 8. Nuxt /
-9. Flask / 
 """
+oss_aqm = [6, 3, 7, 2, 1, 5, 4, 8]
+sources = {
+    'user_votes': [1,2,3,4,5,6,7,8],
+    'github_stars': [1,4,2,6,3,5,7,8],
+    'deps.dev': [4,3,8,1,7,5,2,6],
+    'chat_gpt': [1,3,2,8,5,4,6,7],
+}
 
-x1 = [1, 2, 3, 4, 5, 6]
-x2 = [1, 4, 3, 2, 5, 6]
-tau, p_value = scipy.stats.kendalltau(x1, x2)
-print(tau)
+for key, value in sources.items():
+    x1 = oss_aqm
+    x2 = value
+    tau, p_value = scipy.stats.kendalltau(x1, x2)
+    print('oss-qam vs', key, tau)
+
+print('-----peason corelation-----')
+for key, value in sources.items():
+    x1 = oss_aqm
+    x2 = value
+    tau, p_value = scipy.stats.pearsonr(x1, x2)
+    print('oss-qam vs', key, tau)
+
