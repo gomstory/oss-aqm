@@ -30,7 +30,9 @@ def lambda_handler(event, context):
 	# Clone projec
 	subprocess.run(["git", "clone", git_url,], cwd=temp_url)
 	total_markdown = os.popen(f"ls -R {temp_url}/{repo} | grep .md | wc -l ").read().strip()
+	total_files = os.popen(f"ls -R {temp_url}/{repo} | grep . | wc -l ").read().strip()
 	rows['markdown'] = int(total_markdown)
+	rows['files'] = int(total_files)
 	
 	# Create json file to tmp folder
 	file_name = 'files.json'
