@@ -40,8 +40,8 @@ class Professional_Support(ScoreCalculator):
 
     def get_score(self) -> float:
         value = self.get_value()
-        self.score = value * 100
-        return round(self.score, 2)
+        self.score = round((value * 100), 2)
+        return self.score
 
     def __str__(self) -> str:
         issue_rate = "{:.2f}".format(self.issue_support_rate * 100)
