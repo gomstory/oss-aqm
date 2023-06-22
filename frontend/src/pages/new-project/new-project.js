@@ -151,6 +151,7 @@ function NewProject(props) {
                                     <td>{row.forum_status}</td>
                                     <td>{row.book_status}</td>
                                     <td>{row.course_status}</td>
+                                    <td>{row.file_status}</td>
                                     <td>{row.requestor}</td>
                                 </tr>
                             )}

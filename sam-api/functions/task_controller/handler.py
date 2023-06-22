@@ -40,7 +40,7 @@ def lambda_handler(event, context):
             Key={
                 'github_id': github_url
             },
-            UpdateExpression=f"SET #1=:1, #2=:2, #3=:3, #4=:4, #5=:5, #6=:6, #7=:7, #8=:8, #9=:9, #10=:10, #11=:11, #12=:12",
+            UpdateExpression=f"SET #1=:1, #2=:2, #3=:3, #4=:4, #5=:5, #6=:6, #7=:7, #8=:8, #9=:9, #10=:10, #11=:11, #12=:12, #13=:13",
             ExpressionAttributeNames={
                 '#1': "license_status",
                 '#2': "lang_status",
@@ -54,6 +54,7 @@ def lambda_handler(event, context):
                 '#10': "forum_status",
                 '#11': "book_status",
                 '#12': "course_status",
+                '#13': "file_status",
             },
             ExpressionAttributeValues={
                 ':1': "in-progress",
@@ -68,6 +69,7 @@ def lambda_handler(event, context):
                 ':10': "in-progress",
                 ':11': "in-progress",
                 ':12': "in-progress",
+                ':13': "in-progress",
             },
             ReturnValues="UPDATED_NEW"
         )
@@ -85,7 +87,8 @@ def lambda_handler(event, context):
             os.environ["GET_USER_FUNCTION"],
             os.environ["GET_FORUM_FUNCTION"],
             os.environ["GET_BOOK_FUNCTION"],
-            os.environ["GET_COURSE_FUNCTION"]
+            os.environ["GET_COURSE_FUNCTION"],
+            os.environ["GET_FILE_FUNCTION"]
         ]
 
         payload = {

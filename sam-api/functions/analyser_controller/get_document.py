@@ -8,10 +8,21 @@ class Document(ScoreCalculator):
     def __init__(self, data: dict) -> None:
         self.metric_key = "document"
         self.sonar = data['sonar-info']
+        self.files = data["files"] if 'files' in data else None
         self.metrics = self.sonar['component']['measures']
         self.comment_lines = 0
         self.code_lines = 0
+        self.total_markdown = 0
+        self.total_files = 0
 
+    def get_total_markdown(self):
+        total = 0
+
+        if self.files is not None:
+            total = int(self.files['markdown']) if 'markdown' in self.files else 0
+        
+        return total
+    
     def get_metric(self, metrics: dict, key: str):
         for item in metrics:
             if item['metric'] == key:
@@ -19,41 +30,54 @@ class Document(ScoreCalculator):
         return 0
 
     def get_comment_lines(self):
-        """Number of lines containing either comment or commented-out code."""
         code_comment = self.get_metric(self.metrics, 'comment_lines')
         return int(code_comment)
 
     def get_code_lines(self):
-        """
-        Number of physical lines that contain at least one character 
-        which is neither a whitespace nor a tabulation nor part of a comment.
-        """
         total_lines = self.get_metric(self.metrics, 'ncloc')
         return int(total_lines)
 
-    def get_value(self) -> float:
-        """Get Code Comment Line Density"""
+    def get_totle_files(self):
+        files = self.get_metric(self.metrics, 'files')
+        return int(files)
+    
+    def get_markdown_density(self):
+        self.total_markdown = self.get_total_markdown()
+        self.total_files = self.get_totle_files()
+        
+        if self.total_files == 0:
+            return 0
+        else:
+            return round((self.total_markdown/ (self.total_markdown + self.total_files)), 3)
+
+    def get_comment_density(self) -> float:
         self.comment_lines = self.get_comment_lines()
         self.code_lines = self.get_code_lines()
         
         if (self.code_lines + self.comment_lines == 0):
-            self.value = 0
-            return self.value
+            return 0
         else:
-            self.value = round(self.comment_lines / (self.comment_lines + self.code_lines), 3)
-            return self.value
-
+            return round(self.comment_lines / (self.comment_lines + self.code_lines), 3)
+    
+    def get_value(self): 
+        m1 = self.get_comment_density()
+        m2 = self.get_markdown_density()
+        return round(m1 + m2, 3)
+    
     def get_score(self) -> float:
-        """Convert to (0,100) score rank"""
-        self.score = self.value * 100
-        return round(self.score, 2)
+        self.value = self.get_value()
+        return round(((self.value / 2) * 100), 2)
 
     def __str__(self) -> str:
-        return f"{self.comment_lines}/{self.code_lines}"
+        comment_ratio = self.get_comment_density()
+        markdown_ratio = self.get_markdown_density()
+        return f"{comment_ratio}/{markdown_ratio}"
     
     def to_json(self) -> dict:
         data =  super().to_json()
         data['comment_lines'] = self.comment_lines
         data['code_lines'] = self.code_lines
+        data['total_markdown'] = self.total_markdown
+        data['total_files'] = self.total_files
         return data
 

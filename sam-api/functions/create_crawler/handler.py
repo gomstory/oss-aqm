@@ -73,7 +73,8 @@ def lambda_handler(event, context):
             'user_status': 'in-queue',
             'forum_status': 'in-queue',
             'book_status': "in-queue",
-            'course_status': "in-queue"
+            'course_status': "in-queue",
+            'file_status': "in-queue"
         }
     )
     
