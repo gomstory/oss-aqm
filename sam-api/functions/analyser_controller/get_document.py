@@ -51,7 +51,7 @@ class Document(ScoreCalculator):
         if self.total_files == 0:
             return 0
         else:
-            return round((self.total_markdown/ (self.total_markdown + self.total_files)), 3)
+            return round((self.total_markdown/ self.total_files), 3)
 
     def get_comment_density(self) -> float:
         self.comment_lines = self.get_comment_lines()
