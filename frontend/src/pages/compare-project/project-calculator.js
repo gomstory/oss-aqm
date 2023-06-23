@@ -24,17 +24,25 @@ export function ScoreCalculator(props) {
   const [sum, setSum] = useState(0)
 
   useEffect(() => {
+    const logs = []
     const localWeight = { ...weight }
     const totalWeight = Object.values(localWeight).reduce((prev, cur) => prev + cur.weight, 0)
-    const weightedScore = Object.keys(localWeight).reduce((prev, field) => {
-      const weight = localWeight[field].weight
-      const score = project[field].score
+    const totalWeightedScore = Object.keys(localWeight).reduce((prev, field) => {
+      const weight = parseInt(localWeight[field].weight)
+      const score = parseFloat(project[field].score)
       const weightedScore = (weight * score)
-      return prev + weightedScore
+      const total = prev + weightedScore
+      logs.push({ field, weight, score, weightedScore })
+      return total
     }, 0)
 
     // Dispatch total score
-    setSum((weightedScore / totalWeight).toFixed(2))
+    const overallScore = (totalWeightedScore / totalWeight)
+    setSum((overallScore).toFixed(2))
+    logs.push({ field: 'overall_score', weight: totalWeight, score: totalWeightedScore, weightedScore: overallScore })
+
+    // Debug as table
+    console.table(logs)
 
   }, [weight, project])
 
