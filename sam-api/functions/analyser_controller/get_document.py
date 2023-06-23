@@ -18,8 +18,8 @@ class Document(ScoreCalculator):
     def get_total_markdown(self):
         total = 0
 
-        if self.files is not None:
-            total = int(self.files['markdown']) if 'markdown' in self.files else 0
+        if self.files is not None and 'markdown' in self.files:
+            total = int(self.files['markdown'])
         
         return total
     
@@ -38,8 +38,11 @@ class Document(ScoreCalculator):
         return int(total_lines)
 
     def get_totle_files(self):
-        files = self.get_metric(self.metrics, 'files')
-        return int(files)
+        if self.files is not None and 'files' in self.files:
+            return int(self.files['files'])
+        else:
+            files = self.get_metric(self.metrics, 'files')
+            return int(files)
     
     def get_markdown_density(self):
         self.total_markdown = self.get_total_markdown()
