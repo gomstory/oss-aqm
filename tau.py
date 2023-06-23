@@ -18,7 +18,7 @@ Web Framwork:
 7. Ember /
 8. Nuxt /
 """
-oss_aqm = [6, 3, 7, 2, 1, 5, 4, 8]
+oss_aqm = [6, 4, 7, 2, 1, 5, 3, 8]
 sources = {
     'user_votes': [1,2,3,4,5,6,7,8],
     'github_stars': [1,4,2,6,3,5,7,8],
