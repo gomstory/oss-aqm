@@ -26,4 +26,5 @@ class Developmet_Lang(ScoreCalculator):
         }
 
         range = switcher.get(primary_lang, 1)
-        return (range / 5) * 100
+        self.score = round((range / 5) * 100, 2)
+        return self.score

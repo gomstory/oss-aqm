@@ -26,18 +26,18 @@ class LearningMaterial(ScoreCalculator):
         total_material = self.get_value()
         range = 1
 
-        if total_material == 0:
-            range = 1
-        elif total_material >= 1 and total_material <= 3:
-            range = 2
-        elif total_material > 3 and total_material <= 6:
-            range = 3
-        elif total_material > 6 and total_material <= 15:
-            range = 4
-        elif total_material > 15:
+        if total_material > 15:
             range = 5
+        elif total_material > 6:
+            range = 4
+        elif total_material > 3:
+            range = 3
+        elif total_material >= 1:
+            range = 2
+        elif total_material == 0:
+            range = 0
 
-        self.score = (range/5) * 100
+        self.score = round((range/5) * 100, 2)
         return self.score
     
     def to_json(self) -> dict:

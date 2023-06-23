@@ -18,7 +18,7 @@ class CodeQuality(ScoreCalculator):
                 return item['value']
         return 0
 
-    def get_duplicate_line(self):
+    def get_unduplicated_line(self):
         self.duplicated_lines = self.find_metric('duplicated_lines')
         self.lines = self.find_metric('lines')
 
@@ -49,13 +49,13 @@ class CodeQuality(ScoreCalculator):
         return self.avg_cyclomatic_score
     
     def get_value(self) -> float:
-        dup = self.get_duplicate_line()
+        dup = self.get_unduplicated_line()
         cyclo = self.get_uncomplex_code()
         self.value = (dup + cyclo) / 2
         return self.value
 
     def get_score(self) -> float:
-        self.score = self.value * 100
+        self.score = round((self.value * 100), 2)
         return self.score
 
     def __str__(self) -> str:

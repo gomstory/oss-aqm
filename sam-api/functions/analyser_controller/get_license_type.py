@@ -38,7 +38,7 @@ class License(ScoreCalculator):
         }
 
         range = switcher.get(self.value, 1)
-        self.score = (range / 5) * 100
+        self.score = round((range / 5) * 100, 2)
         return self.score
 
     def __str__(self) -> str:

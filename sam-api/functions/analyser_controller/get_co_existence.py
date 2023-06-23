@@ -79,16 +79,16 @@ class Co_Existence(ScoreCalculator):
         }
 
         platform_supported = switcher.get(primary_lang, 1)
-        m = 1
+        rank = 1
 
         if platform_supported == 1:
-            m = 1
+            rank = 1
         elif platform_supported >= 2 and platform_supported <= 3:
-            m = 3
+            rank = 3
         elif platform_supported >= 4:
-            m = 5
+            rank = 5
 
-        self.score = round((m / 5) * 100, 2)
+        self.score = round((rank / 5) * 100, 2)
         self.platforms = platform_supported
         return self.score
     

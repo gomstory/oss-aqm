@@ -25,21 +25,21 @@ class SupportContributor(ScoreCalculator):
 
     def get_score(self) -> float:
         """Calculate Contributor score"""
-        score = 0
+        rank = 0
         total_contributors = self.value
 
-        if total_contributors < 5:
-            score = 1
-        elif total_contributors >= 5 and total_contributors <= 10:
-            score = 2
-        elif total_contributors > 10 and total_contributors <= 20:
-            score = 3
-        elif total_contributors > 20 and total_contributors <= 50:
-            score = 4
-        elif total_contributors > 50:
-            score = 5
+        if total_contributors > 50:
+            rank = 5
+        elif total_contributors > 20:
+            rank = 4
+        elif total_contributors > 10:
+            rank = 3
+        elif total_contributors >= 5:
+            rank = 2
+        elif total_contributors < 5:
+            rank = 1
 
-        self.score =  (score / 5) * 100
+        self.score =  round((rank / 5) * 100, 2)
         return self.score
 
     def __str__(self) -> str:

@@ -46,9 +46,9 @@ class Maturity(ScoreCalculator):
 
         if minor_release > 3: 
             score_range = 5
-        elif minor_release <= 3 and minor_release > 1: 
+        elif minor_release >= 1 and minor_release <= 3: 
             score_range = 3
-        elif minor_release <= 1: 
+        elif minor_release == 0: 
             score_range = 1
 
         return round((score_range / 5), 2)
@@ -56,21 +56,21 @@ class Maturity(ScoreCalculator):
     def get_age_score(self, days: int = 1) -> float:
         age_range = 0
 
-        if days < 60: 
-            # < 3 mo
-            age_range = 1
-        elif days >= 60 and days < 365: 
-            # 3 mo - 1 years
-            age_range = 2
-        elif days >= 365 and days < 730: 
-            # > 1-2 years
-            age_range = 3
-        elif days >= 730 and days < 1095: 
-            # > 2-3 years
-            age_range = 4
-        elif days >= 1095: 
+        if days > 1095:
             # > 3 years
             age_range = 5
+        elif days > 730:
+            # > 2-3 years
+            age_range = 4
+        elif days > 365:
+            # > 1-2 years
+            age_range = 3
+        elif days >= 60:
+            # 2 mo - 1 years
+            age_range = 2
+        elif days < 60:
+            # < 2 mo
+            age_range = 1
         
         return round((age_range / 5), 2)
 
@@ -99,7 +99,7 @@ class Maturity(ScoreCalculator):
             bugless_ranking = 3
         elif total_issue > 50 and total_issue <= 100:
             bugless_ranking = 4
-        elif total_issue < 50:
+        elif total_issue <= 50:
             bugless_ranking = 5
 
         return bugless_ranking / 5

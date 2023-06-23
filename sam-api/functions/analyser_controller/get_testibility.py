@@ -34,7 +34,7 @@ class Testibility(ScoreCalculator):
         elif avg_cyclimetric >= 1 and avg_cyclimetric <= 10:
             rank = 4  
 
-        self.score = (rank / 4) * 100
+        self.score = round((rank / 4) * 100, 2)
         return self.score
     
     def to_json(self) -> dict:

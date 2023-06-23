@@ -62,7 +62,7 @@ class NewFeature(ScoreCalculator):
             self.score = 0
             return 0
         else:
-            self.score = (self.value / self.total_pull_requests) * 100
+            self.score = (self.total_new_pull_requests / self.total_pull_requests) * 100
             return round(self.score, 2)
 
     def __str__(self) -> str:

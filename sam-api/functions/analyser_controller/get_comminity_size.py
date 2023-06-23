@@ -30,7 +30,7 @@ class CommunitySize(SupportContributor):
         elif total_users > 300:
             scale_range = 5
 
-        self.score = (scale_range/5) * 100
+        self.score = round((scale_range/5) * 100, 2)
         return self.score
 
     def __str__(self) -> str:

@@ -53,8 +53,8 @@ class ContinuingChange(ScoreCalculator):
         return self.value
 
     def get_score(self) -> float:
-        self.score = (self.value / 30) * 100
-        return round(self.score, 2)
+        self.score = round(((self.value / 30) * 100), 2)
+        return self.score
 
     def __str__(self) -> str:
         return f"{self.value}/30"
