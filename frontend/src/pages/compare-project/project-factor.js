@@ -472,7 +472,7 @@ export function ProjectMetric() {
                             </span>
                             <span className="result">
                                 <span className="title">Result</span>
-                                <p>Left: Age/Issueless Code/Minor Releases</p>
+                                <p>Left: Age/Total issue/Total Releases</p>
                                 <p>Right: Quality metric score</p>
                             </span>
                         </span>

@@ -50,7 +50,8 @@ class Professional_Support(ScoreCalculator):
     
     def to_json(self) -> dict:
         data = super().to_json()
+        data['total_pull_request'] = len(self.pull_requests)
+        data['total_pull_request_supported'] = len(self.supported_pull_requests)
         data['total_issue'] = len(self.issues)
-        data['total_pr_supported'] = len(self.supported_pull_requests)
         data["total_issue_supported"] = len(self.issues_supported)
         return data
