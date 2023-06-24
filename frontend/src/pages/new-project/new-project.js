@@ -132,6 +132,7 @@ function NewProject(props) {
                                 <th>Forum</th>
                                 <th>Books</th>
                                 <th>Courses</th>
+                                <th>Markdown</th>
                                 <th>Requested By</th>
                             </tr>
                         </thead>

@@ -36,7 +36,7 @@ def lambda_handler(event, context):
     token_list = []
 
     # Add access token when calling the Github api
-    if 'access_token' in event:
+    if 'access_token' in event and len(event['access_token']) > 0:
         token_list = list(event['access_token'])
         access_token = token_list.pop()
         headers={ 'Authorization': f'Bearer {access_token}' }
