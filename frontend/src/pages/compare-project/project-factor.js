@@ -598,7 +598,7 @@ export function ProjectMetric() {
                             </span>
                             <span className="result">
                                 <span className="title">Result</span>
-                                <p>Left: Comment lines ratio/Markdown files ratio</p>
+                                <p>Left: Comment lines rate/Markdown files rate</p>
                                 <p>Right: Quality metric score</p>
                             </span>
                         </span>
@@ -877,7 +877,7 @@ export function ProjectMetric() {
                             </span>
                             <span className="result">
                                 <span className="title">Result</span>
-                                <p>Left: Uncomplex Code/Unduplicated Code</p>
+                                <p>Left: Uncomplex Code rate/Unduplicated Code rate</p>
                                 <p>Right: Quality metric score</p>
                             </span>
                         </span>
