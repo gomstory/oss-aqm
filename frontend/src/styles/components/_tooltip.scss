@@ -25,7 +25,20 @@
     visibility: visible;
 }
 
+.tooltip .tooltiptext {
+    opacity: 0;
+    transition: visibility 0.5s 0s, opacity 0.5s linear;
+}
+  
+.tooltip:hover .tooltiptext {
+    opacity: 1;
+}
+
 .tooltiptext {
+    .title {
+        font-size: 25px;
+    }
+
     .title,
     .equation {
         font-weight: bold;
@@ -37,6 +50,15 @@
     .result {
         display: block;
         margin: 10px 0;
+    }
+
+    .metric .equation {
+        margin: 10px 0;
+        color: red;
+    }
+
+    .definition ul li {
+        margin: 2px 0;
     }
 
     .metric .row {

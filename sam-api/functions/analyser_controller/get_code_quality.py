@@ -59,9 +59,9 @@ class CodeQuality(ScoreCalculator):
         return self.score
 
     def __str__(self) -> str:
-        unduplicated_round = "{:.2f}".format(self.duplicated_lines_score)
-        uncomplex_round = "{:.2f}".format(self.avg_cyclomatic_score)
-        return f"{uncomplex_round}/{unduplicated_round}"
+        unduplicated_percent = round(self.duplicated_lines_score * 100, 2)
+        uncomplex_percent = round(self.avg_cyclomatic_score * 100, 2)
+        return f"{uncomplex_percent}/{unduplicated_percent}"
     
     def to_json(self) -> dict:
         data = super().to_json()

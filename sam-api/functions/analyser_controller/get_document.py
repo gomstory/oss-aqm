@@ -72,9 +72,9 @@ class Document(ScoreCalculator):
         return round(((self.value / 2) * 100), 2)
 
     def __str__(self) -> str:
-        comment_ratio = self.get_comment_density()
-        markdown_ratio = self.get_markdown_density()
-        return f"{comment_ratio}/{markdown_ratio}"
+        comment_percent =  round(self.get_comment_density() * 100, 2)
+        markdown_percent = round(self.get_markdown_density() * 100, 2)
+        return f"{comment_percent}/{markdown_percent}"
     
     def to_json(self) -> dict:
         data =  super().to_json()
