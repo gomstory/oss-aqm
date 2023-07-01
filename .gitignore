@@ -30,3 +30,4 @@ raw-data/*
 **/configs.js
 **/samconfig.toml
 **/template.yml
+.devcontainer/devcontainer.json
