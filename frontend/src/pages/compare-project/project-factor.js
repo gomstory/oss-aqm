@@ -18,7 +18,7 @@ export function ProjectMetric() {
                             <span className="title">Project Size</span>
                             <span className="definition">
                                 Number of physical lines that contain at least one character which is neither a whitespace nor a tabulation nor part of a comment.
-                                Check <a target="_blank" href="https://docs.sonarqube.org/latest/user-guide/metric-definitions/#header-8">ncloc</a>
+                                Check <a target="_blank" rel="noreferrer" href="https://docs.sonarqube.org/latest/user-guide/metric-definitions/#header-8">ncloc</a>
                             </span>
                             <span className="metric">
                                 <span className="title">Metric</span>
@@ -80,7 +80,7 @@ export function ProjectMetric() {
                                 <ul>
                                     <li>
                                         License Type refers to different types of open-source licenses that define how the open source can be used, modified, and shared.
-                                        Check <a target="_blank" href="https://choosealicense.com/appendix/"><code> license type </code></a>
+                                        Check <a target="_blank" rel="noreferrer" href="https://choosealicense.com/appendix/"><code> license type </code></a>
                                     </li>
                                 </ul>
                             </span>
@@ -137,18 +137,24 @@ export function ProjectMetric() {
                         <span className="tooltiptext">
                             <span className="title">Size of Community</span>
                             <span className="definition">
-                                Size of Community refers to the number of members in the open-source community. It consists of three quality metric elements:
+                                Size of Community refers to the number of members in the open-source community. It consists of one quality metric elements:
                                 <ul>
                                     <li>
-                                        Number of Core Team Members refers to the number of core members of the open-source project, including owners and dedicated members, who determine the direction and evolution of the project.
-                                    </li>
-                                    <li>
-                                        Number of Contributors refers to the number of open-source project members who have contributed to the commit history of the project.
-                                    </li>
-                                    <li>
-                                        Number of Watchers refers to the number of open-source project members who have will be notified of activity in the project, but have not contributed to the project.
+                                        Number of Core Team Members, Contributors, and Watchers where
+                                        <ul style={{"list-style-type": "circle"}}>
+                                            <li>
+                                                Number of Core Team Members refers to the number of core members of the open-source project, including owners and dedicated members, who determine the direction and evolution of the project.
+                                            </li>
+                                            <li>
+                                                Number of Contributors refers to the number of open-source project members who have contributed to the commit history of the project.
+                                            </li>
+                                            <li>
+                                                Number of Watchers refers to the number of open-source project members who have will be notified of activity in the project, but have not contributed to the project.
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
+                           
                             </span>
                             <span className="metric">
                                 <span className="title">Metric</span>
@@ -163,23 +169,15 @@ export function ProjectMetric() {
                                 </div>
                                 <div className="row">
                                     <span>M=1</span>
-                                    <span>Small (Total &lt; 50 people)</span>
-                                </div>
-                                <div className="row">
-                                    <span>M=2</span>
-                                    <span>Relatively Small (Total 50 - 100 people)</span>
+                                    <span>Small (&lt; 50 people)</span>
                                 </div>
                                 <div className="row">
                                     <span>M=3</span>
-                                    <span>Medium (Total 100 - 200 people)</span>
-                                </div>
-                                <div className="row">
-                                    <span>M=4</span>
-                                    <span>Relatively Large (Total 200 - 300 people)</span>
+                                    <span>Medium (50 - 249 people)</span>
                                 </div>
                                 <div className="row">
                                     <span>M=5</span>
-                                    <span>Large (Total &gt; 300 people)</span>
+                                    <span>Large (&ge; 250 people)</span>
                                 </div>
                             </span>
                             <span className="result">

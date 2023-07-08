@@ -90,7 +90,7 @@ function SearchProject() {
         className="search"
         onInput={onInput}
         onFocus={onFocus}
-        placeholder="Search Github Project">
+        placeholder="Search GitHub Project">
       </input>
 
       {popup && searchResult &&

@@ -32,7 +32,7 @@ def lambda_handler(event, context):
     rows = []
     page = 1
 
-    # Add access token when calling the Github api
+    # Add access token when calling the GitHub api
     if 'access_token' in event and len(event['access_token']) > 0:
         token_list = list(event['access_token'])
         access_token = token_list.pop()
@@ -64,7 +64,7 @@ def lambda_handler(event, context):
 
    # Throw error when exceed maxumum request
     if api_quata <= 0:
-        return respond(ValueError("Exceed maximum request from Github"))
+        return respond(ValueError("Exceed maximum request from GitHub"))
 
     # Create json file to tmp folder
     file_name = 'core-team.json'

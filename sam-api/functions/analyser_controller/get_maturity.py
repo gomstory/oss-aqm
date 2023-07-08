@@ -75,7 +75,7 @@ class Maturity(ScoreCalculator):
         return round((age_range / 5), 2)
 
     def get_total_issue(self):
-        """Get number of issues the last 6 months reported in Github"""
+        """Get number of issues the last 6 months reported in GitHub"""
         today = datetime.now()
         six_month_early = today - timedelta(days=180)
         selected_issue = []

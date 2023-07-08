@@ -57,7 +57,7 @@ def lambda_handler(event, context):
         result['used_by'] = int(used_by_total)
 
     # Find startgazers list
-    # Add access token when calling the Github api
+    # Add access token when calling the GitHub api
     headers = None
     token_list = []
 
@@ -100,7 +100,7 @@ def lambda_handler(event, context):
 
     # Throw error when exceed maxumum request
     if api_quata <= 0:
-        return respond(ValueError("Exceed maximum request from Github"))
+        return respond(ValueError("Exceed maximum request from GitHub"))
 
     # Create json file to tmp folder
     file_name = 'user.json'

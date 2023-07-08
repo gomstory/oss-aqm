@@ -92,16 +92,16 @@ function NewProject(props) {
         <div className="container">
             {!auth && (
                 <span>
-                    You have login to request new project
-                    <a href={loginURL} className='btn primary ml-10'>Login to Github</a>
+                    You have to login to request new project
+                    <a href={loginURL} className='btn primary ml-10'>Login to GitHub</a>
                 </span>
 
             )}
 
             {auth &&
                 <div className='mt-20'>
-                    <h1>Request New Github Projects</h1>
-                    <input className='text-input' ref={inputEl} type="text" placeholder="Please Enter Github URL" />
+                    <h1>Request New GitHub Projects</h1>
+                    <input className='text-input' ref={inputEl} type="text" placeholder="Please Enter GitHub URL" />
                     <button className='btn primary ml-10' onClick={createRequest}>Submit Request</button>
                     { submit && <p className='mt-5 green'>Your request has been submitted, after few minutes the recrod will be displayed</p> } 
                 </div>
@@ -119,7 +119,7 @@ function NewProject(props) {
                     <table className='table'>
                         <thead>
                             <tr>
-                                <th>Github Project</th>
+                                <th>GitHub Project</th>
                                 <th>Repo Information</th>
                                 <th>Release</th>
                                 <th>Source Code</th>

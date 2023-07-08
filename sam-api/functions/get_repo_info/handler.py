@@ -28,7 +28,7 @@ def lambda_handler(event, context):
     repo = event['repo']
     owner = event['owner']
 
-    # Add access token when calling the Github api
+    # Add access token when calling the GitHub api
     headers = None
     if 'access_token' in event and len(event['access_token']) > 0:
         access_token = event['access_token'][0]

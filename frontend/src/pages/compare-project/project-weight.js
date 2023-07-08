@@ -6,7 +6,7 @@ export function ProjectWeight() {
     const weight = useSelector(it => it.project.weight)
 
     const options = Array.from({ length: 10 }, (_, i) => i + 1).map(option => <option key={option} value={option}>{option}</option>)
-    options.unshift(<option key="un-select" value="-1">DISABLE</option>)
+    options.unshift(<option key="un-select" value="-1">DISABLED</option>)
     
     const onWeightChange = (event) => {
         let metricName = event.target.name
