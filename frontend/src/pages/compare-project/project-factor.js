@@ -137,7 +137,7 @@ export function ProjectMetric() {
                         <span className="tooltiptext">
                             <span className="title">Size of Community</span>
                             <span className="definition">
-                                Size of Community refers to the number of members in the open-source community. It consists of one quality metric elements:
+                                Size of Community refers to the number of members in the open-source community. It consists of one quality metric element:
                                 <ul>
                                     <li>
                                         Number of Core Team Members, Contributors, and Watchers where
