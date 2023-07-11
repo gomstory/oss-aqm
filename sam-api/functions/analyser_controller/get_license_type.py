@@ -13,7 +13,7 @@ class License(ScoreCalculator):
             license = self.license_info['license']['key']
             self.value = license
         elif 'license' in self.repo_info:
-            license = self.repo_info['license']['key']
+            license = self.repo_info['license']['key'] if self.repo_info['license'] is not None else 'none'
             self.value = license
 
         return self.value
