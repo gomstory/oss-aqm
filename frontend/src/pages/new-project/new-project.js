@@ -13,6 +13,7 @@ function NewProject(props) {
     const [loading, setLoading] = useState(false);
     const [reqList, setReqList] = useState([]);
     const [submit, setSubmit] = useState(false);
+    const [error, setError] = useState(false)
     const loginURL = `${apiConfigs.baseUrl}/oauth/github/login`;
     const location = useLocation();
     const dispatch = useDispatch();
@@ -74,7 +75,8 @@ function NewProject(props) {
         if (!url) return;
         return createCrawler(url, username)
             .then(() => inputEl.current.value = "")
-            .then(() => showSubmitMsg());
+            .then(() => showSubmitMsg())
+            .catch(() => showErrorMsg())
     }
 
     const onLogout = () => {
@@ -85,6 +87,13 @@ function NewProject(props) {
         setSubmit(true)
         setTimeout(() => {
             setSubmit(false);
+        }, 10000);
+    }
+
+    const showErrorMsg = () => {
+        setError(true)
+        setTimeout(() => {
+            setError(false);
         }, 10000);
     }
 
@@ -104,6 +113,7 @@ function NewProject(props) {
                     <input className='text-input' ref={inputEl} type="text" placeholder="Please Enter GitHub URL" />
                     <button className='btn primary ml-10' onClick={createRequest}>Submit Request</button>
                     { submit && <p className='mt-5 green'>Your request has been submitted, after few minutes the recrod will be displayed</p> } 
+                    { error && <p className='mt-5 red'>Invalid URL, please re-enter.</p> } 
                 </div>
             }
 
