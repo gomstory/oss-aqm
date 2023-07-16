@@ -83,12 +83,14 @@ class Co_Existence(ScoreCalculator):
 
         if platform_supported == 1:
             rank = 1
-        elif platform_supported >= 2 and platform_supported <= 3:
+        elif platform_supported == 2:
+            rank = 2
+        elif platform_supported == 3:
             rank = 3
-        elif platform_supported >= 4:
-            rank = 5
+        elif platform_supported == 4:
+            rank = 4
 
-        self.score = round((rank / 5) * 100, 2)
+        self.score = round((rank / 4) * 100, 2)
         self.platforms = platform_supported
         return self.score
     

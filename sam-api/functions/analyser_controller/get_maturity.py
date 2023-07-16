@@ -29,11 +29,11 @@ class Maturity(ScoreCalculator):
 
         for release in data:
             version = release['tag_name']
-            minor_release = re.findall(r"(\d+)", version)
+            release_versions = re.findall(r"(\d+)", version)
 
-            if minor_release is not None:
-                major = minor_release[0]
-                minor = minor_release[1]
+            if release_versions is not None:
+                major = release_versions[0]
+                minor = release_versions[1]
                 major_minor = f"{major}.{minor}"
 
                 if (major_minor in minor_releases) == False:
@@ -44,14 +44,16 @@ class Maturity(ScoreCalculator):
     def get_release_score(self, minor_release: int = 0) -> float:
         score_range = 1
 
-        if minor_release > 3: 
-            score_range = 5
-        elif minor_release >= 1 and minor_release <= 3: 
-            score_range = 3
-        elif minor_release == 0: 
+        if minor_release == 0:
             score_range = 1
+        elif minor_release > 3: 
+            score_range = 1
+        elif minor_release == 1 or minor_release == 3: 
+            score_range = 2
+        elif minor_release == 2:
+            score_range = 3
 
-        return round((score_range / 5), 2)
+        return round((score_range / 3), 2)
 
     def get_age_score(self, days: int = 1) -> float:
         age_range = 0

@@ -170,10 +170,18 @@ export function ProjectMetric() {
                                 <div className="row">
                                     <span>M=1</span>
                                     <span>Small (&lt; 50 people)</span>
+                                </div> 
+                                <div className="row">
+                                    <span>M=2</span>
+                                    <span>Relatively Small (50 - 115 people)</span>
                                 </div>
                                 <div className="row">
                                     <span>M=3</span>
-                                    <span>Medium (50 - 249 people)</span>
+                                    <span>Medium (116 - 183 people)</span>
+                                </div>
+                                <div className="row">
+                                    <span>M=4</span>
+                                    <span>Relatively Large (184 - 249 people)</span>
                                 </div>
                                 <div className="row">
                                     <span>M=5</span>
@@ -713,11 +721,11 @@ export function ProjectMetric() {
                 <div className='item-list'>
                     <span className="sub-factor">Innovativeness</span>
                     <div className="tooltip">
-                        <span className="quality-metric">New Features</span>
+                        <span className="quality-metric">New Features Focus</span>
                         <span className="tooltiptext">
-                            <span className="title">New Features</span>
+                            <span className="title">New Features Focus</span>
                             <span className="definition">
-                                New Features refers to the degree to which the change as new feature enhancement has been introduced to the open-source software which indicates innovativeness of the open source. Enhancing the open source helps with keeping the software that utilizes the open source upgraded and modernized, making it beneficial for economic reasons. The metric consists of one quality metric element:
+                                New Features Focus New Features refers to the degree to which the change as new feature enhancement has been introduced to the open-source software in relation to the effort to effect change to the open source. This indicates the degree of the contributors' focus on innovativeness of the open source.  The focus on enhancing the open source with new features helps keep the software that utilizes the open source upgraded and modernized, making it beneficial for economic reasons. The metric consists of one quality metric element:
                                 <ul>
                                     <li>New Feature Pull Requests refers to the proportion of pull requests labeled with new features in the past 6 months.</li>
                                 </ul>
@@ -727,7 +735,7 @@ export function ProjectMetric() {
                                 <div className="equation">V11 = M * 100</div>
                                 <div className="row">
                                     <span>V11</span>
-                                    <span>New Features</span>
+                                    <span>New Features Focus</span>
                                 </div>
                                 <div className="row">
                                     <span>M</span>
@@ -1116,7 +1124,7 @@ export function ProjectMetric() {
                             </span>
                             <span className="metric">
                                 <span className="title">Metric</span>
-                                <div className="equation">V18 = M/5 * 100</div>
+                                <div className="equation">V18 = M/4 * 100</div>
                                 <div className="row">
                                     <span>V18</span>
                                     <span>Co-existence</span>
@@ -1130,11 +1138,15 @@ export function ProjectMetric() {
                                     <span>1 Supported Development Environment Type</span>
                                 </div>
                                 <div className="row">
-                                    <span>M=3</span>
-                                    <span>2-3 Supported Development Environment Types </span>
+                                    <span>M=2</span>
+                                    <span>2 Supported Development Environment Types </span>
                                 </div>
                                 <div className="row">
-                                    <span>M=5</span>
+                                    <span>M=3</span>
+                                    <span>3 Supported Development Environment Types </span>
+                                </div>
+                                <div className="row">
+                                    <span>M=4</span>
                                     <span>4 Supported Development Environment Types</span>
                                 </div>
                             </span>
