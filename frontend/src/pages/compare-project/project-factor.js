@@ -1119,7 +1119,7 @@ export function ProjectMetric() {
                             <span className="definition">
                                 Co-existence refers to the degree to which the open-source software can co-exist or work with other software in various development environment, and is dependent on the various development environment that the programming language of the project is used for. It consists of one quality metric element:
                                 <ul>
-                                    <li>Development Environment refers to the types of development environment, i.e. web, mobile, desktop, or embedded development environment, which the primary programming language of the project can support.</li>
+                                    <li>Development Environment refers to the four types of development environment, i.e. web, mobile, desktop, or embedded development environment, which the primary programming language of the project can support.</li>
                                 </ul>
                             </span>
                             <span className="metric">
@@ -1131,7 +1131,7 @@ export function ProjectMetric() {
                                 </div>
                                 <div className="row">
                                     <span>M</span>
-                                    <span>Development Environment</span>
+                                    <span>Development Environment i.e. web, mobile, desktop, embedded</span>
                                 </div>
                                 <div className="row">
                                     <span>M=1</span>
