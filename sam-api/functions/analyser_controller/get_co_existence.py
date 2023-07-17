@@ -24,7 +24,6 @@ class Co_Existence(ScoreCalculator):
             'java': 3, 
             'c++': 3, 
             'c': 3, 
-            'javascript': 2, 
             'c#': 4, 
             'r': 1, 
             'go': 2, 
@@ -32,6 +31,7 @@ class Co_Existence(ScoreCalculator):
             'css': 1, 
             'swift': 2, 
             'kotlin': 2, 
+            'javascript': 2, 
             'typescript': 2, 
             'php': 1, 
             # Based on https://techviral.net/best-popular-programming-languages/
